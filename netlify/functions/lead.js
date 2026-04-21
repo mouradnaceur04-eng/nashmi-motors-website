@@ -181,7 +181,7 @@ exports.handler = async (event) => {
         'Content-Type':  'application/json',
       },
       body: JSON.stringify({
-        from:    `Nashmi Motors Website <leads@nashmimotors.com>`,
+        from:    `Nashmi Motors Website <onboarding@resend.dev>`,
         to:      [LEAD_EMAIL],
         cc:      ["sales@nashmimotors.com"],
         subject: `[Finance Lead] ${name} — ${vehicle}`,
