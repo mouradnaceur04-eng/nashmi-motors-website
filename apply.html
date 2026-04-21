@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply for Financing — Nashmi Motors | Harrisburg, PA</title>
+<meta name="description" content="Apply for car financing at Nashmi Motors in Harrisburg PA. All credit types welcome. Get pre-approved quickly. Call (717) 743-5175.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="topbar-hours">Mon–Fri 10am–6pm &nbsp;&bull;&nbsp; Sat 10am–3pm &nbsp;&bull;&nbsp; Sun Closed</span>
+    </div>
+    <div class="topbar-right">
+      <a href="mailto:sales@nashmimotors.com" class="topbar-link">sales@nashmimotors.com</a>
+      <a href="tel:7177435175" class="topbar-link">(717) 743-5175</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="52">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="inventory.html" class="nav-link">Inventory</a>
+      <a href="apply.html" class="nav-link active">Apply Online</a>
+      <a href="sell.html" class="nav-link">We Buy Cars</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Apply for Financing</h1>
+    <p>Good credit, bad credit, no credit — we work with all credit types. Fill out the form below to get started.</p>
+  </div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="section section-white" style="padding-bottom:0">
+  <div class="container">
+    <div class="features-grid" style="grid-template-columns:repeat(3,1fr);background:transparent">
+      <div class="feature-card animate-on-scroll" style="background:var(--bg);border:1px solid var(--border)">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 style="color:var(--dark)">Fast Process</h3>
+        <p style="color:var(--gray)">Submit your info and we'll be in touch the same business day to discuss your options.</p>
+      </div>
+      <div class="feature-card animate-on-scroll delay-1" style="background:var(--bg);border:1px solid var(--border)">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 style="color:var(--dark)">Your Info is Safe</h3>
+        <p style="color:var(--gray)">We handle your information with care and only use it to help you find financing.</p>
+      </div>
+      <div class="feature-card animate-on-scroll delay-2" style="background:var(--bg);border:1px solid var(--border)">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 style="color:var(--dark)">All Credit Welcome</h3>
+        <p style="color:var(--gray)">Rebuilding credit? First-time buyer? We work with multiple lenders to find solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="section section-white">
+  <div class="container apply-layout">
+
+    <!-- FORM -->
+    <div class="apply-form-wrap animate-on-scroll">
+      <form class="apply-form" id="apply-form" onsubmit="handleApply(event)">
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">1</span> Personal Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" name="First Name" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" name="Last Name" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" name="Email" placeholder="john@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" name="Date of Birth">
+            </div>
+            <div class="form-group">
+              <label>Driver's License #</label>
+              <input type="text" name="Drivers License" placeholder="PA12345678">
+            </div>
+          </div>
+        </div>
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">2</span> Current Address</h3>
+          <div class="form-group">
+            <label>Street Address *</label>
+            <input type="text" name="Street Address" placeholder="123 Main Street" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City *</label>
+              <input type="text" name="City" placeholder="Harrisburg" required>
+            </div>
+            <div class="form-group">
+              <label>State *</label>
+              <select name="State" required>
+                <option value="">Select</option>
+                <option selected>PA</option>
+                <option>MD</option><option>DE</option><option>NJ</option><option>NY</option>
+                <option>VA</option><option>WV</option><option>OH</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ZIP *</label>
+              <input type="text" name="ZIP" placeholder="17111" maxlength="5" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>How Long at This Address?</label>
+              <select name="Time at Address">
+                <option>Less than 1 year</option>
+                <option>1–2 years</option>
+                <option>2–5 years</option>
+                <option>5+ years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Housing Status</label>
+              <select name="Housing Status">
+                <option>Own</option>
+                <option>Rent</option>
+                <option>Live with family</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">3</span> Employment & Income</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employment Status *</label>
+              <select name="Employment Status" required>
+                <option value="">Select...</option>
+                <option>Full-time employed</option>
+                <option>Part-time employed</option>
+                <option>Self-employed</option>
+                <option>Retired</option>
+                <option>Other income source</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Employer Name</label>
+              <input type="text" name="Employer" placeholder="Company name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Monthly Income (before taxes) *</label>
+              <input type="number" name="Monthly Income" placeholder="e.g. 3000" min="0" step="100" required>
+            </div>
+            <div class="form-group">
+              <label>Time at Current Job</label>
+              <select name="Time at Job">
+                <option>Less than 6 months</option>
+                <option>6–12 months</option>
+                <option>1–3 years</option>
+                <option>3+ years</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">4</span> Vehicle & Down Payment</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Vehicle I'm Interested In</label>
+              <select name="Vehicle Interest">
+                <option>Not sure yet — show me what I qualify for</option>
+                <option>2002 FORD ESCAPE — $4,995</option>
+                <option>2013 KIA OPTIMA — $5,995</option>
+                <option>2012 NISSAN ROGUE — $5,995</option>
+                <option>2019 FORD FIESTA — $6,995</option>
+                <option>2020 KIA FORTE — $7,995</option>
+                <option>2017 FORD ESCAPE — $7,995 (on sale)</option>
+                <option>2014 JEEP GRAND CHEROKEE — $8,995</option>
+                <option>2015 NISSAN ROGUE — $8,995</option>
+                <option>2017 CHRYSLER PACIFICA — $9,995</option>
+                <option>2018 FORD ESCAPE — $9,995 (on sale)</option>
+                <option>2016 TOYOTA COROLLA — $10,995</option>
+                <option>2011 FORD F150 SUPERCREW — $10,995</option>
+                <option>2018 AUDI Q5 — $11,995</option>
+                <option>2014 JEEP GRAND CHEROKEE — $11,995</option>
+                <option>2019 INFINITI QX60 — $11,995</option>
+                <option>2023 KIA SOUL — $13,995</option>
+                <option>2020 KIA OPTIMA — $14,995 (on sale)</option>
+                <option>2016 GMC SIERRA 1500 — $15,995</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Down Payment</label>
+              <select name="Down Payment">
+                <option>$0 — No money down</option>
+                <option>$500 – $1,000</option>
+                <option>$1,000 – $2,000</option>
+                <option>$2,000 – $3,000</option>
+                <option>$3,000+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Do you have a trade-in?</label>
+            <select name="Trade In">
+              <option>No trade-in</option>
+              <option>Yes — I have a vehicle to trade</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Anything else you'd like us to know?</label>
+            <textarea name="Additional Notes" rows="3" placeholder="Credit situation, specific needs, questions, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="apply-consent">
+          <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+            <input type="checkbox" required style="margin-top:3px;flex-shrink:0;accent-color:var(--green)">
+            <span style="font-size:13px;color:var(--gray);line-height:1.6">
+              I authorize Nashmi Motors to contact me regarding financing options. I understand this is a preliminary inquiry and does not guarantee credit approval.
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;font-size:16px;padding:18px">
+          Submit Application →
+        </button>
+
+        <div id="apply-success" style="display:none;margin-top:20px;padding:28px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;text-align:center">
+          <div style="width:56px;height:56px;background:#15803d;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="color:#15803d;margin-bottom:6px">Application Submitted!</h3>
+          <p style="color:#166534;font-size:14px">Your application has been sent directly to our team. We'll review it and contact you during business hours.<br><br>Questions? Call <a href="tel:7177435175" style="color:#15803d;font-weight:700">(717) 743-5175</a></p>
+        </div>
+        <div id="apply-error" style="display:none;margin-top:20px;padding:20px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px;text-align:center">
+          <p style="color:#dc2626;font-size:14px">Something went wrong. Please call us at <a href="tel:7177435175" style="color:#dc2626;font-weight:700">(717) 743-5175</a> or email <a href="mailto:sales@nashmimotors.com" style="color:#dc2626;font-weight:700">sales@nashmimotors.com</a>.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="apply-sidebar animate-on-scroll delay-2">
+      <div class="apply-sidebar-card">
+        <h4>What to Expect</h4>
+        <ul>
+          <li>Submit this form</li>
+          <li>We review your info</li>
+          <li>We call you to discuss options</li>
+          <li>Come in, test drive, sign papers</li>
+          <li>Drive home same day</li>
+        </ul>
+      </div>
+      <div class="apply-sidebar-card">
+        <h4>Prefer to Apply by Phone?</h4>
+        <p>Call us and we'll walk you through everything in minutes.</p>
+        <a href="tel:7177435175" class="btn btn-primary" style="width:100%;margin-top:12px;text-align:center;display:block">
+          (717) 743-5175
+        </a>
+      </div>
+      <div class="apply-sidebar-card">
+        <h4>What to Bring When You Come In</h4>
+        <ul>
+          <li>Valid driver's license</li>
+          <li>Recent pay stub or proof of income</li>
+          <li>Proof of residence (utility bill, etc.)</li>
+          <li>Trade-in title, if applicable</li>
+        </ul>
+      </div>
+      <div class="apply-sidebar-card" style="background:var(--green);border-color:var(--green)">
+        <h4 style="color:#fff">Current Deals</h4>
+        <ul id="sidebar-deals">
+          <li style="color:rgba(255,255,255,0.9)">Loading deals...</li>
+        </ul>
+        <a href="inventory.html" style="color:#fff;font-size:13px;font-weight:600;text-decoration:underline;display:block;margin-top:10px">View all inventory →</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="44">
+      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link">f</a>
+        <a href="https://www.instagram.com/nashmimotors" target="_blank" rel="noopener" class="social-link">ig</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Inventory</h4>
+      <a href="inventory.html">All Vehicles</a>
+      <a href="inventory.html?type=sedan">Sedans</a>
+      <a href="inventory.html?type=suv">SUVs</a>
+      <a href="inventory.html?type=truck">Trucks</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a href="apply.html">Apply for Financing</a>
+      <a href="sell.html">Sell Us Your Car</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><a href="tel:7177435175">(717) 743-5175</a></p>
+      <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
+      <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
+      <p>Mon–Fri 10am–6pm<br>Sat 10am–3pm &bull; Sun Closed</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© 2026 Nashmi Motors. All rights reserved.</span>
+      <span>8001 Paxton St, Harrisburg, PA 17111</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+// Populate vehicle dropdown + sidebar deals from live inventory
+onInventoryLoaded = function() {
+  // Update vehicle dropdown
+  const sel = document.querySelector('select[name="Vehicle Interest"]');
+  if (sel) {
+    sel.innerHTML = '<option>Not sure yet — show me what I qualify for</option>';
+    inventory.forEach(c => {
+      const displayPrice = c.sale || c.price;
+      const label = `${c.year} ${c.make} ${c.model}` +
+        (displayPrice ? ` — ${fmtPrice(displayPrice)}` : '') +
+        (c.sale ? ' (on sale)' : '');
+      const o = document.createElement('option');
+      o.value = label;
+      o.textContent = label;
+      sel.appendChild(o);
+    });
+  }
+
+  // Update sidebar deals (sale cars only)
+  const deals = inventory.filter(c => c.sale).slice(0, 4);
+  const list  = document.getElementById('sidebar-deals');
+  if (list && deals.length) {
+    list.innerHTML = deals.map(c =>
+      `<li style="color:rgba(255,255,255,0.9)">${c.year} ${c.make} ${c.model} — Was ${fmtPrice(c.price)} &rarr; <strong style="color:#fff">${fmtPrice(c.sale)}</strong></li>`
+    ).join('');
+  }
+};
+loadInventory();
+
+// Handle form submission — POST to Netlify Function → DealerCenter ADF lead
+async function handleApply(e) {
+  e.preventDefault();
+  const form   = e.target;
+  const btn    = form.querySelector('button[type="submit"]');
+  const data   = {};
+  for (const [k, v] of new FormData(form).entries()) {
+    if (v?.toString().trim()) data[k] = v.toString().trim();
+  }
+
+  // Update button state
+  btn.disabled    = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const res = await fetch('/.netlify/functions/lead', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      // Success
+      form.style.display = 'none';
+      const success = document.getElementById('apply-success');
+      success.style.display = 'block';
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      throw new Error('Server returned ' + res.status);
+    }
+  } catch (err) {
+    console.error('Submit error:', err);
+    btn.disabled    = false;
+    btn.textContent = 'Submit Application →';
+    document.getElementById('apply-error').style.display = 'block';
+    document.getElementById('apply-error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

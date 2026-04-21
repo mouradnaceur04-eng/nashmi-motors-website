@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nashmi Motors — Quality Used Cars in Harrisburg, PA</title>
+<meta name="description" content="Quality used cars in Harrisburg, PA. Starting at $4,995. Easy financing for all credit types. Call (717) 743-5175.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="topbar-hours">Mon–Fri 10am–6pm &nbsp;&bull;&nbsp; Sat 10am–3pm &nbsp;&bull;&nbsp; Sun Closed</span>
+    </div>
+    <div class="topbar-right">
+      <a href="mailto:sales@nashmimotors.com" class="topbar-link">sales@nashmimotors.com</a>
+      <a href="tel:7177435175" class="topbar-link">(717) 743-5175</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="52">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="inventory.html" class="nav-link">Inventory</a>
+      <a href="apply.html" class="nav-link">Apply Online</a>
+      <a href="sell.html" class="nav-link">We Buy Cars</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO — SPLIT LAYOUT -->
+<section class="hero-split">
+  <!-- LEFT PANEL -->
+  <div class="hero-split-left">
+    <div class="hero-split-content animate-fade-up">
+      <div class="hero-eyebrow">Quality Used Cars &bull; Harrisburg, PA</div>
+      <h1 class="hero-split-title">
+        Why Wait?<br>
+        <span class="hero-accent">Get the Keys<br>Now &amp; Save Big.</span>
+      </h1>
+      <p class="hero-split-sub">
+        Carefully selected vehicles starting at $4,995. Financing available for all credit types — good, bad, or none.
+      </p>
+      <div class="hero-split-actions">
+        <a href="inventory.html" class="btn btn-primary btn-lg">Browse Inventory</a>
+        <a href="apply.html" class="btn btn-outline-dark btn-lg">Get Pre-Approved</a>
+      </div>
+      <!-- INLINE SEARCH -->
+      <div class="hero-search">
+        <select id="s-make" onchange="updateModels()" class="hero-select">
+          <option value="">Any Make</option>
+          <option>AUDI</option><option>CHRYSLER</option><option>FORD</option>
+          <option>GMC</option><option>INFINITI</option><option>JEEP</option>
+          <option>KIA</option><option>NISSAN</option><option>TOYOTA</option>
+        </select>
+        <select id="s-model" class="hero-select">
+          <option value="">Any Model</option>
+        </select>
+        <select id="s-price" class="hero-select">
+          <option value="">Any Price</option>
+          <option value="6000">Under $6,000</option>
+          <option value="9000">Under $9,000</option>
+          <option value="12000">Under $12,000</option>
+          <option value="16000">Under $16,000</option>
+        </select>
+        <button class="btn btn-primary" onclick="runSearch()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — angled car image -->
+  <div class="hero-split-right">
+    <div class="hero-split-img">
+      <img src="https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
+           alt="2020 Kia Optima" loading="eager">
+    </div>
+    <!-- FLOATING STAT CARDS -->
+    <div class="hero-float-cards">
+      <div class="hero-float-card">
+        <span class="hero-float-num">$4,995</span>
+        <span class="hero-float-label">Starting Price</span>
+      </div>
+      <div class="hero-float-card">
+        <span class="hero-float-num">All</span>
+        <span class="hero-float-label">Credit Types</span>
+      </div>
+      <div class="hero-float-card">
+        <span class="hero-float-num">6 Days</span>
+        <span class="hero-float-label">A Week Open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BROWSE BY TYPE -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-eyebrow">Browse By Type</span>
+      <h2 class="section-title">Find Your Perfect Match</h2>
+    </div>
+    <div class="body-types">
+      <a href="inventory.html?type=sedan" class="body-type-card animate-on-scroll">
+        <div class="body-type-icon">
+          <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="28">
+            <path d="M5 17h30M7 17L11 9h18l4 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M13 9l2-4h10l2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="11" cy="19" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="29" cy="19" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>Sedan</span>
+      </a>
+      <a href="inventory.html?type=suv" class="body-type-card animate-on-scroll delay-1">
+        <div class="body-type-icon">
+          <svg viewBox="0 0 44 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="28">
+            <path d="M5 18h34M7 18L10 9h24l3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M11 9V5h22v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="32" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>SUV</span>
+      </a>
+      <a href="inventory.html?type=truck" class="body-type-card animate-on-scroll delay-2">
+        <div class="body-type-icon">
+          <svg viewBox="0 0 48 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="28">
+            <path d="M4 18h40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 18V8h20v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M26 12h10l6 6H26V12z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="12" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="35" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>Truck</span>
+      </a>
+      <a href="inventory.html?type=van" class="body-type-card animate-on-scroll delay-3">
+        <div class="body-type-icon">
+          <svg viewBox="0 0 46 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="50" height="28">
+            <path d="M5 18h36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 18V6h28l4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 11h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="13" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="33" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>Van</span>
+      </a>
+      <a href="inventory.html" class="body-type-card animate-on-scroll delay-4">
+        <div class="body-type-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span>All Vehicles</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED INVENTORY -->
+<section class="section section-bg" id="featured">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-eyebrow">Featured Vehicles</span>
+      <h2 class="section-title">Current Best Deals</h2>
+      <p class="section-desc">Sale pricing on select vehicles. Limited availability — first come, first served.</p>
+    </div>
+    <div class="cars-grid" id="featured-grid"></div>
+    <div class="section-cta animate-on-scroll">
+      <a href="inventory.html" class="btn btn-primary btn-lg">View All Vehicles</a>
+    </div>
+  </div>
+</section>
+
+<!-- GOOGLE REVIEWS -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-eyebrow">Google Reviews</span>
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="reviews-rating-summary animate-on-scroll">
+        <div class="reviews-score">5.0</div>
+        <div class="reviews-summary-right">
+          <div class="stars-row">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <p class="reviews-source">Rated 5.0 on Google</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+
+      <!-- Review 1 -->
+      <div class="review-card animate-on-scroll">
+        <div class="review-header">
+          <div class="reviewer-avatar">JR</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Jeffrey Riley</span>
+            <span class="reviewer-meta">2 months ago &bull; Google Review</span>
+          </div>
+          <div class="review-google-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </div>
+        </div>
+        <div class="review-stars">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="review-text">"I just purchased a used car from Ali, and he was hands-down the most responsive, kind, and detail-oriented person I've ever dealt with. Every single detail was taken care of, and the car was in immaculate condition — no issues at all. Ali's honesty and professionalism completely defy any stereotype of used car salesmen. If I ever need another car, I will drive to Pennsylvania again in a heartbeat."</p>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card animate-on-scroll delay-1">
+        <div class="review-header">
+          <div class="reviewer-avatar">AK</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Ashraf Khan</span>
+            <span class="reviewer-meta">2 months ago &bull; Google Review &bull; Local Guide</span>
+          </div>
+          <div class="review-google-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </div>
+        </div>
+        <div class="review-stars">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20" fill="currentColor" class="star-svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="review-text">"Super easy financing — all the documentation was done really quickly. Mr. Ali Alqudah helped me a lot with all my paperwork. If anyone in or near Harrisburg is looking for a used car, Nashmi Motors is the place. Great selection including luxury vehicles, and some of the best pricing in the market."</p>
+      </div>
+
+    </div>
+
+    <div class="section-cta animate-on-scroll">
+      <a href="https://g.page/r/nashmi-motors/review" target="_blank" rel="noopener" class="btn btn-outline-green btn-lg">Leave a Google Review</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header animate-on-scroll" style="color:#fff">
+      <span class="section-eyebrow" style="color:var(--green-bright)">Why Nashmi Motors</span>
+      <h2 class="section-title" style="color:#fff">A Better Way to Buy</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate-on-scroll">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Transparent Pricing</h3>
+        <p>Clearly marked prices on every vehicle. What you see is what you pay — no last-minute fees or back-and-forth.</p>
+      </div>
+      <div class="feature-card animate-on-scroll delay-1">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" stroke-width="2"/><path d="M2 10h20" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>Financing for All Credit</h3>
+        <p>Good credit, bad credit, rebuilding credit — apply online or in person. We work with multiple lenders to get you approved.</p>
+      </div>
+      <div class="feature-card animate-on-scroll delay-2">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>We Buy Your Car</h3>
+        <p>Selling outright or trading in? Bring your vehicle in for a fair offer — cash payment or trade credit toward your next purchase.</p>
+      </div>
+      <div class="feature-card animate-on-scroll delay-3">
+        <div class="feature-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Open Six Days a Week</h3>
+        <p>Stop by Monday through Friday 10am–6pm or Saturday 10am–3pm. No appointment needed for a test drive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE A TEST DRIVE -->
+<section class="section section-white" id="test-drive">
+  <div class="container">
+    <div class="testdrive-layout">
+      <div class="testdrive-text animate-on-scroll">
+        <span class="section-eyebrow">No Pressure, No Obligation</span>
+        <h2 class="section-title">Schedule a Test Drive</h2>
+        <p>Found a car you like? Reserve a time to come in and drive it. Takes less than a minute to request — we'll confirm by phone.</p>
+        <ul class="testdrive-perks">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            No appointment fee
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            No obligation to buy
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            We'll have the car ready for you
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Walk-ins always welcome too
+          </li>
+        </ul>
+        <div style="margin-top:24px;padding:20px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border)">
+          <p style="font-size:13px;color:var(--gray);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px">Prefer to call?</p>
+          <a href="tel:7177435175" style="font-size:20px;font-weight:800;font-family:var(--font-head);color:var(--dark)">(717) 743-5175</a>
+        </div>
+      </div>
+      <div class="testdrive-form-wrap animate-on-scroll delay-1">
+        <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)">
+          <h3>Request a Test Drive</h3>
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" name="Name" placeholder="Full name" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone *</label>
+              <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="Email" placeholder="Optional">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Vehicle You'd Like to Drive *</label>
+            <select name="Vehicle" required>
+              <option value="">Select a vehicle...</option>
+              <option>2002 FORD ESCAPE — $4,995</option>
+              <option>2013 KIA OPTIMA — $5,995</option>
+              <option>2012 NISSAN ROGUE — $5,995</option>
+              <option>2019 FORD FIESTA — $6,995</option>
+              <option>2020 KIA FORTE — $7,995</option>
+              <option>2017 FORD ESCAPE — $7,995 (Sale)</option>
+              <option>2014 JEEP GRAND CHEROKEE — $8,995</option>
+              <option>2015 NISSAN ROGUE — $8,995</option>
+              <option>2017 CHRYSLER PACIFICA — $9,995</option>
+              <option>2018 FORD ESCAPE — $9,995 (Sale)</option>
+              <option>2016 TOYOTA COROLLA — $10,995</option>
+              <option>2011 FORD F150 SUPERCREW — $10,995</option>
+              <option>2018 AUDI Q5 — $11,995</option>
+              <option>2014 JEEP GRAND CHEROKEE — $11,995</option>
+              <option>2019 INFINITI QX60 — $11,995</option>
+              <option>2023 KIA SOUL — $13,995</option>
+              <option>2020 KIA OPTIMA — $14,995 (Sale)</option>
+              <option>2016 GMC SIERRA 1500 — $15,995</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preferred Day *</label>
+              <input type="date" name="Preferred Date" required>
+            </div>
+            <div class="form-group">
+              <label>Preferred Time</label>
+              <select name="Preferred Time">
+                <option>Morning (10am–12pm)</option>
+                <option>Afternoon (12pm–3pm)</option>
+                <option>Late afternoon (3pm–6pm)</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:15px;font-size:14px">
+            Request Test Drive
+          </button>
+          <p style="font-size:11.5px;color:var(--gray-light);text-align:center;margin-top:12px">
+            We'll call to confirm your time slot within a few hours.
+          </p>
+        </form>
+        <div id="td-success" style="display:none;padding:32px;text-align:center">
+          <div style="width:56px;height:56px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 style="color:var(--dark);margin-bottom:8px">Request Sent!</h3>
+          <p style="color:var(--gray);font-size:14px">Your email app will open to send the request. We'll follow up by phone to confirm your time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="section section-bg">
+  <div class="container about-strip">
+    <div class="about-strip-text animate-on-scroll">
+      <span class="section-eyebrow">Our Dealership</span>
+      <h2 class="section-title">Straightforward Car Buying in Harrisburg</h2>
+      <p>Nashmi Motors is an independent used car dealer on Paxton Street in Harrisburg. We carry a tight, carefully selected inventory — sedans, SUVs, trucks, and vans — at prices built for real budgets.</p>
+      <p>Our focus: honest pricing, flexible financing, and a no-pressure experience. Stop by, take a drive, see for yourself.</p>
+      <div class="about-actions">
+        <a href="about.html" class="btn btn-primary">About Us</a>
+        <a href="contact.html" class="btn btn-ghost">Get Directions</a>
+      </div>
+    </div>
+    <div class="about-strip-img animate-on-scroll delay-2">
+      <div class="about-img-card">
+        <img src="https://imagescf.dealercenter.net/640/480/202603-1840d1c50d5044be86b7ee316b636217.jpg" alt="2020 Kia Forte at Nashmi Motors">
+        <div class="about-img-badge">
+          <span class="badge-num">$4,995</span>
+          <span class="badge-text">Starting<br>Price</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner animate-on-scroll">
+  <div class="container cta-banner-inner">
+    <div>
+      <h2>Ready to drive home today?</h2>
+      <p>Apply online in minutes. All credit types welcome.</p>
+    </div>
+    <div class="cta-banner-actions">
+      <a href="apply.html" class="btn btn-white btn-lg">Apply for Financing</a>
+      <a href="tel:7177435175" class="btn btn-outline-white btn-lg">(717) 743-5175</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="44">
+      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link">f</a>
+        <a href="https://www.instagram.com/nashmimotors" target="_blank" rel="noopener" class="social-link">ig</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Inventory</h4>
+      <a href="inventory.html">All Vehicles</a>
+      <a href="inventory.html?type=sedan">Sedans</a>
+      <a href="inventory.html?type=suv">SUVs</a>
+      <a href="inventory.html?type=truck">Trucks</a>
+      <a href="inventory.html?type=van">Vans</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a href="apply.html">Apply for Financing</a>
+      <a href="sell.html">Sell Us Your Car</a>
+      <a href="index.html#test-drive">Schedule Test Drive</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><a href="tel:7177435175">(717) 743-5175</a></p>
+      <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
+      <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
+      <p>Mon–Fri 10am–6pm<br>Sat 10am–3pm &bull; Sun Closed</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; 2026 Nashmi Motors. All rights reserved.</span>
+      <span>8001 Paxton St, Harrisburg, PA 17111</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+// Wire featured grid to async inventory loader
+onInventoryLoaded = function() {
+  // Sale cars first, then any with photos
+  const sales     = inventory.filter(c => c.sale);
+  const withPhoto = inventory.filter(c => c.img && !c.sale);
+  const featured  = [...sales, ...withPhoto].slice(0, 6);
+  document.getElementById('featured-grid').innerHTML = featured.map(carCard).join('');
+};
+
+loadInventory();
+
+// Test drive form
+function handleTestDrive(e) {
+  e.preventDefault();
+  const mailto = formToMailto(e.target, 'Test Drive Request — Nashmi Motors');
+  window.location.href = mailto;
+  document.getElementById('testdrive-form').style.display = 'none';
+  document.getElementById('td-success').style.display = 'block';
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

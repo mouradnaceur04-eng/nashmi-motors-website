@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory — Nashmi Motors | Used Cars in Harrisburg, PA</title>
+<meta name="description" content="Browse quality used cars, SUVs, trucks and vans in Harrisburg PA. Starting at $4,995. Easy financing for all credit types.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="topbar-hours">Mon–Fri 10am–6pm &nbsp;&bull;&nbsp; Sat 10am–3pm &nbsp;&bull;&nbsp; Sun Closed</span>
+    </div>
+    <div class="topbar-right">
+      <a href="mailto:sales@nashmimotors.com" class="topbar-link">sales@nashmimotors.com</a>
+      <a href="tel:7177435175" class="topbar-link">(717) 743-5175</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="52">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="inventory.html" class="nav-link active">Inventory</a>
+      <a href="apply.html" class="nav-link">Apply Online</a>
+      <a href="sell.html" class="nav-link">We Buy Cars</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Our Inventory</h1>
+    <p>Quality used vehicles — ready to drive home today. Prices start at $4,995.</p>
+  </div>
+</section>
+
+<!-- INVENTORY LAYOUT -->
+<div class="container inventory-layout">
+
+  <!-- SIDEBAR FILTERS -->
+  <aside class="filter-sidebar">
+    <div class="filter-header">
+      <h3>Filter</h3>
+      <button class="filter-clear" onclick="clearFilters()">Clear All</button>
+    </div>
+
+    <div class="filter-group">
+      <h4>Body Type</h4>
+      <label><input type="checkbox" name="type" value="sedan"> Sedan</label>
+      <label><input type="checkbox" name="type" value="suv"> SUV / Crossover</label>
+      <label><input type="checkbox" name="type" value="truck"> Truck</label>
+      <label><input type="checkbox" name="type" value="van"> Van / Minivan</label>
+    </div>
+
+    <div class="filter-group">
+      <h4>Make</h4>
+      <label><input type="checkbox" name="make" value="AUDI"> Audi</label>
+      <label><input type="checkbox" name="make" value="CHRYSLER"> Chrysler</label>
+      <label><input type="checkbox" name="make" value="FORD"> Ford</label>
+      <label><input type="checkbox" name="make" value="GMC"> GMC</label>
+      <label><input type="checkbox" name="make" value="INFINITI"> Infiniti</label>
+      <label><input type="checkbox" name="make" value="JEEP"> Jeep</label>
+      <label><input type="checkbox" name="make" value="KIA"> Kia</label>
+      <label><input type="checkbox" name="make" value="NISSAN"> Nissan</label>
+      <label><input type="checkbox" name="make" value="TOYOTA"> Toyota</label>
+    </div>
+
+    <div class="filter-group">
+      <h4>Drivetrain</h4>
+      <label><input type="checkbox" name="drive" value="FWD"> FWD</label>
+      <label><input type="checkbox" name="drive" value="AWD"> AWD</label>
+      <label><input type="checkbox" name="drive" value="4WD"> 4WD</label>
+      <label><input type="checkbox" name="drive" value="2WD"> 2WD</label>
+    </div>
+
+    <div class="filter-group">
+      <h4>Price Range</h4>
+      <div class="price-inputs">
+        <input type="number" id="f-min-price" placeholder="Min $" min="0" step="500" oninput="applyFilters()">
+        <span>–</span>
+        <input type="number" id="f-max-price" placeholder="Max $" min="0" step="500" oninput="applyFilters()">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Condition</h4>
+      <label><input type="checkbox" name="special" value="sale"> On Sale</label>
+      <label><input type="checkbox" name="special" value="photo"> Has Photos</label>
+    </div>
+
+    <div style="padding:16px 20px">
+      <button class="btn btn-primary" style="width:100%" onclick="applyFilters()">Apply Filters</button>
+    </div>
+  </aside>
+
+  <!-- MAIN RESULTS -->
+  <div class="inventory-main">
+    <div class="inventory-toolbar">
+      <span class="results-count" id="results-count">Loading...</span>
+      <div class="sort-wrap">
+        <label>Sort by:</label>
+        <select id="sort-select" onchange="applyFilters()">
+          <option value="default">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="year-desc">Year: Newest First</option>
+          <option value="miles-asc">Miles: Lowest First</option>
+        </select>
+      </div>
+    </div>
+    <div class="cars-grid" id="inv-grid"></div>
+    <div id="no-results" class="no-results" style="display:none">
+      <span>🔍</span>
+      <h3>No vehicles match your filters</h3>
+      <p>Try adjusting or clearing your filters.</p>
+      <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" style="margin-top:64px">
+  <div class="container cta-banner-inner">
+    <div>
+      <h2>Can't find what you're looking for?</h2>
+      <p>Call or email us — new vehicles arrive regularly.</p>
+    </div>
+    <div class="cta-banner-actions">
+      <a href="tel:7177435175" class="btn btn-white btn-lg">(717) 743-5175</a>
+      <a href="mailto:sales@nashmimotors.com" class="btn btn-outline-white btn-lg">Email Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="44">
+      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link">f</a>
+        <a href="https://www.instagram.com/nashmimotors" target="_blank" rel="noopener" class="social-link">ig</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Inventory</h4>
+      <a href="inventory.html">All Vehicles</a>
+      <a href="inventory.html?type=sedan">Sedans</a>
+      <a href="inventory.html?type=suv">SUVs</a>
+      <a href="inventory.html?type=truck">Trucks</a>
+      <a href="inventory.html?type=van">Vans</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a href="apply.html">Apply for Financing</a>
+      <a href="sell.html">Sell Us Your Car</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><a href="tel:7177435175">(717) 743-5175</a></p>
+      <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
+      <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
+      <p>Mon–Fri 10am–6pm<br>Sat 10am–3pm &bull; Sun Closed</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© 2026 Nashmi Motors. All rights reserved.</span>
+      <span>8001 Paxton St, Harrisburg, PA 17111</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+// Pre-set filters from URL params (runs immediately — no inventory needed)
+const params = new URLSearchParams(location.search);
+const urlType  = params.get('type');
+const urlMake  = params.get('make');
+const urlPrice = params.get('price');
+if (urlType)  { const cb = document.querySelector(`input[name="type"][value="${urlType}"]`);            if (cb) cb.checked = true; }
+if (urlMake)  { const cb = document.querySelector(`input[name="make"][value="${urlMake.toUpperCase()}"]`); if (cb) cb.checked = true; }
+if (urlPrice) { document.getElementById('f-max-price').value = urlPrice; }
+
+document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.addEventListener('change', applyFilters));
+
+function getChecked(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+}
+
+function applyFilters() {
+  const types    = getChecked('type');
+  const makes    = getChecked('make');
+  const drives   = getChecked('drive');
+  const specials = getChecked('special');
+  const minP = parseFloat(document.getElementById('f-min-price').value) || 0;
+  const maxP = parseFloat(document.getElementById('f-max-price').value) || Infinity;
+  const sort = document.getElementById('sort-select').value;
+
+  let results = inventory.filter(c => {
+    const price = c.sale || c.price;
+    if (types.length  && !types.includes(c.type))   return false;
+    if (makes.length  && !makes.includes(c.make))   return false;
+    if (drives.length && !drives.includes(c.drive)) return false;
+    if (price < minP || price > maxP)               return false;
+    if (specials.includes('sale')  && !c.sale)      return false;
+    if (specials.includes('photo') && !c.img)       return false;
+    return true;
+  });
+
+  // Sort
+  if (sort === 'price-asc')  results.sort((a,b) => (a.sale||a.price||0) - (b.sale||b.price||0));
+  if (sort === 'price-desc') results.sort((a,b) => (b.sale||b.price||0) - (a.sale||a.price||0));
+  if (sort === 'year-desc')  results.sort((a,b) => b.year - a.year);
+  if (sort === 'miles-asc')  results.sort((a,b) => (a.miles||999999) - (b.miles||999999));
+
+  const grid  = document.getElementById('inv-grid');
+  const noRes = document.getElementById('no-results');
+  document.getElementById('results-count').textContent =
+    results.length + ' vehicle' + (results.length !== 1 ? 's' : '') + ' found';
+
+  if (results.length === 0) {
+    grid.innerHTML = '';
+    noRes.style.display = 'flex';
+  } else {
+    noRes.style.display = 'none';
+    grid.innerHTML = results.map(carCard).join('');
+  }
+}
+
+function clearFilters() {
+  document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.getElementById('f-min-price').value = '';
+  document.getElementById('f-max-price').value = '';
+  document.getElementById('sort-select').value = 'default';
+  applyFilters();
+}
+
+// Load inventory asynchronously, then run the first filter pass
+onInventoryLoaded = applyFilters;
+loadInventory();
+</script>
+</body>
+</html>

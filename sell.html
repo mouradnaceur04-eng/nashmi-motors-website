@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Buy Cars — Nashmi Motors | Harrisburg, PA</title>
+<meta name="description" content="Sell your car to Nashmi Motors in Harrisburg PA. We buy vehicles outright and accept trade-ins. Call (717) 743-5175 for a fast offer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-left">
+      <span class="topbar-hours">⏰ Mon–Fri 10am–6pm &nbsp;|&nbsp; Sat 10am–3pm &nbsp;|&nbsp; Sun Closed</span>
+    </div>
+    <div class="topbar-right">
+      <a href="mailto:sales@nashmimotors.com" class="topbar-link">✉️ sales@nashmimotors.com</a>
+      <a href="tel:7177435175" class="topbar-link">📞 (717) 743-5175</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="52">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="inventory.html" class="nav-link">Inventory</a>
+      <a href="apply.html" class="nav-link">Apply Online</a>
+      <a href="sell.html" class="nav-link active">We Buy Cars</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1>We Buy Your Car</h1>
+    <p>Sell us your vehicle outright or trade it in toward another car. Fast, simple, no hassle.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-eyebrow">The Process</span>
+      <h2 class="section-title">3 Simple Steps</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card animate-on-scroll">
+        <div class="step-num">1</div>
+        <h3>Tell Us About Your Car</h3>
+        <p>Fill out the form below or give us a call with your vehicle's year, make, model, mileage, and condition. The more info you can share, the better.</p>
+      </div>
+      <div class="step-card animate-on-scroll delay-1">
+        <div class="step-num">2</div>
+        <h3>Get an Offer</h3>
+        <p>We'll review the info and get back to you with an offer. Bring the car in so we can take a look, and we'll finalize the number on the spot.</p>
+      </div>
+      <div class="step-card animate-on-scroll delay-2">
+        <div class="step-num">3</div>
+        <h3>Get Paid or Trade In</h3>
+        <p>Accept the offer and walk away with cash — or apply the value toward a vehicle from our lot. Simple as that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM + SIDEBAR -->
+<section class="section section-bg">
+  <div class="container apply-layout">
+
+    <!-- FORM -->
+    <div class="apply-form-wrap animate-on-scroll">
+      <h2 style="font-family:var(--font-head);font-size:1.6rem;color:var(--dark);margin-bottom:6px">Tell Us About Your Vehicle</h2>
+      <p style="color:var(--gray);font-size:14px;margin-bottom:28px">Fill out the form and we'll get back to you with an offer. Or call <a href="tel:7177435175" style="color:var(--green);font-weight:600">(717) 743-5175</a> and we can discuss over the phone.</p>
+
+      <form class="apply-form" id="sell-form" onsubmit="handleSell(event)">
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">1</span> Your Contact Info</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" name="First Name" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" name="Last Name" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone *</label>
+              <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="Email" placeholder="john@email.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">2</span> Your Vehicle</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Year *</label>
+              <input type="number" name="Year" placeholder="e.g. 2018" min="1990" max="2026" required>
+            </div>
+            <div class="form-group">
+              <label>Make *</label>
+              <input type="text" name="Make" placeholder="e.g. Toyota" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Model *</label>
+              <input type="text" name="Model" placeholder="e.g. Camry" required>
+            </div>
+            <div class="form-group">
+              <label>Trim / Package</label>
+              <input type="text" name="Trim" placeholder="e.g. SE, XLE">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Mileage *</label>
+              <input type="number" name="Mileage" placeholder="e.g. 85000" min="0" required>
+            </div>
+            <div class="form-group">
+              <label>Color</label>
+              <input type="text" name="Color" placeholder="e.g. Silver">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Drivetrain</label>
+              <select name="Drivetrain">
+                <option value="">Unknown</option>
+                <option>FWD</option><option>RWD</option><option>AWD</option><option>4WD</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Transmission</label>
+              <select name="Transmission">
+                <option value="">Unknown</option>
+                <option>Automatic</option><option>Manual</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">3</span> Condition & Details</h3>
+          <div class="form-group">
+            <label>Overall Condition *</label>
+            <select name="Condition" required>
+              <option value="">Select condition...</option>
+              <option>Excellent — Like new, no issues</option>
+              <option>Good — Minor wear, everything works</option>
+              <option>Fair — Some cosmetic or mechanical issues</option>
+              <option>Poor — Needs significant work</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Any accidents or damage?</label>
+            <select name="Accident History">
+              <option>No — Clean history</option>
+              <option>Yes — Minor fender bender</option>
+              <option>Yes — More significant damage</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Do you have the title?</label>
+            <select name="Has Title">
+              <option>Yes — Title is in my name</option>
+              <option>Yes — Still have a loan (lien on title)</option>
+              <option>No title</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>What are you looking to do?</label>
+            <select name="Intent">
+              <option>Sell outright for cash</option>
+              <option>Trade in toward a vehicle at Nashmi Motors</option>
+              <option>Not sure yet — just want an offer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>What are you hoping to get for it?</label>
+            <input type="text" name="Asking Price" placeholder="e.g. $8,000 or not sure">
+          </div>
+          <div class="form-group">
+            <label>Additional Notes</label>
+            <textarea name="Notes" rows="3" placeholder="Any other details about the vehicle, recent repairs, modifications, etc."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;font-size:16px;padding:18px">
+          Submit Vehicle Info →
+        </button>
+
+        <div id="sell-success" style="display:none;margin-top:20px;padding:20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;text-align:center">
+          <div style="font-size:2rem;margin-bottom:8px">🙌</div>
+          <h3 style="color:#15803d;margin-bottom:6px">Got it!</h3>
+          <p style="color:#166534;font-size:14px">Your email app will open to send the details. We'll review and follow up during business hours.<br>Questions? Call <a href="tel:7177435175" style="color:#15803d;font-weight:700">(717) 743-5175</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="apply-sidebar animate-on-scroll delay-2">
+      <div class="apply-sidebar-card">
+        <h4>Why Sell to Us?</h4>
+        <ul>
+          <li>✅ No fees or commissions</li>
+          <li>✅ Fast, fair offers</li>
+          <li>✅ Cash or trade-in credit</li>
+          <li>✅ We handle the paperwork</li>
+          <li>✅ No obligation to buy from us</li>
+        </ul>
+      </div>
+      <div class="apply-sidebar-card">
+        <h4>Rather Talk First?</h4>
+        <p>Call us with your vehicle details and we can give you a rough idea of value right on the phone.</p>
+        <a href="tel:7177435175" class="btn btn-primary" style="width:100%;margin-top:12px;text-align:center;display:block">
+          📞 (717) 743-5175
+        </a>
+      </div>
+      <div class="apply-sidebar-card">
+        <h4>What to Bring</h4>
+        <ul>
+          <li>🔑 Vehicle title</li>
+          <li>📄 Your driver's license</li>
+          <li>🔐 All sets of keys</li>
+          <li>📋 Service records (if available)</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png" alt="Nashmi Motors" height="44">
+      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link">f</a>
+        <a href="https://www.instagram.com/nashmimotors" target="_blank" rel="noopener" class="social-link">ig</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Inventory</h4>
+      <a href="inventory.html">All Vehicles</a>
+      <a href="inventory.html?type=sedan">Sedans</a>
+      <a href="inventory.html?type=suv">SUVs</a>
+      <a href="inventory.html?type=truck">Trucks</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a href="apply.html">Apply for Financing</a>
+      <a href="sell.html">Sell Us Your Car</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📞 <a href="tel:7177435175">(717) 743-5175</a></p>
+      <p>✉️ <a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
+      <p>📍 8001 Paxton St<br>Harrisburg, PA 17111</p>
+      <p>⏰ Mon–Fri 10am–6pm<br>Sat 10am–3pm · Sun Closed</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© 2026 Nashmi Motors. All rights reserved.</span>
+      <span>8001 Paxton St, Harrisburg, PA 17111</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+function handleSell(e) {
+  e.preventDefault();
+  const mailto = formToMailto(e.target, 'We Buy Cars Inquiry — Nashmi Motors Website');
+  window.location.href = mailto;
+  document.getElementById('sell-success').style.display = 'block';
+  e.target.querySelectorAll('input,select,textarea,button[type="submit"]').forEach(el => el.disabled = true);
+  document.getElementById('sell-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

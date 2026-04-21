@@ -1,0 +1,42 @@
+name: Sync Inventory
+
+on:
+  schedule:
+    # Runs every 6 hours — picks up new cars same day they're added
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    # Also lets you trigger it manually from GitHub with one click
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install requests playwright
+          playwright install chromium
+          playwright install-deps chromium
+
+      - name: Run scraper
+        run: python scraper/scrape.py
+
+      - name: Commit inventory.json if changed
+        run: |
+          git config user.name  "Nashmi Inventory Bot"
+          git config user.email "bot@nashmimotors.com"
+          git add public/inventory.json
+          if git diff --staged --quiet; then
+            echo "No inventory changes — skipping commit"
+          else
+            git commit -m "🔄 Auto-sync inventory $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
