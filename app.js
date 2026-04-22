@@ -53,8 +53,9 @@ function carCard(c) {
                      : c.carfaxBadge.toLowerCase().includes('good')  ? 'cfx-good'
                      : 'cfx-fair';
     const inner = `<span class="cfx-label">CARFAX</span><span class="cfx-value">${c.carfaxBadge}</span>`;
+    // Use onclick on a div — cannot nest <a> inside <a> (car-img-wrap is already an <a>)
     cfxBadgeHtml = c.carfax
-      ? `<a href="${c.carfax}" target="_blank" rel="noopener" class="cfx-badge ${badgeClass}" title="View CarFax Report">${inner}</a>`
+      ? `<div class="cfx-badge ${badgeClass}" onclick="event.preventDefault();event.stopPropagation();window.open('${c.carfax}','_blank')" title="View CarFax Report" role="link" tabindex="0">${inner}</div>`
       : `<div class="cfx-badge ${badgeClass}">${inner}</div>`;
   }
 
