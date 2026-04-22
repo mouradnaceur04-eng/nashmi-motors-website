@@ -16,8 +16,11 @@ const DEALER_EMAIL   = "sales@nashmimotors.com";
 const DEALER_PHONE   = "(717) 743-5175";
 const DEALER_ADDRESS = "8001 Paxton St, Harrisburg, PA 17111";
 
-// DealerCenter ADF intake email — leads sent here appear directly in the dealer's CRM
-const LEAD_EMAIL = process.env.LEAD_EMAIL || "29008363@leadsprod.dealercenter.net";
+// Resend free plan restriction: onboarding@resend.dev can only send to the account owner's email.
+// So we send to the owner's Gmail first; once nashmimotors.com domain is verified in Resend,
+// update LEAD_EMAIL env var to 29008363@leadsprod.dealercenter.net and set OWNER_EMAIL to blank.
+const LEAD_EMAIL    = process.env.LEAD_EMAIL    || "29008363@leadsprod.dealercenter.net";
+const OWNER_EMAIL   = process.env.OWNER_EMAIL   || "mouradnaceur04@gmail.com";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 // ─── Build ADF XML ──────────────────────────────────────────────────────────
@@ -99,12 +102,21 @@ function buildEmailHtml(d, adfXml) {
     .map(([k, v]) => `<tr><td style="padding:6px 12px;font-weight:600;color:#374151;white-space:nowrap;font-size:13px">${k}</td><td style="padding:6px 12px;color:#111827;font-size:13px">${v}</td></tr>`)
     .join('');
 
+  const dealerCenterEmail = process.env.LEAD_EMAIL || "29008363@leadsprod.dealercenter.net";
+  const forwardBanner = process.env.RESEND_FROM_DOMAIN ? '' : `
+  <div style="background:#fef3c7;border-left:4px solid #d97706;padding:16px 24px;font-size:13px;color:#92400e">
+    <strong>Action needed:</strong> Forward this email (with the ADF XML below) to
+    <a href="mailto:${dealerCenterEmail}" style="color:#b45309;font-weight:600">${dealerCenterEmail}</a>
+    to log this lead in DealerCenter CRM.
+  </div>`;
+
   return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;background:#f5f7fa;padding:24px">
 <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08)">
   <div style="background:#4a7c59;padding:24px 32px">
     <h1 style="color:#fff;margin:0;font-size:20px">New Finance Application</h1>
     <p style="color:rgba(255,255,255,0.8);margin:4px 0 0;font-size:14px">Submitted from NashmiMotors.com — ${new Date().toLocaleString('en-US',{timeZone:'America/New_York'})}</p>
   </div>
+  ${forwardBanner}
   <div style="padding:32px">
     <table style="width:100%;border-collapse:collapse">
       <thead><tr><th colspan="2" style="text-align:left;padding:6px 12px;background:#f5f7fa;color:#6b7280;font-size:11px;letter-spacing:0.8px;text-transform:uppercase">Applicant Details</th></tr></thead>
@@ -174,6 +186,19 @@ exports.handler = async (event) => {
 
   // Send via Resend
   try {
+    // Resend free plan: onboarding@resend.dev can only deliver to the account owner's email.
+    // We send to OWNER_EMAIL (Gmail) now. Once nashmimotors.com domain is verified in Resend,
+    // set LEAD_EMAIL env var and the system will automatically route to DealerCenter.
+    const useVerifiedDomain = process.env.RESEND_FROM_DOMAIN; // e.g. "sales@nashmimotors.com"
+    const fromAddr = useVerifiedDomain
+      ? `Nashmi Motors <${useVerifiedDomain}>`
+      : `Nashmi Motors Website <onboarding@resend.dev>`;
+
+    // Recipients — when using verified domain we can send anywhere; otherwise owner only
+    const toList = useVerifiedDomain
+      ? [LEAD_EMAIL, "sales@nashmimotors.com"]
+      : [OWNER_EMAIL];
+
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -181,13 +206,12 @@ exports.handler = async (event) => {
         'Content-Type':  'application/json',
       },
       body: JSON.stringify({
-        from:    `Nashmi Motors Website <onboarding@resend.dev>`,
-        to:      [LEAD_EMAIL],
-        cc:      ["sales@nashmimotors.com"],
+        from:    fromAddr,
+        to:      toList,
         subject: `[Finance Lead] ${name} — ${vehicle}`,
         html:    htmlBody,
         // Plain text fallback includes the raw ADF XML so DealerCenter can parse it
-        text:    `New finance application from ${name}\nPhone: ${data['Phone']}\nEmail: ${data['Email']}\nVehicle: ${vehicle}\n\n${adfXml}`,
+        text:    `New finance application from ${name}\nPhone: ${data['Phone']}\nEmail: ${data['Email']}\nVehicle: ${vehicle}\n\nForward ADF XML to: ${LEAD_EMAIL}\n\n${adfXml}`,
         // Tag the email as ADF so DealerCenter's email parser recognises it
         headers: {
           'X-Lead-Source':   'Nashmi Motors Website',

@@ -74,6 +74,28 @@
   border-radius: 6px;
 }
 
+/* CarFax badge on detail page */
+.vd-cfx-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1.5px solid currentColor;
+}
+.cfx-great { background: rgba(20,184,82,0.15); color: #14b852; border-color: #14b852; }
+.cfx-good  { background: rgba(37,99,235,0.15); color: #2563eb; border-color: #2563eb; }
+.cfx-fair  { background: rgba(234,88,12,0.15); color: #ea580c; border-color: #ea580c; }
+
 .vd-specs-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -559,10 +581,23 @@ function renderVehicle(c) {
 
   // Photo
   const photoWrap = document.getElementById('vd-photo-wrap');
+  // CarFax value badge for detail page
+  let cfxDetailBadge = '';
+  if (c.carfaxBadge) {
+    const bc = c.carfaxBadge.toLowerCase().includes('great') ? 'cfx-great'
+             : c.carfaxBadge.toLowerCase().includes('good')  ? 'cfx-good'
+             : 'cfx-fair';
+    cfxDetailBadge = `<div class="vd-cfx-badge cfx-badge ${bc}">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      ${c.carfaxBadge}
+    </div>`;
+  }
+
   if (c.imgUrl) {
     photoWrap.innerHTML = `
       <img src="${c.imgUrl}" alt="${label}" loading="eager">
       ${c.sale ? '<div class="vd-sale-badge">On Sale</div>' : ''}
+      ${cfxDetailBadge}
     `;
   } else {
     photoWrap.innerHTML = `
@@ -571,6 +606,7 @@ function renderVehicle(c) {
         <p>Photos Coming Soon</p>
       </div>
       ${c.sale ? '<div class="vd-sale-badge">On Sale</div>' : ''}
+      ${cfxDetailBadge}
     `;
   }
 

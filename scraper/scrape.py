@@ -158,16 +158,17 @@ def fetch_xml_feed() -> list[dict] | None:
         return None, None
 
     for el in items:
-        vin   = t(el, "vin","VIN","Vin")
-        year  = t(el, "year","Year","model_year","ModelYear")
-        make  = t(el, "make","Make")
-        model = t(el, "model","Model")
-        stock = t(el, "stock","StockNumber","stock_number","Stock")
-        miles_raw = t(el, "miles","mileage","Mileage","Miles","odometer","Odometer")
-        drive_raw = t(el, "drivetrain","Drivetrain","drive","Drive","DriveType","drive_type")
-        fuel_raw  = t(el, "fuel","FuelType","fuel_type","Fuel")
-        carfax    = t(el, "carfax","CarFax","carfax_url","CarFaxURL")
-        url_raw   = t(el, "url","URL","link","Link","detail_url","DetailURL")
+        vin        = t(el, "vin","VIN","Vin")
+        year       = t(el, "year","Year","model_year","ModelYear")
+        make       = t(el, "make","Make")
+        model      = t(el, "model","Model")
+        stock      = t(el, "stock","StockNumber","stock_number","Stock")
+        miles_raw  = t(el, "miles","mileage","Mileage","Miles","odometer","Odometer")
+        drive_raw  = t(el, "drivetrain","Drivetrain","drive","Drive","DriveType","drive_type")
+        fuel_raw   = t(el, "fuel","FuelType","fuel_type","Fuel")
+        carfax     = t(el, "carfax","CarFax","carfax_url","CarFaxURL")
+        url_raw    = t(el, "url","URL","link","Link","detail_url","DetailURL")
+        badge_raw  = t(el, "carfax_badge","CarFaxBadge","carfax_value","CarFaxValue","value_badge")
 
         if not (vin or (year and make and model)):
             continue
@@ -193,6 +194,12 @@ def fetch_xml_feed() -> list[dict] | None:
             model_slug = model.lower().replace(' ','-')
             url_raw = f"https://www.nashmimotors.com/inventory/{make_slug}/{model_slug}/"
 
+        # Normalise carfax badge from XML feed
+        xml_badge = None
+        if re.search(r'great', badge_raw or '', re.I):   xml_badge = "Great Value"
+        elif re.search(r'good',  badge_raw or '', re.I): xml_badge = "Good Value"
+        elif re.search(r'fair',  badge_raw or '', re.I): xml_badge = "Fair Value"
+
         vehicles.append({
             "vin":    vin    or None,
             "stock":  stock  or None,
@@ -207,8 +214,9 @@ def fetch_xml_feed() -> list[dict] | None:
             "fuel":   normalize_fuel(fuel_raw),
             "img":    img_id,
             "imgUrl": (IMG_BASE + img_id + ".jpg") if img_id else (photo_url or None),
-            "url":    url_raw or None,
-            "carfax": carfax or None,
+            "url":        url_raw or None,
+            "carfax":     carfax or None,
+            "carfaxBadge": xml_badge,
         })
 
     print(f"  Parsed {len(vehicles)} vehicles from XML feed")
@@ -271,15 +279,48 @@ def scrape_playwright() -> list[dict]:
                                        .map(p=>p.innerText.trim()).filter(t=>t&&t!=='Price:');
                     const milesEl = item.querySelector('[class*="mile"],[class*="odometer"]');
                     const cfEl    = item.querySelector('a[href*="carfax.com"]');
+
+                    // CarFax value badge — DealerCenter renders it as an image with alt text
+                    // or as a text element with class containing "carfax","cfx","value","badge"
+                    let carfaxBadge = null;
+                    // Try image alt text first (most common on DealerCenter)
+                    const cfImgs = [...item.querySelectorAll('img[src*="carfax"],img[alt*="Value"],img[alt*="value"]')];
+                    for (const img of cfImgs) {
+                        const alt = (img.alt || '').trim();
+                        if (/great|good|fair/i.test(alt)) { carfaxBadge = alt; break; }
+                    }
+                    // Try text elements
+                    if (!carfaxBadge) {
+                        const sel = '[class*="carfax"],[class*="cfx"],[class*="value-badge"],[class*="badge"]';
+                        const badgeEls = [...item.querySelectorAll(sel)];
+                        for (const el of badgeEls) {
+                            const txt = el.innerText.trim();
+                            if (/great value|good value|fair value/i.test(txt)) {
+                                carfaxBadge = txt.replace(/\\s+/g,' ').trim();
+                                break;
+                            }
+                        }
+                    }
+                    // Try data attributes
+                    if (!carfaxBadge) {
+                        const dataVals = Object.values(item.dataset || {});
+                        for (const v of dataVals) {
+                            if (/great value|good value|fair value/i.test(v)) {
+                                carfaxBadge = v.trim(); break;
+                            }
+                        }
+                    }
+
                     return {
-                        url:    link   ? link.href   : null,
-                        title:  imccEl ? imccEl.dataset.title : null,
-                        vin:    item.dataset.vehicleId ? item.dataset.vehicleId.replace('vehicle-id-','') : null,
-                        stock:  imccEl ? imccEl.dataset.sn : null,
-                        imgs:   imgs,
-                        prices: prices,
-                        miles:  milesEl ? milesEl.innerText.replace(/[^\d,]/g,'').trim() : null,
-                        carfax: cfEl ? cfEl.href : null,
+                        url:         link   ? link.href   : null,
+                        title:       imccEl ? imccEl.dataset.title : null,
+                        vin:         item.dataset.vehicleId ? item.dataset.vehicleId.replace('vehicle-id-','') : null,
+                        stock:       imccEl ? imccEl.dataset.sn : null,
+                        imgs:        imgs,
+                        prices:      prices,
+                        miles:       milesEl ? milesEl.innerText.replace(/[^\d,]/g,'').trim() : null,
+                        carfax:      cfEl ? cfEl.href : null,
+                        carfaxBadge: carfaxBadge,
                     };
                 });
             }""")
@@ -299,6 +340,13 @@ def scrape_playwright() -> list[dict]:
                     if img_id: break
                 miles_raw = c.get('miles','').replace(',','')
                 miles = int(miles_raw) if miles_raw.isdigit() else None
+                # Normalise carfax badge text
+                raw_badge = (c.get('carfaxBadge') or '').strip()
+                badge = None
+                if re.search(r'great', raw_badge, re.I):   badge = "Great Value"
+                elif re.search(r'good',  raw_badge, re.I): badge = "Good Value"
+                elif re.search(r'fair',  raw_badge, re.I): badge = "Fair Value"
+
                 vehicles.append({
                     "vin": c.get('vin'), "stock": c.get('stock'),
                     "year": year, "make": make.upper() if make else make, "model": model.upper() if model else model,
@@ -307,6 +355,7 @@ def scrape_playwright() -> list[dict]:
                     "drive": "N/A", "fuel": "Gasoline",
                     "img": img_id, "imgUrl": (IMG_BASE+img_id+".jpg") if img_id else None,
                     "url": c.get('url'), "carfax": c.get('carfax'),
+                    "carfaxBadge": badge,
                 })
             print(f"    → {new_count} new (total {len(vehicles)})")
             if new_count == 0: break

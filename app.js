@@ -46,11 +46,24 @@ function carCard(c) {
       </a>`
     : '';
 
+  // CarFax value badge (Great Value / Good Value / Fair Value)
+  let cfxBadgeHtml = '';
+  if (c.carfaxBadge) {
+    const badgeClass = c.carfaxBadge.toLowerCase().includes('great') ? 'cfx-great'
+                     : c.carfaxBadge.toLowerCase().includes('good')  ? 'cfx-good'
+                     : 'cfx-fair';
+    cfxBadgeHtml = `<div class="cfx-badge ${badgeClass}">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      ${c.carfaxBadge}
+    </div>`;
+  }
+
   return `
 <div class="car-card" data-type="${c.type}" data-make="${c.make}" data-drive="${c.drive}" data-price="${displayPrice || 0}">
   <a href="${detailUrl}" class="car-img-wrap">
     ${imgHtml}
     ${saleBadge}
+    ${cfxBadgeHtml}
   </a>
   <div class="car-info">
     <h3 class="car-title"><a href="${detailUrl}">${c.year} ${c.make} ${c.model}</a></h3>

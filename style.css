@@ -713,6 +713,40 @@ img { max-width: 100%; display: block; }
 }
 .car-badge.sale { background: #e63946; }
 
+/* CarFax Value Badges */
+.cfx-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 50px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1.5px solid currentColor;
+}
+.cfx-great {
+  background: rgba(20, 184, 82, 0.15);
+  color: #14b852;
+  border-color: #14b852;
+}
+.cfx-good {
+  background: rgba(37, 99, 235, 0.15);
+  color: #2563eb;
+  border-color: #2563eb;
+}
+.cfx-fair {
+  background: rgba(234, 88, 12, 0.15);
+  color: #ea580c;
+  border-color: #ea580c;
+}
+
 .car-save {
   position: absolute;
   top: 12px;
