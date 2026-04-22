@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="page-title">Vehicle Details — Nashmi Motors</title>
 <meta name="description" content="View details, pricing, and CarFax for this vehicle at Nashmi Motors in Harrisburg, PA.">
@@ -74,27 +77,43 @@
   border-radius: 6px;
 }
 
-/* CarFax badge on detail page */
+/* CarFax badge on detail page — same pill style as inventory cards */
 .vd-cfx-badge {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 50px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  letter-spacing: 0.4px;
+  gap: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1.5px solid currentColor;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
-.cfx-great { background: rgba(20,184,82,0.15); color: #14b852; border-color: #14b852; }
-.cfx-good  { background: rgba(37,99,235,0.15); color: #2563eb; border-color: #2563eb; }
-.cfx-fair  { background: rgba(234,88,12,0.15); color: #ea580c; border-color: #ea580c; }
+.vd-cfx-badge:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+.vd-cfx-badge .cfx-label {
+  background: #003399;
+  color: #fff;
+  padding: 6px 9px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+.vd-cfx-badge .cfx-value {
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+.vd-cfx-badge.cfx-great .cfx-value { background: #1aa34a; }
+.vd-cfx-badge.cfx-good  .cfx-value { background: #2563eb; }
+.vd-cfx-badge.cfx-fair  .cfx-value { background: #ea580c; }
 
 .vd-specs-card {
   background: var(--white);
@@ -587,10 +606,10 @@ function renderVehicle(c) {
     const bc = c.carfaxBadge.toLowerCase().includes('great') ? 'cfx-great'
              : c.carfaxBadge.toLowerCase().includes('good')  ? 'cfx-good'
              : 'cfx-fair';
-    cfxDetailBadge = `<div class="vd-cfx-badge cfx-badge ${bc}">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      ${c.carfaxBadge}
-    </div>`;
+    const inner = `<span class="cfx-label">CARFAX</span><span class="cfx-value">${c.carfaxBadge}</span>`;
+    cfxDetailBadge = c.carfax
+      ? `<a href="${c.carfax}" target="_blank" rel="noopener" class="vd-cfx-badge ${bc}">${inner}</a>`
+      : `<div class="vd-cfx-badge ${bc}">${inner}</div>`;
   }
 
   if (c.imgUrl) {
