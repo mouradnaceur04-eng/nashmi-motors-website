@@ -41,15 +41,51 @@ function buildADF(d) {
   const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
   const comments = [
-    d['Employment Status']  ? `Employment: ${d['Employment Status']}`        : '',
-    d['Employer']           ? `Employer: ${d['Employer']}`                   : '',
-    d['Monthly Income']     ? `Monthly Income: $${d['Monthly Income']}`      : '',
-    d['Time at Job']        ? `Time at Job: ${d['Time at Job']}`             : '',
-    d['Housing Status']     ? `Housing: ${d['Housing Status']}`              : '',
-    d['Time at Address']    ? `Time at Address: ${d['Time at Address']}`     : '',
-    d['Down Payment']       ? `Down Payment: ${d['Down Payment']}`           : '',
-    d['Trade In']           ? `Trade-In: ${d['Trade In']}`                   : '',
-    d['Additional Notes']   ? `Notes: ${d['Additional Notes']}`              : '',
+    // Personal
+    d['Date of Birth']         ? `DOB: ${d['Date of Birth']}`                             : '',
+    d['SSN']                   ? `SSN: ${d['SSN']}`                                       : '',
+    d['Contact Method']        ? `Preferred Contact: ${d['Contact Method']}`              : '',
+    d['Home Phone']            ? `Home Phone: ${d['Home Phone']}`                         : '',
+    d['Work Phone']            ? `Work Phone: ${d['Work Phone']}`                         : '',
+    // Address
+    d['Housing Type']          ? `Housing Type: ${d['Housing Type']}`                     : '',
+    d['Monthly Rent']          ? `Monthly Rent/Mortgage: ${d['Monthly Rent']}`            : '',
+    d['Years at Address']      ? `Years at Address: ${d['Years at Address']}`             : '',
+    d['Months at Address']     ? `Months at Address: ${d['Months at Address']}`           : '',
+    // Previous address
+    d['Prev Street Address']   ? `Prev Address: ${d['Prev Street Address']}, ${d['Prev City']||''}, ${d['Prev State']||''} ${d['Prev ZIP']||''}` : '',
+    d['Prev Housing Type']     ? `Prev Housing: ${d['Prev Housing Type']}`                : '',
+    d['Prev Monthly Rent']     ? `Prev Rent: ${d['Prev Monthly Rent']}`                   : '',
+    // Employment
+    d['Employment Status']     ? `Employment Status: ${d['Employment Status']}`           : '',
+    d['Employer']              ? `Employer: ${d['Employer']}`                             : '',
+    d['Job Title']             ? `Title: ${d['Job Title']}`                               : '',
+    d['Employer Phone']        ? `Employer Phone: ${d['Employer Phone']}`                 : '',
+    d['Employer Street']       ? `Employer Address: ${d['Employer Street']}, ${d['Employer City']||''}, ${d['Employer State']||''} ${d['Employer ZIP']||''}` : '',
+    d['Monthly Income']        ? `Monthly Gross Income: ${d['Monthly Income']}`           : '',
+    d['Income Type']           ? `Income Type: ${d['Income Type']}`                       : '',
+    d['Years at Job']          ? `Years at Job: ${d['Years at Job']}`                     : '',
+    d['Months at Job']         ? `Months at Job: ${d['Months at Job']}`                   : '',
+    d['Other Income Amount']   ? `Other Income: ${d['Other Income Amount']} (${d['Other Income Source']||''})` : '',
+    // Vehicle
+    d['Down Payment']          ? `Down Payment: ${d['Down Payment']}`                     : '',
+    d['Exterior Color']        ? `Exterior Color Pref: ${d['Exterior Color']}`            : '',
+    d['Interior Color']        ? `Interior Color Pref: ${d['Interior Color']}`            : '',
+    // Trade-in
+    d['Trade VIN']             ? `Trade VIN: ${d['Trade VIN']}`                          : '',
+    d['Trade Year']            ? `Trade Vehicle: ${d['Trade Year']} ${d['Trade Make']||''} ${d['Trade Model']||''} (${d['Trade Mileage']||'?'} mi)` : '',
+    d['Trade Loan']            ? `Trade Loan: ${d['Trade Loan']}${d['Trade Amount Owed'] ? ' — Owed: '+d['Trade Amount Owed'] : ''}` : '',
+    // Co-Buyer
+    d['CoBuyer First Name']    ? `CO-BUYER: ${d['CoBuyer First Name']} ${d['CoBuyer Last Name']||''} (${d['CoBuyer Relationship']||''})` : '',
+    d['CoBuyer Phone']         ? `CoBuyer Phone: ${d['CoBuyer Phone']}`                  : '',
+    d['CoBuyer Email']         ? `CoBuyer Email: ${d['CoBuyer Email']}`                  : '',
+    d['CoBuyer DOB']           ? `CoBuyer DOB: ${d['CoBuyer DOB']}`                      : '',
+    d['CoBuyer SSN']           ? `CoBuyer SSN: ${d['CoBuyer SSN']}`                      : '',
+    d['CoBuyer Employer']      ? `CoBuyer Employer: ${d['CoBuyer Employer']} / ${d['CoBuyer Job Title']||''}` : '',
+    d['CoBuyer Monthly Income']? `CoBuyer Income: ${d['CoBuyer Monthly Income']}`         : '',
+    d['CoBuyer Income Type']   ? `CoBuyer Income Type: ${d['CoBuyer Income Type']}`      : '',
+    // Notes
+    d['Additional Notes']      ? `Notes: ${d['Additional Notes']}`                        : '',
     `Source: Nashmi Motors Website`,
   ].filter(Boolean).join('\n');
 

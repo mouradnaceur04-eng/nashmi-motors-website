@@ -11,6 +11,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
+<style>
+/* ── Apply form extras ───────────────────────────────── */
+.apply-section { border:1px solid var(--border); border-radius:12px; padding:28px; margin-bottom:20px; background:#fff; }
+.apply-section-title { font-size:15px; font-weight:700; color:var(--dark); margin:0 0 20px; display:flex; align-items:center; gap:10px; }
+.apply-step { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:var(--green); color:#fff; border-radius:50%; font-size:12px; font-weight:800; flex-shrink:0; }
+.toggle-section { border:1px dashed var(--border); border-radius:10px; padding:16px 20px; margin-bottom:20px; background:var(--bg); }
+.toggle-label { display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:600; font-size:14px; color:var(--dark); user-select:none; }
+.toggle-label input[type=checkbox] { width:18px; height:18px; accent-color:var(--green); flex-shrink:0; }
+.toggle-body { display:none; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); }
+.toggle-body.open { display:block; }
+.section-note { font-size:12px; color:var(--gray); background:#fef3c7; border:1px solid #fcd34d; border-radius:8px; padding:10px 14px; margin-bottom:20px; }
+.ssn-note { font-size:12px; color:#6b7280; margin-top:4px; }
+.radio-row { display:flex; gap:24px; align-items:center; margin-top:4px; }
+.radio-row label { display:flex; align-items:center; gap:7px; font-weight:500; font-size:14px; cursor:pointer; }
+.radio-row input[type=radio] { accent-color:var(--green); width:16px; height:16px; }
+.cobuy-header { background:linear-gradient(135deg,#1a3c2e,#2d5a3d); color:#fff; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
+.cobuy-header h4 { margin:0 0 4px; font-size:15px; }
+.cobuy-header p { margin:0; font-size:13px; opacity:0.8; }
+</style>
 </head>
 <body>
 
@@ -66,21 +85,21 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h3 style="color:var(--dark)">Fast Process</h3>
-        <p style="color:var(--gray)">Submit your info and we'll be in touch the same business day to discuss your options.</p>
+        <p style="color:var(--gray)">Submit your info and we'll be in touch the same business day.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-1" style="background:var(--bg);border:1px solid var(--border)">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
         <h3 style="color:var(--dark)">Your Info is Safe</h3>
-        <p style="color:var(--gray)">We handle your information with care and only use it to help you find financing.</p>
+        <p style="color:var(--gray)">SSL-encrypted and handled with care. Only used to find you financing.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-2" style="background:var(--bg);border:1px solid var(--border)">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h3 style="color:var(--dark)">All Credit Welcome</h3>
-        <p style="color:var(--gray)">Rebuilding credit? First-time buyer? We work with multiple lenders to find solutions.</p>
+        <p style="color:var(--gray)">Rebuilding credit? First-time buyer? We work with multiple lenders.</p>
       </div>
     </div>
   </div>
@@ -92,181 +111,688 @@
 
     <!-- FORM -->
     <div class="apply-form-wrap animate-on-scroll">
-      <form class="apply-form" id="apply-form" onsubmit="handleApply(event)">
+      <form class="apply-form" id="apply-form" onsubmit="handleApply(event)" autocomplete="on">
 
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  SECTION 1 — PERSONAL INFO                     -->
+        <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
           <h3 class="apply-section-title"><span class="apply-step">1</span> Personal Information</h3>
           <div class="form-row">
             <div class="form-group">
               <label>First Name *</label>
-              <input type="text" name="First Name" placeholder="John" required>
+              <input type="text" name="First Name" placeholder="John" required autocomplete="given-name">
             </div>
             <div class="form-group">
               <label>Last Name *</label>
-              <input type="text" name="Last Name" placeholder="Smith" required>
+              <input type="text" name="Last Name" placeholder="Smith" required autocomplete="family-name">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Phone Number *</label>
-              <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+              <label>Cell Phone *</label>
+              <input type="tel" name="Phone" placeholder="(717) 000-0000" required autocomplete="tel">
             </div>
             <div class="form-group">
-              <label>Email Address *</label>
-              <input type="email" name="Email" placeholder="john@email.com" required>
+              <label>Home Phone</label>
+              <input type="tel" name="Home Phone" placeholder="(717) 000-0000" autocomplete="tel-national">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Date of Birth</label>
-              <input type="date" name="Date of Birth">
+              <label>Work Phone</label>
+              <input type="tel" name="Work Phone" placeholder="(717) 000-0000">
             </div>
             <div class="form-group">
-              <label>Driver's License #</label>
-              <input type="text" name="Drivers License" placeholder="PA12345678">
+              <label>Email *</label>
+              <input type="email" name="Email" placeholder="john@email.com" required autocomplete="email">
             </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preferred Contact Method *</label>
+              <select name="Contact Method" required>
+                <option value="">Select...</option>
+                <option>Cell Phone</option>
+                <option>Home Phone</option>
+                <option>Email</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth *</label>
+              <input type="text" name="Date of Birth" placeholder="mm/dd/yyyy" maxlength="10" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Social Security Number (SSN) *</label>
+            <input type="text" name="SSN" placeholder="___-__-____" maxlength="11" required autocomplete="off"
+                   oninput="this.value=this.value.replace(/[^0-9-]/g,'')">
+            <p class="ssn-note">🔒 Encrypted and used only for credit verification purposes.</p>
           </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  SECTION 2 — CURRENT ADDRESS                   -->
+        <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
           <h3 class="apply-section-title"><span class="apply-step">2</span> Current Address</h3>
           <div class="form-group">
             <label>Street Address *</label>
-            <input type="text" name="Street Address" placeholder="123 Main Street" required>
+            <input type="text" name="Street Address" placeholder="123 Main Street" required autocomplete="street-address">
           </div>
           <div class="form-row">
             <div class="form-group">
               <label>City *</label>
-              <input type="text" name="City" placeholder="Harrisburg" required>
+              <input type="text" name="City" placeholder="Harrisburg" required autocomplete="address-level2">
             </div>
             <div class="form-group">
               <label>State *</label>
-              <select name="State" required>
+              <select name="State" required autocomplete="address-level1">
                 <option value="">Select</option>
-                <option selected>PA</option>
-                <option>MD</option><option>DE</option><option>NJ</option><option>NY</option>
-                <option>VA</option><option>WV</option><option>OH</option><option>Other</option>
+                <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                <option>OK</option><option>OR</option><option selected>PA</option><option>RI</option><option>SC</option>
+                <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                <option>DC</option>
               </select>
             </div>
             <div class="form-group">
-              <label>ZIP *</label>
-              <input type="text" name="ZIP" placeholder="17111" maxlength="5" required>
+              <label>Zip Code *</label>
+              <input type="text" name="ZIP" placeholder="17111" maxlength="5" required autocomplete="postal-code">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>How Long at This Address?</label>
-              <select name="Time at Address">
-                <option>Less than 1 year</option>
-                <option>1–2 years</option>
-                <option>2–5 years</option>
-                <option>5+ years</option>
+              <label>Housing Type *</label>
+              <select name="Housing Type" required>
+                <option value="">Select...</option>
+                <option>Rent</option>
+                <option>Own</option>
+                <option>Other</option>
               </select>
             </div>
             <div class="form-group">
-              <label>Housing Status</label>
-              <select name="Housing Status">
-                <option>Own</option>
-                <option>Rent</option>
-                <option>Live with family</option>
+              <label>Monthly Rent / Mortgage *</label>
+              <input type="text" name="Monthly Rent" placeholder="e.g. $850" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Years at Address *</label>
+              <select name="Years at Address" required>
+                <option value="">Select</option>
+                <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+                <option>10</option><option>11</option><option>12</option><option>13</option><option>14</option>
+                <option>15</option><option>16</option><option>17</option><option>18</option><option>19</option>
+                <option>20+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Months at Address</label>
+              <select name="Months at Address">
+                <option value="">Select</option>
+                <option>0</option><option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5</option><option>6</option><option>7</option>
+                <option>8</option><option>9</option><option>10</option><option>11</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  PREVIOUS ADDRESS (collapsible)                 -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="toggle-section">
+          <label class="toggle-label">
+            <input type="checkbox" id="prev-addr-toggle" onchange="toggleSection('prev-addr-body',this.checked)">
+            Add Previous Address (if less than 2 years at current address)
+          </label>
+          <div class="toggle-body" id="prev-addr-body">
+            <div class="form-group">
+              <label>Street Address</label>
+              <input type="text" name="Prev Street Address" placeholder="123 Main Street">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" name="Prev City" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label>State</label>
+                <select name="Prev State">
+                  <option value="">Select</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                  <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                  <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                  <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                  <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                  <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                  <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                  <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                  <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                  <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                  <option>DC</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Zip Code</label>
+                <input type="text" name="Prev ZIP" placeholder="00000" maxlength="5">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Housing Type</label>
+                <select name="Prev Housing Type">
+                  <option value="">Select...</option>
+                  <option>Rent</option><option>Own</option><option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Monthly Rent / Mortgage</label>
+                <input type="text" name="Prev Monthly Rent" placeholder="e.g. $800">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Years at Address</label>
+                <select name="Prev Years at Address">
+                  <option value="">Select</option>
+                  <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Months at Address</label>
+                <select name="Prev Months at Address">
+                  <option value="">Select</option>
+                  <option>0</option><option>1</option><option>2</option><option>3</option>
+                  <option>4</option><option>5</option><option>6</option><option>7</option>
+                  <option>8</option><option>9</option><option>10</option><option>11</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  SECTION 3 — EMPLOYMENT                        -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">3</span> Employment Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employer Name *</label>
+              <input type="text" name="Employer" placeholder="Company name" required>
+            </div>
+            <div class="form-group">
+              <label>Title / Position *</label>
+              <input type="text" name="Job Title" placeholder="e.g. Warehouse Associate" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employer Phone *</label>
+              <input type="tel" name="Employer Phone" placeholder="(717) 000-0000" required>
+            </div>
+            <div class="form-group">
+              <label>Employment Status</label>
+              <select name="Employment Status">
+                <option value="">Select...</option>
+                <option>Full Time</option>
+                <option>Part Time</option>
+                <option>Temporary / Seasonal</option>
+                <option>Active Military</option>
+                <option>SSI / Retired</option>
+                <option>Self Employed</option>
+                <option>Unemployed</option>
                 <option>Other</option>
               </select>
             </div>
           </div>
-        </div>
-
-        <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">3</span> Employment & Income</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Employment Status *</label>
-              <select name="Employment Status" required>
-                <option value="">Select...</option>
-                <option>Full-time employed</option>
-                <option>Part-time employed</option>
-                <option>Self-employed</option>
-                <option>Retired</option>
-                <option>Other income source</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Employer Name</label>
-              <input type="text" name="Employer" placeholder="Company name">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Monthly Income (before taxes) *</label>
-              <input type="number" name="Monthly Income" placeholder="e.g. 3000" min="0" step="100" required>
-            </div>
-            <div class="form-group">
-              <label>Time at Current Job</label>
-              <select name="Time at Job">
-                <option>Less than 6 months</option>
-                <option>6–12 months</option>
-                <option>1–3 years</option>
-                <option>3+ years</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">4</span> Vehicle & Down Payment</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Vehicle I'm Interested In</label>
-              <select name="Vehicle Interest">
-                <option>Not sure yet — show me what I qualify for</option>
-                <option>2002 FORD ESCAPE — $4,995</option>
-                <option>2013 KIA OPTIMA — $5,995</option>
-                <option>2012 NISSAN ROGUE — $5,995</option>
-                <option>2019 FORD FIESTA — $6,995</option>
-                <option>2020 KIA FORTE — $7,995</option>
-                <option>2017 FORD ESCAPE — $7,995 (on sale)</option>
-                <option>2014 JEEP GRAND CHEROKEE — $8,995</option>
-                <option>2015 NISSAN ROGUE — $8,995</option>
-                <option>2017 CHRYSLER PACIFICA — $9,995</option>
-                <option>2018 FORD ESCAPE — $9,995 (on sale)</option>
-                <option>2016 TOYOTA COROLLA — $10,995</option>
-                <option>2011 FORD F150 SUPERCREW — $10,995</option>
-                <option>2018 AUDI Q5 — $11,995</option>
-                <option>2014 JEEP GRAND CHEROKEE — $11,995</option>
-                <option>2019 INFINITI QX60 — $11,995</option>
-                <option>2023 KIA SOUL — $13,995</option>
-                <option>2020 KIA OPTIMA — $14,995 (on sale)</option>
-                <option>2016 GMC SIERRA 1500 — $15,995</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Down Payment</label>
-              <select name="Down Payment">
-                <option>$0 — No money down</option>
-                <option>$500 – $1,000</option>
-                <option>$1,000 – $2,000</option>
-                <option>$2,000 – $3,000</option>
-                <option>$3,000+</option>
-              </select>
-            </div>
-          </div>
           <div class="form-group">
-            <label>Do you have a trade-in?</label>
-            <select name="Trade In">
-              <option>No trade-in</option>
-              <option>Yes — I have a vehicle to trade</option>
+            <label>Employer Street Address *</label>
+            <input type="text" name="Employer Street" placeholder="123 Business Ave" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employer City *</label>
+              <input type="text" name="Employer City" placeholder="City" required>
+            </div>
+            <div class="form-group">
+              <label>Employer State *</label>
+              <select name="Employer State" required>
+                <option value="">Select</option>
+                <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                <option>OK</option><option>OR</option><option selected>PA</option><option>RI</option><option>SC</option>
+                <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                <option>DC</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Employer ZIP *</label>
+              <input type="text" name="Employer ZIP" placeholder="00000" maxlength="5" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Monthly Gross Income *</label>
+              <input type="text" name="Monthly Income" placeholder="e.g. $3,200" required>
+            </div>
+            <div class="form-group">
+              <label>Income Type *</label>
+              <select name="Income Type" required>
+                <option value="">Select...</option>
+                <option>Comp Paystub w/ YTD</option>
+                <option>Printed Paystub - No YTD</option>
+                <option>Handwritten Paystub</option>
+                <option>Self Emp - Bus Bank Stmt</option>
+                <option>Self Emp - Pers Bank Stmt</option>
+                <option>Job Letter</option>
+                <option>SSI Buyer</option>
+                <option>Perm Disability - Ins</option>
+                <option>Child Support / Foster Care</option>
+                <option>Home Care / Dependent Income</option>
+                <option>Student Income</option>
+                <option>Trust / Annuity Income</option>
+                <option>Passive Income</option>
+                <option>Short Term Disability</option>
+                <option>Active Military Income</option>
+                <option>Ride Share</option>
+                <option>Dealer Employee</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Years at Job *</label>
+              <select name="Years at Job" required>
+                <option value="">Select</option>
+                <option>Less than 1</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+                <option>10</option><option>11</option><option>12</option><option>13</option><option>14</option>
+                <option>15+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Months at Job</label>
+              <select name="Months at Job">
+                <option value="">Select</option>
+                <option>0</option><option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5</option><option>6</option><option>7</option>
+                <option>8</option><option>9</option><option>10</option><option>11</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Other Income Amount</label>
+              <input type="text" name="Other Income Amount" placeholder="e.g. $500/mo">
+            </div>
+            <div class="form-group">
+              <label>Other Income Source</label>
+              <input type="text" name="Other Income Source" placeholder="e.g. Rental income">
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  SECTION 4 — VEHICLE INTEREST                  -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">4</span> Vehicle Interest</h3>
+          <div class="form-group">
+            <label>Vehicle I'm Interested In</label>
+            <select name="Vehicle Interest">
+              <option>Not sure yet — show me what I qualify for</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Anything else you'd like us to know?</label>
-            <textarea name="Additional Notes" rows="3" placeholder="Credit situation, specific needs, questions, etc."></textarea>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Year</label>
+              <input type="text" name="Vehicle Year" placeholder="e.g. 2020">
+            </div>
+            <div class="form-group">
+              <label>Make</label>
+              <input type="text" name="Vehicle Make" placeholder="e.g. KIA">
+            </div>
+            <div class="form-group">
+              <label>Model</label>
+              <input type="text" name="Vehicle Model" placeholder="e.g. Optima">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Down Payment *</label>
+              <input type="text" name="Down Payment" placeholder="e.g. $1,000" required>
+            </div>
+            <div class="form-group">
+              <label>Exterior Color Preference</label>
+              <input type="text" name="Exterior Color" placeholder="e.g. Black">
+            </div>
+            <div class="form-group">
+              <label>Interior Color Preference</label>
+              <input type="text" name="Interior Color" placeholder="e.g. Gray">
+            </div>
           </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  TRADE-IN (collapsible)                        -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="toggle-section">
+          <label class="toggle-label">
+            <input type="checkbox" id="tradein-toggle" onchange="toggleSection('tradein-body',this.checked)">
+            Add a Trade-In Vehicle
+          </label>
+          <div class="toggle-body" id="tradein-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>VIN</label>
+                <input type="text" name="Trade VIN" placeholder="17-character VIN" maxlength="17">
+              </div>
+              <div class="form-group">
+                <label>Mileage</label>
+                <input type="text" name="Trade Mileage" placeholder="e.g. 95,000">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Year</label>
+                <input type="text" name="Trade Year" placeholder="e.g. 2016">
+              </div>
+              <div class="form-group">
+                <label>Make</label>
+                <input type="text" name="Trade Make" placeholder="e.g. Honda">
+              </div>
+              <div class="form-group">
+                <label>Model</label>
+                <input type="text" name="Trade Model" placeholder="e.g. Civic">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Do you owe money on your trade-in?</label>
+              <div class="radio-row">
+                <label><input type="radio" name="Trade Loan" value="No" checked> No</label>
+                <label><input type="radio" name="Trade Loan" value="Yes" onchange="toggleSection('trade-owed-row',true)"> Yes</label>
+              </div>
+            </div>
+            <div class="form-group" id="trade-owed-row" style="display:none">
+              <label>Amount Owed on Trade-In</label>
+              <input type="text" name="Trade Amount Owed" placeholder="e.g. $4,500">
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!--  CO-BUYER (collapsible)                        -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="toggle-section">
+          <label class="toggle-label">
+            <input type="checkbox" id="cobuy-toggle" onchange="toggleSection('cobuy-body',this.checked)">
+            Add a Co-Buyer (spouse, family member, etc.)
+          </label>
+          <div class="toggle-body" id="cobuy-body">
+            <div class="cobuy-header">
+              <h4>Co-Buyer Information</h4>
+              <p>Adding a co-buyer can help improve approval odds and loan terms.</p>
+            </div>
+
+            <div class="form-group">
+              <label>Relationship to Buyer *</label>
+              <select name="CoBuyer Relationship">
+                <option value="">Select...</option>
+                <option>Spouse</option>
+                <option>Parent</option>
+                <option>Relative</option>
+                <option>Co-Habitant</option>
+                <option>Registered Domestic Partner</option>
+                <option>Civil Union</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="CoBuyer First Name" placeholder="Jane">
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="CoBuyer Last Name" placeholder="Smith">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Cell Phone</label>
+                <input type="tel" name="CoBuyer Phone" placeholder="(717) 000-0000">
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="CoBuyer Email" placeholder="jane@email.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Home Phone</label>
+                <input type="tel" name="CoBuyer Home Phone" placeholder="(717) 000-0000">
+              </div>
+              <div class="form-group">
+                <label>Work Phone</label>
+                <input type="tel" name="CoBuyer Work Phone" placeholder="(717) 000-0000">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <select name="CoBuyer Contact Method">
+                  <option value="">Select...</option>
+                  <option>Cell Phone</option><option>Home Phone</option><option>Email</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="text" name="CoBuyer DOB" placeholder="mm/dd/yyyy" maxlength="10">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>SSN</label>
+              <input type="text" name="CoBuyer SSN" placeholder="___-__-____" maxlength="11" autocomplete="off"
+                     oninput="this.value=this.value.replace(/[^0-9-]/g,'')">
+              <p class="ssn-note">🔒 Encrypted and used only for credit verification.</p>
+            </div>
+
+            <p style="font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;padding-top:16px;border-top:1px solid var(--border)">Co-Buyer Address</p>
+            <div class="form-group">
+              <label>Street Address</label>
+              <input type="text" name="CoBuyer Street" placeholder="123 Main Street">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" name="CoBuyer City" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label>State</label>
+                <select name="CoBuyer State">
+                  <option value="">Select</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                  <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                  <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                  <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                  <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                  <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                  <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                  <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                  <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                  <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                  <option>DC</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Zip</label>
+                <input type="text" name="CoBuyer ZIP" placeholder="00000" maxlength="5">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Housing Type</label>
+                <select name="CoBuyer Housing Type">
+                  <option value="">Select...</option>
+                  <option>Rent</option><option>Own</option><option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Monthly Rent / Mortgage</label>
+                <input type="text" name="CoBuyer Monthly Rent" placeholder="e.g. $850">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Years at Address</label>
+                <select name="CoBuyer Years at Address">
+                  <option value="">Select</option>
+                  <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Months at Address</label>
+                <select name="CoBuyer Months at Address">
+                  <option value="">Select</option>
+                  <option>0</option><option>1</option><option>2</option><option>3</option>
+                  <option>4</option><option>5</option><option>6</option><option>7</option>
+                  <option>8</option><option>9</option><option>10</option><option>11</option>
+                </select>
+              </div>
+            </div>
+
+            <p style="font-size:13px;font-weight:700;color:var(--dark);margin:20px 0 12px;padding-top:16px;border-top:1px solid var(--border)">Co-Buyer Employment</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Employer Name</label>
+                <input type="text" name="CoBuyer Employer" placeholder="Company name">
+              </div>
+              <div class="form-group">
+                <label>Title / Position</label>
+                <input type="text" name="CoBuyer Job Title" placeholder="e.g. Manager">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Employer Phone</label>
+                <input type="tel" name="CoBuyer Employer Phone" placeholder="(717) 000-0000">
+              </div>
+              <div class="form-group">
+                <label>Monthly Gross Income</label>
+                <input type="text" name="CoBuyer Monthly Income" placeholder="e.g. $2,800">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Employer Street Address</label>
+              <input type="text" name="CoBuyer Employer Street" placeholder="123 Business Ave">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" name="CoBuyer Employer City" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label>State</label>
+                <select name="CoBuyer Employer State">
+                  <option value="">Select</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+                  <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+                  <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+                  <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                  <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+                  <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+                  <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+                  <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                  <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+                  <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                  <option>DC</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>ZIP</label>
+                <input type="text" name="CoBuyer Employer ZIP" placeholder="00000" maxlength="5">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Years at Job</label>
+                <select name="CoBuyer Years at Job">
+                  <option value="">Select</option>
+                  <option>Less than 1</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Months at Job</label>
+                <select name="CoBuyer Months at Job">
+                  <option value="">Select</option>
+                  <option>0</option><option>1</option><option>2</option><option>3</option>
+                  <option>4</option><option>5</option><option>6</option><option>7</option>
+                  <option>8</option><option>9</option><option>10</option><option>11</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Income Type</label>
+              <select name="CoBuyer Income Type">
+                <option value="">Select...</option>
+                <option>Comp Paystub w/ YTD</option><option>Printed Paystub - No YTD</option>
+                <option>Handwritten Paystub</option><option>Self Emp - Bus Bank Stmt</option>
+                <option>Self Emp - Pers Bank Stmt</option><option>Job Letter</option>
+                <option>SSI Buyer</option><option>Perm Disability - Ins</option>
+                <option>Child Support / Foster Care</option><option>Home Care / Dependent Income</option>
+                <option>Student Income</option><option>Trust / Annuity Income</option>
+                <option>Passive Income</option><option>Short Term Disability</option>
+                <option>Active Military Income</option><option>Ride Share</option><option>Dealer Employee</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Other Income Amount</label>
+                <input type="text" name="CoBuyer Other Income Amount" placeholder="e.g. $400/mo">
+              </div>
+              <div class="form-group">
+                <label>Other Income Source</label>
+                <input type="text" name="CoBuyer Other Income Source" placeholder="e.g. Side business">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTES -->
+        <div class="apply-section">
+          <h3 class="apply-section-title"><span class="apply-step">5</span> Additional Notes</h3>
+          <div class="form-group">
+            <label>Anything else you'd like us to know?</label>
+            <textarea name="Additional Notes" rows="3" placeholder="Credit situation, specific requests, questions, etc."></textarea>
+          </div>
+        </div>
+
+        <!-- CONSENT -->
         <div class="apply-consent">
           <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
             <input type="checkbox" required style="margin-top:3px;flex-shrink:0;accent-color:var(--green)">
             <span style="font-size:13px;color:var(--gray);line-height:1.6">
-              I authorize Nashmi Motors to contact me regarding financing options. I understand this is a preliminary inquiry and does not guarantee credit approval.
+              I authorize Nashmi Motors to contact me regarding financing options and to use the information provided for credit verification purposes. I understand this is a preliminary inquiry and does not guarantee credit approval.
             </span>
           </label>
         </div>
@@ -280,7 +806,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 style="color:#15803d;margin-bottom:6px">Application Submitted!</h3>
-          <p style="color:#166534;font-size:14px">Your application has been sent directly to our team. We'll review it and contact you during business hours.<br><br>Questions? Call <a href="tel:7177435175" style="color:#15803d;font-weight:700">(717) 743-5175</a></p>
+          <p style="color:#166534;font-size:14px">Your application has been sent to our team. We'll review it and contact you during business hours.<br><br>Questions? Call <a href="tel:7177435175" style="color:#15803d;font-weight:700">(717) 743-5175</a></p>
         </div>
         <div id="apply-error" style="display:none;margin-top:20px;padding:20px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px;text-align:center">
           <p style="color:#dc2626;font-size:14px">Something went wrong. Please call us at <a href="tel:7177435175" style="color:#dc2626;font-weight:700">(717) 743-5175</a> or email <a href="mailto:sales@nashmimotors.com" style="color:#dc2626;font-weight:700">sales@nashmimotors.com</a>.</p>
@@ -294,7 +820,7 @@
         <h4>What to Expect</h4>
         <ul>
           <li>Submit this form</li>
-          <li>We review your info</li>
+          <li>We review your info same day</li>
           <li>We call you to discuss options</li>
           <li>Come in, test drive, sign papers</li>
           <li>Drive home same day</li>
@@ -379,16 +905,30 @@
 
 <script src="app.js"></script>
 <script>
-// Populate vehicle dropdown + sidebar deals from live inventory
+// Collapsible section toggle
+function toggleSection(id, open) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open', open);
+}
+
+// Trade loan radio — show/hide owed field
+document.querySelectorAll('input[name="Trade Loan"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const row = document.getElementById('trade-owed-row');
+    if (row) row.style.display = r.value === 'Yes' ? 'block' : 'none';
+  });
+});
+
+// Populate vehicle dropdown from live inventory
 onInventoryLoaded = function() {
-  // Update vehicle dropdown
   const sel = document.querySelector('select[name="Vehicle Interest"]');
   if (sel) {
     sel.innerHTML = '<option>Not sure yet — show me what I qualify for</option>';
     inventory.forEach(c => {
-      const displayPrice = c.sale || c.price;
+      const displayPrice = c.salePrice || c.price;
       const label = `${c.year} ${c.make} ${c.model}` +
-        (displayPrice ? ` — ${fmtPrice(displayPrice)}` : '') +
+        (displayPrice ? ` — $${Number(displayPrice).toLocaleString()}` : '') +
         (c.sale ? ' (on sale)' : '');
       const o = document.createElement('option');
       o.value = label;
@@ -396,29 +936,27 @@ onInventoryLoaded = function() {
       sel.appendChild(o);
     });
   }
-
-  // Update sidebar deals (sale cars only)
+  // Sidebar deals
   const deals = inventory.filter(c => c.sale).slice(0, 4);
   const list  = document.getElementById('sidebar-deals');
   if (list && deals.length) {
     list.innerHTML = deals.map(c =>
-      `<li style="color:rgba(255,255,255,0.9)">${c.year} ${c.make} ${c.model} — Was ${fmtPrice(c.price)} &rarr; <strong style="color:#fff">${fmtPrice(c.sale)}</strong></li>`
+      `<li style="color:rgba(255,255,255,0.9)">${c.year} ${c.make} ${c.model} — Was ${fmtPrice(c.price)} &rarr; <strong style="color:#fff">${fmtPrice(c.salePrice||c.sale)}</strong></li>`
     ).join('');
   }
 };
 loadInventory();
 
-// Handle form submission — POST to Netlify Function → DealerCenter ADF lead
+// Submit form → Netlify function → email to dealer
 async function handleApply(e) {
   e.preventDefault();
-  const form   = e.target;
-  const btn    = form.querySelector('button[type="submit"]');
-  const data   = {};
+  const form = e.target;
+  const btn  = form.querySelector('button[type="submit"]');
+  const data = {};
   for (const [k, v] of new FormData(form).entries()) {
     if (v?.toString().trim()) data[k] = v.toString().trim();
   }
 
-  // Update button state
   btn.disabled    = true;
   btn.textContent = 'Sending...';
 
@@ -428,22 +966,20 @@ async function handleApply(e) {
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(data),
     });
-
     if (res.ok) {
-      // Success
       form.style.display = 'none';
-      const success = document.getElementById('apply-success');
-      success.style.display = 'block';
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const s = document.getElementById('apply-success');
+      s.style.display = 'block';
+      s.scrollIntoView({ behavior:'smooth', block:'center' });
     } else {
-      throw new Error('Server returned ' + res.status);
+      throw new Error('Server ' + res.status);
     }
   } catch (err) {
-    console.error('Submit error:', err);
     btn.disabled    = false;
     btn.textContent = 'Submit Application →';
-    document.getElementById('apply-error').style.display = 'block';
-    document.getElementById('apply-error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const errEl = document.getElementById('apply-error');
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({ behavior:'smooth', block:'center' });
   }
 }
 
