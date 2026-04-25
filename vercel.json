@@ -1,4 +1,5 @@
 {
+  "outputDirectory": ".",
   "functions": {
     "api/inventory.js": {
       "maxDuration": 15,
