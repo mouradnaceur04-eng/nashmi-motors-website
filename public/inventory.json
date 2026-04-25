@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-25T15:45:32Z",
+  "updated": "2026-04-25T16:09:56Z",
   "count": 23,
   "vehicles": [
     {
@@ -190,9 +190,9 @@
       "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg",
       "photos": [
         "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg",
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-039a484af9f5493d9a9d5c051585aa6f.jpg"
       ],
@@ -477,8 +477,8 @@
       "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
       "photos": [
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
+        "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg"
       ],
@@ -534,9 +534,9 @@
       "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg",
       "photos": [
         "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg",
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/nissan/rogue/a1040/",
@@ -587,12 +587,12 @@
       "miles": 173710,
       "drive": "4WD",
       "fuel": "Flex",
-      "img": "202604-fe173159e1b6434382ee32c638d4578e",
-      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+      "img": "202603-a20d08755c204b30905a7dbb89efa304",
+      "imgUrl": "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
       "photos": [
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1039/",
@@ -763,8 +763,8 @@
       "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-b0c555734bb04fd99a60b752ed23e5d7.jpg",
       "photos": [
         "https://imagescf.dealercenter.net/640/480/202604-b0c555734bb04fd99a60b752ed23e5d7.jpg",
-        "https://imagescf.dealercenter.net/640/480/202604-940abb31352d4b608bb8db28b1dd8e2e.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
+        "https://imagescf.dealercenter.net/640/480/202604-940abb31352d4b608bb8db28b1dd8e2e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/chrysler/pacifica/a1032/",
@@ -823,7 +823,7 @@
         "https://imagescf.dealercenter.net/640/480/202604-940abb31352d4b608bb8db28b1dd8e2e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-62bdc266996c4db4875590572703e53d.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
+        "https://imagescf.dealercenter.net/640/480/202604-98d761fdfd6343498219fde07c02beb0.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-b0c555734bb04fd99a60b752ed23e5d7.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/toyota/corolla/r1011/",
@@ -931,12 +931,12 @@
       "miles": 137835,
       "drive": "AWD",
       "fuel": "Gasoline",
-      "img": "202604-fe173159e1b6434382ee32c638d4578e",
-      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+      "img": "202603-a20d08755c204b30905a7dbb89efa304",
+      "imgUrl": "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
       "photos": [
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/",
@@ -987,12 +987,12 @@
       "miles": 90100,
       "drive": "4WD",
       "fuel": "Flex",
-      "img": "202604-fe173159e1b6434382ee32c638d4578e",
-      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+      "img": "202603-a20d08755c204b30905a7dbb89efa304",
+      "imgUrl": "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
       "photos": [
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/",
@@ -1043,12 +1043,12 @@
       "miles": 131931,
       "drive": "AWD",
       "fuel": "Gasoline",
-      "img": "202604-fe173159e1b6434382ee32c638d4578e",
-      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+      "img": "202603-a20d08755c204b30905a7dbb89efa304",
+      "imgUrl": "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
       "photos": [
+        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
-        "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/audi/q5/a1041/",
@@ -1103,8 +1103,8 @@
       "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
       "photos": [
         "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
-        "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg",
+        "https://imagescf.dealercenter.net/640/480/202604-21088e02348445a98de409b04dc265f3.jpg",
         "https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg",
         "https://imagescf.dealercenter.net/640/480/202604-04863681eb7a477d912eac4575326cc9.jpg"
       ],
@@ -1142,60 +1142,6 @@
         "Fuel Type",
         "GASOLINE",
         "ELECTROMECHANICAL STEERING"
-      ]
-    },
-    {
-      "vin": "KNDJ23AU3P7884308",
-      "stock": "R1001",
-      "year": 2023,
-      "make": "KIA",
-      "model": "SOUL",
-      "type": "suv",
-      "price": 13995,
-      "sale": null,
-      "miles": 42418,
-      "drive": "FWD",
-      "fuel": "Gasoline",
-      "img": "202604-fe173159e1b6434382ee32c638d4578e",
-      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
-      "photos": [
-        "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
-        "https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
-      ],
-      "url": "https://www.nashmimotors.com/inventory/kia/soul/r1001/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/5C2gqNM6Z5M1YtpwTrwZE5AqnbQS38gwkEDnhEdWozoBCcQBK6M-EOgiskjZjzD8YfYlz-29gQ-hiR2GdTWgkbNpYdp2HFByJVg",
-      "carfaxBadge": null,
-      "features": [
-        "English",
-        "Fran\u00e7ais",
-        "Deutsch",
-        "Italiano",
-        "Espa\u00f1ol",
-        "\u7b80\u4f53\u4e2d\u6587",
-        "Stock Number",
-        "R1001",
-        "Trim",
-        "LX WAGON 4D",
-        "Drivetrain",
-        "FWD",
-        "Transmission",
-        "AUTOMATIC",
-        "Engine",
-        "4-CYL, 2.0 LITER",
-        "Mileage",
-        "42,418 mi",
-        "Doors",
-        "Exterior Color",
-        "GRAY",
-        "Interior Color",
-        "VIN",
-        "KNDJ23AU3P7884308",
-        "MPG(City/Highway)",
-        "28/33",
-        "Fuel Type",
-        "GASOLINE",
-        "ELECTRONIC STABILITY CONTROL",
-        "COLLISION WARNING"
       ]
     },
     {
@@ -1254,6 +1200,60 @@
         "Fuel Type",
         "GASOLINE",
         "BLUETOOTH WIRELESS"
+      ]
+    },
+    {
+      "vin": "KNDJ23AU3P7884308",
+      "stock": "R1001",
+      "year": 2023,
+      "make": "KIA",
+      "model": "SOUL",
+      "type": "suv",
+      "price": 13995,
+      "sale": null,
+      "miles": 42418,
+      "drive": "FWD",
+      "fuel": "Gasoline",
+      "img": "202604-fe173159e1b6434382ee32c638d4578e",
+      "imgUrl": "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+      "photos": [
+        "https://imagescf.dealercenter.net/640/480/202604-fe173159e1b6434382ee32c638d4578e.jpg",
+        "https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
+      ],
+      "url": "https://www.nashmimotors.com/inventory/kia/soul/r1001/",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/5C2gqNM6Z5M1YtpwTrwZE5AqnbQS38gwkEDnhEdWozoBCcQBK6M-EOgiskjZjzD8YfYlz-29gQ-hiR2GdTWgkbNpYdp2HFByJVg",
+      "carfaxBadge": null,
+      "features": [
+        "English",
+        "Fran\u00e7ais",
+        "Deutsch",
+        "Italiano",
+        "Espa\u00f1ol",
+        "\u7b80\u4f53\u4e2d\u6587",
+        "Stock Number",
+        "R1001",
+        "Trim",
+        "LX WAGON 4D",
+        "Drivetrain",
+        "FWD",
+        "Transmission",
+        "AUTOMATIC",
+        "Engine",
+        "4-CYL, 2.0 LITER",
+        "Mileage",
+        "42,418 mi",
+        "Doors",
+        "Exterior Color",
+        "GRAY",
+        "Interior Color",
+        "VIN",
+        "KNDJ23AU3P7884308",
+        "MPG(City/Highway)",
+        "28/33",
+        "Fuel Type",
+        "GASOLINE",
+        "ELECTRONIC STABILITY CONTROL",
+        "COLLISION WARNING"
       ]
     },
     {
