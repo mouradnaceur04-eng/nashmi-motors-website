@@ -445,15 +445,16 @@ def scrape_playwright() -> list[dict]:
         while True:
             url = SITE_URL if page_num==1 else f"{SITE_URL}?page_no={page_num}"
             print(f"  Scraping listing page {page_num}…", flush=True)
-            pg.goto(url, wait_until="networkidle", timeout=60000)
-            pg.wait_for_timeout(5000)
+            pg.goto(url, wait_until="domcontentloaded", timeout=30000)
+            pg.wait_for_timeout(4000)
 
             cards = pg.evaluate("""() => {
                 return [...document.querySelectorAll('.vehicle-container')].map(item => {
                     const link   = item.querySelector('a[href*="/inventory/"]');
                     const imccEl = item.querySelector('[data-sn]');
-                    const imgs   = [...item.querySelectorAll('img')]
-                                       .map(i=>i.src).filter(s=>s.includes('imagescf.dealercenter'));
+                    const imgs   = [...item.querySelectorAll('img, [data-src], [data-lazy]')]
+                                       .map(i=>i.getAttribute('data-src')||i.getAttribute('data-lazy')||i.src||'')
+                                       .filter(s=>s.includes('imagescf.dealercenter'));
                     const prices = [...item.querySelectorAll('[class*="price"]')]
                                        .map(p=>p.innerText.trim()).filter(t=>t&&t!=='Price:');
                     const milesEl = item.querySelector('[class*="mile"],[class*="odometer"]');
@@ -533,20 +534,43 @@ def scrape_playwright() -> list[dict]:
         for v in vehicles:
             if not v.get('url'): continue
             try:
-                pg.goto(v['url'], wait_until="domcontentloaded", timeout=20000)
-                pg.wait_for_timeout(2500)
+                pg.goto(v['url'], wait_until="domcontentloaded", timeout=30000)
+                # Wait for slick slider to initialize (DealerCenter uses slick for gallery)
+                try:
+                    pg.wait_for_selector('.slick-initialized', timeout=8000)
+                except Exception:
+                    pass
+                pg.wait_for_timeout(1500)
 
                 detail = pg.evaluate("""() => {
                     // Drivetrain / fuel spec text
                     const rows = [...document.querySelectorAll('[class*="spec"],[class*="detail"],td,li')];
                     const specs = rows.map(r=>r.innerText.trim()).join('\\n');
 
-                    // All gallery photos
-                    const allImgs = [...document.querySelectorAll('img[src*="imagescf.dealercenter"]')]
-                        .map(i => i.src).filter(Boolean);
-                    // De-duplicate preserving order
+                    // PRIMARY: Use slick-slide img elements — these are the actual loaded carousel photos
+                    // DealerCenter initializes slick slider with all vehicle photos already in src
+                    const slickPhotos = [...document.querySelectorAll('.slick-initialized .slick-slide img[src*="imagescf.dealercenter"]')]
+                        .map(i => i.src)
+                        .filter(u => u && u.includes('/640/480/'));
+
+                    // FALLBACK: data-src/data-lazy attributes in the gallery container
+                    const galleryEl = document.querySelector('.dws-vehicle-media-wrapper, [class*="vehicle-media"]');
+                    const scope = galleryEl || document.querySelector('main, .entry-content') || document;
+                    const lazyPhotos = [...scope.querySelectorAll('[data-src*="/640/480/"], [data-lazy*="/640/480/"]')]
+                        .map(i => i.getAttribute('data-src') || i.getAttribute('data-lazy') || '')
+                        .filter(u => u && u.includes('imagescf.dealercenter'));
+
+                    // og:image = DealerCenter's chosen primary photo (not placeholder)
+                    const ogImg = (document.querySelector('meta[property="og:image"]')?.content || '');
+                    const primaryPhoto = ogImg.includes('imagescf.dealercenter') && ogImg.includes('/640/480/') ? ogImg : null;
+
+                    const allUrls = [...slickPhotos, ...lazyPhotos];
+                    // De-duplicate by filename hash
                     const seen = new Set(), photos = [];
-                    for (const u of allImgs) { if (!seen.has(u)) { seen.add(u); photos.push(u); } }
+                    for (const u of allUrls) {
+                        const key = u.split('/').pop().split('?')[0];
+                        if (key && !seen.has(key)) { seen.add(key); photos.push(u); }
+                    }
 
                     // Features — look for lists of options/features
                     const featEls = [...document.querySelectorAll('[class*="feature"],[class*="option"],[class*="equip"]')];
@@ -556,7 +580,7 @@ def scrape_playwright() -> list[dict]:
                     // De-dup
                     const uniqueFeats = [...new Set(features)].slice(0, 30);
 
-                    return { specs, photos, features: uniqueFeats };
+                    return { specs, photos, primaryPhoto, features: uniqueFeats };
                 }""")
 
                 specs = detail.get('specs', '')
@@ -565,11 +589,28 @@ def scrape_playwright() -> list[dict]:
                 fuel = re.search(r'(?i)(electric|hybrid|diesel|gasoline|flex)', specs or '')
                 v['fuel'] = normalize_fuel(fuel.group(1) if fuel else '')
 
-                # All photos from gallery (override listing-page single photo)
+                # Determine the best primary photo:
+                # 1. og:image from detail page (DealerCenter's explicit primary)
+                # 2. listing-page thumbnail (captured during inventory scrape)
+                detail_primary = detail.get('primaryPhoto')  # og:image if it's a real photo
+                listing_primary = v.get('imgUrl')
+                best_primary = detail_primary or listing_primary
+
+                # Merge gallery photos with best primary first
                 detail_photos = detail.get('photos') or []
-                if detail_photos:
+                if detail_photos or best_primary:
                     processed = []
                     seen_ids = set()
+                    # Put the best primary photo first
+                    if best_primary:
+                        pid = img_id_from_url(best_primary)
+                        if pid:
+                            seen_ids.add(pid)
+                            processed.append(IMG_BASE + pid + ".jpg")
+                        else:
+                            seen_ids.add(best_primary)
+                            processed.append(best_primary)
+                    # Add remaining gallery photos
                     for url in detail_photos:
                         iid = img_id_from_url(url)
                         if iid and iid not in seen_ids:
@@ -579,9 +620,9 @@ def scrape_playwright() -> list[dict]:
                             seen_ids.add(url)
                             processed.append(url)
                     if processed:
-                        v['photos']  = processed
-                        v['imgUrl']  = processed[0]
-                        v['img']     = img_id_from_url(processed[0])
+                        v['photos'] = processed
+                        v['imgUrl'] = processed[0]
+                        v['img']    = img_id_from_url(processed[0])
 
                 # Features
                 if detail.get('features'):
