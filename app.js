@@ -1,14 +1,14 @@
 // Nashmi Motors — app.js
-// Inventory is fetched live from /.netlify/functions/inventory (30-second CDN cache)
+// Inventory is fetched live from /api/inventory (Vercel serverless, 30-second CDN cache)
 // which proxies the DealerCenter XML feed in real time.
 
 let inventory = [];
 
 async function loadInventory() {
-  // Try live Netlify function first (real-time DealerCenter data, 30s CDN cache)
+  // Try live Vercel function first (real-time DealerCenter data, 30s CDN cache)
   // Fall back to static JSON for local dev where the function isn't running
   const endpoints = [
-    '/.netlify/functions/inventory',
+    '/api/inventory',
     'public/inventory.json',
   ];
   for (const url of endpoints) {
