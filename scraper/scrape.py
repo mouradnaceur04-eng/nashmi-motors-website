@@ -17,7 +17,7 @@ except ImportError:
 FEED_URL  = "https://feeds.dealercenter.net/inventory/29008363/feed.xml"
 SITE_URL  = "https://www.nashmimotors.com/inventory/"
 OUT_FILE  = Path(__file__).parent.parent / "public" / "inventory.json"
-IMG_BASE  = "https://imagescf.dealercenter.net/640/480/"
+IMG_BASE  = "https://imagescf.dealercenter.net/1024/768/"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -310,24 +310,34 @@ def enrich_photos_playwright(vehicles: list) -> None:
                 pg.wait_for_timeout(2500)
 
                 raw_photos = pg.evaluate("""() => {
-                    // Only grab main gallery images (640/480), not sidebar/related-vehicle thumbs (90/90)
-                    // DealerCenter wraps the vehicle gallery in .dws-vehicle-media-wrapper
-                    const galleryEl = document.querySelector(
-                        '.dws-vehicle-media-wrapper, .vehicle-gallery, .carousel, #vehicle-photos, [class*="vehicle-media"]'
+                    // ── Target ONLY the main vehicle gallery ──────────────────────────────────
+                    // DealerCenter detail pages have TWO slick carousels:
+                    //   1. .dws-vdp-media-slider  — main vehicle photo gallery (1024/768 images)
+                    //   2. .dws-vehicle-slider     — "Similar Vehicles" sidebar (640/480 images)
+                    // We MUST target only the main gallery. Querying all .slick-initialized would
+                    // contaminate results with photos from completely different vehicles.
+                    const mainGallery = document.querySelector(
+                        '.dws-vdp-media-slider, .dws-vdp-vehicle-media-slider-container'
                     );
+                    if (!mainGallery) return [];
 
-                    // Prefer photos inside the gallery container; fall back to all 640/480 on page
-                    const srcQuery = 'img[src*="/640/480/"], [data-src*="/640/480/"]';
-                    const scope = galleryEl || document;
-                    const imgs = [
-                        ...scope.querySelectorAll(srcQuery),
-                    ].map(i => (i.src || i.getAttribute('data-src') || '').trim()).filter(u => u && u.includes('imagescf.dealercenter'));
+                    // Non-cloned slides only, sorted by DealerCenter's position index
+                    const slides = [...mainGallery.querySelectorAll('.slick-slide:not(.slick-cloned)')]
+                        .sort((a, b) =>
+                            parseInt(a.dataset.slickIndex || '0') - parseInt(b.dataset.slickIndex || '0')
+                        );
 
-                    // De-duplicate by filename hash
+                    // Flatten: each slide may contain 1-2 images (DealerCenter thumbnail-grid layout)
+                    const photos = slides
+                        .flatMap(slide => [...slide.querySelectorAll('img[src*="imagescf.dealercenter"]')])
+                        .map(i => i.src)
+                        .filter(u => u);
+
+                    // De-duplicate by filename hash, preserving DealerCenter position order
                     const seen = new Set(), result = [];
-                    for (const u of imgs) {
-                        const key = u.split('/').pop().split('?')[0];
-                        if (key && !seen.has(key)) { seen.add(key); result.push(u); }
+                    for (const u of photos) {
+                        const hash = u.split('/').pop().split('?')[0];
+                        if (hash && !seen.has(hash)) { seen.add(hash); result.push(u); }
                     }
                     return result;
                 }""")
@@ -547,37 +557,43 @@ def scrape_playwright() -> list[dict]:
                     const rows = [...document.querySelectorAll('[class*="spec"],[class*="detail"],td,li')];
                     const specs = rows.map(r=>r.innerText.trim()).join('\\n');
 
-                    // PRIMARY: Use slick-slide img elements — these are the actual loaded carousel photos
-                    // DealerCenter initializes slick slider with all vehicle photos already in src
-                    const slickPhotos = [...document.querySelectorAll('.slick-initialized .slick-slide img[src*="imagescf.dealercenter"]')]
-                        .map(i => i.src)
-                        .filter(u => u && u.includes('/640/480/'));
+                    // ── Target ONLY the main vehicle gallery ──────────────────────────────────
+                    // DealerCenter detail pages have TWO slick carousels:
+                    //   1. .dws-vdp-media-slider  — main vehicle gallery  (1024/768 images)
+                    //   2. .dws-vehicle-slider     — "Similar Vehicles"   (640/480 images)
+                    // NEVER query all .slick-initialized — that bleeds other vehicles' photos in.
+                    const mainGallery = document.querySelector(
+                        '.dws-vdp-media-slider, .dws-vdp-vehicle-media-slider-container'
+                    );
 
-                    // FALLBACK: data-src/data-lazy attributes in the gallery container
-                    const galleryEl = document.querySelector('.dws-vehicle-media-wrapper, [class*="vehicle-media"]');
-                    const scope = galleryEl || document.querySelector('main, .entry-content') || document;
-                    const lazyPhotos = [...scope.querySelectorAll('[data-src*="/640/480/"], [data-lazy*="/640/480/"]')]
-                        .map(i => i.getAttribute('data-src') || i.getAttribute('data-lazy') || '')
-                        .filter(u => u && u.includes('imagescf.dealercenter'));
-
-                    // og:image = DealerCenter's chosen primary photo (not placeholder)
-                    const ogImg = (document.querySelector('meta[property="og:image"]')?.content || '');
-                    const primaryPhoto = ogImg.includes('imagescf.dealercenter') && ogImg.includes('/640/480/') ? ogImg : null;
-
-                    const allUrls = [...slickPhotos, ...lazyPhotos];
-                    // De-duplicate by filename hash
-                    const seen = new Set(), photos = [];
-                    for (const u of allUrls) {
-                        const key = u.split('/').pop().split('?')[0];
-                        if (key && !seen.has(key)) { seen.add(key); photos.push(u); }
+                    let photos = [];
+                    if (mainGallery) {
+                        // Non-cloned slides sorted by DealerCenter's position index
+                        const slides = [...mainGallery.querySelectorAll('.slick-slide:not(.slick-cloned)')]
+                            .sort((a, b) =>
+                                parseInt(a.dataset.slickIndex || '0') - parseInt(b.dataset.slickIndex || '0')
+                            );
+                        // Flatten: each slide may contain 1-2 imgs (thumbnail-grid layout)
+                        const rawPhotos = slides
+                            .flatMap(slide => [...slide.querySelectorAll('img[src*="imagescf.dealercenter"]')])
+                            .map(i => i.src)
+                            .filter(u => u);
+                        const seen = new Set();
+                        for (const u of rawPhotos) {
+                            const hash = u.split('/').pop().split('?')[0];
+                            if (hash && !seen.has(hash)) { seen.add(hash); photos.push(u); }
+                        }
                     }
+
+                    // og:image = DealerCenter's chosen feature photo (position 1 in the DMS)
+                    const ogImg = (document.querySelector('meta[property="og:image"]')?.content || '');
+                    const primaryPhoto = ogImg.includes('imagescf.dealercenter') ? ogImg : null;
 
                     // Features — look for lists of options/features
                     const featEls = [...document.querySelectorAll('[class*="feature"],[class*="option"],[class*="equip"]')];
                     const features = featEls.flatMap(el =>
                         [...el.querySelectorAll('li,span,p')].map(e => e.innerText.trim())
                     ).filter(f => f && f.length > 2 && f.length < 60 && !/^\\d+$/.test(f));
-                    // De-dup
                     const uniqueFeats = [...new Set(features)].slice(0, 30);
 
                     return { specs, photos, primaryPhoto, features: uniqueFeats };
@@ -589,28 +605,18 @@ def scrape_playwright() -> list[dict]:
                 fuel = re.search(r'(?i)(electric|hybrid|diesel|gasoline|flex)', specs or '')
                 v['fuel'] = normalize_fuel(fuel.group(1) if fuel else '')
 
-                # Determine the best primary photo:
-                # 1. og:image from detail page (DealerCenter's explicit primary)
-                # 2. listing-page thumbnail (captured during inventory scrape)
-                detail_primary = detail.get('primaryPhoto')  # og:image if it's a real photo
+                # ── Photo merge: trust gallery order completely ───────────────────────
+                # DealerCenter's slick carousel reflects the exact position order set in
+                # the DMS. Gallery[0] IS position 1. Do NOT prepend og:image or any other
+                # "primary" ahead of the gallery — that would corrupt the sequence.
+                # og:image is only used as a sole fallback when the gallery is empty.
+                detail_photos  = detail.get('photos') or []
+                detail_primary = detail.get('primaryPhoto')  # og:image (non-placeholder)
                 listing_primary = v.get('imgUrl')
-                best_primary = detail_primary or listing_primary
 
-                # Merge gallery photos with best primary first
-                detail_photos = detail.get('photos') or []
-                if detail_photos or best_primary:
-                    processed = []
-                    seen_ids = set()
-                    # Put the best primary photo first
-                    if best_primary:
-                        pid = img_id_from_url(best_primary)
-                        if pid:
-                            seen_ids.add(pid)
-                            processed.append(IMG_BASE + pid + ".jpg")
-                        else:
-                            seen_ids.add(best_primary)
-                            processed.append(best_primary)
-                    # Add remaining gallery photos
+                if detail_photos:
+                    # Trust gallery order entirely — process in sequence, no prepend
+                    processed, seen_ids = [], set()
                     for url in detail_photos:
                         iid = img_id_from_url(url)
                         if iid and iid not in seen_ids:
@@ -621,8 +627,16 @@ def scrape_playwright() -> list[dict]:
                             processed.append(url)
                     if processed:
                         v['photos'] = processed
-                        v['imgUrl'] = processed[0]
+                        v['imgUrl'] = processed[0]   # gallery[0] = DC position 1
                         v['img']    = img_id_from_url(processed[0])
+                elif detail_primary or listing_primary:
+                    # No gallery found — use og:image or listing thumb as sole photo
+                    fallback = detail_primary or listing_primary
+                    fid = img_id_from_url(fallback)
+                    url = (IMG_BASE + fid + ".jpg") if fid else fallback
+                    v['photos'] = [url]
+                    v['imgUrl'] = url
+                    v['img']    = fid
 
                 # Features
                 if detail.get('features'):

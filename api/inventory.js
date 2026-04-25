@@ -9,7 +9,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const FEED_URL    = 'https://feeds.dealercenter.net/inventory/29008363/feed.xml';
-const IMG_BASE    = 'https://imagescf.dealercenter.net/640/480/';
+const IMG_BASE    = 'https://imagescf.dealercenter.net/1024/768/';  // full-size gallery quality
 // public/inventory.json is one level up from api/
 const STATIC_JSON = path.join(__dirname, '..', 'public', 'inventory.json');
 
@@ -163,7 +163,10 @@ function buildStaticCache() {
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=60');
+  // max-age=30: browsers re-validate after 30s (fast enough for photo reorders)
+  // stale-while-revalidate=30: serve stale at most 30s while refetching in background
+  // No longer stale-while-revalidate=60 — we want photo order changes to be visible quickly
+  res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=30');
 
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 

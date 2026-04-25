@@ -10,8 +10,14 @@
     {
       "source": "/inventory.json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=60, stale-while-revalidate=120" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/api/inventory",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=30, stale-while-revalidate=30" }
       ]
     }
   ]
