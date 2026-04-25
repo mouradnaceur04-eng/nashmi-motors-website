@@ -305,23 +305,35 @@
   .vd-panel  { position: static; }
   .vd-form-inner { grid-template-columns: 1fr; gap: 32px; }
 }
+/* Tablet — tighten panel padding */
+@media (max-width: 768px) {
+  .vd-panel-card { padding: 24px; }
+  .vd-title { font-size: 22px; }
+  .vd-price-main { font-size: 30px; }
+  .vd-form-section { padding: 40px 0; }
+  .vd-specs-card { padding: 20px; }
+  .vd-features-card { padding: 20px; }
+}
 @media (max-width: 600px) {
   /* Gallery goes full-bleed on mobile */
   .vd-hero .container { padding: 0; }
   .vd-breadcrumb { padding: 0 16px; }
   .vd-left, .vd-right { padding: 0 16px; }
-  .vd-layout { gap: 24px; }
+  .vd-layout { gap: 16px; }
   .vd-gallery-wrap { border-radius: 0; }
   .vd-gallery-thumbs { padding: 0 16px 4px; margin-top: 8px; }
 
   .vd-specs-grid { grid-template-columns: 1fr 1fr; }
   .vd-title { font-size: 20px; }
   .vd-price-main { font-size: 28px; }
-  .vd-gal-btn { width: 40px; height: 40px; font-size: 22px; }
+  .vd-gal-btn { width: 44px; height: 44px; font-size: 22px; }
   .vd-thumb { width: 64px; height: 48px; }
   .vd-smtc img { height: 32px; }
   .vd-actions { flex-wrap: wrap; gap: 10px; }
-  .vd-actions .btn { flex: 1 1 calc(50% - 5px); min-width: 0; text-align: center; }
+  .vd-actions .btn { flex: 1 1 calc(50% - 5px); min-width: 0; text-align: center; min-height: 44px; }
+  .vd-panel-card { padding: 20px 16px; }
+  .vd-specs-card,
+  .vd-features-card { padding: 18px 16px; margin-top: 16px; }
 }
 
 /* ── Photo Gallery ──────────────────────────────────── */
@@ -410,7 +422,7 @@
   align-items: center;
   text-decoration: none;
 }
-.vd-smtc img { height: 38px; display: block; }
+.vd-smtc img { height: 38px; display: block; max-width: 100%; }
 
 /* ── Features & Options ── */
 .vd-features-card {
