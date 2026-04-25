@@ -38,5 +38,5 @@ jobs:
           else
             git commit -m "sync: auto-update inventory from DealerCenter [skip ci]"
             git push
-            echo "Pushed — Netlify will deploy the update now."
+            echo "Pushed — Vercel will deploy the update automatically."
           fi
