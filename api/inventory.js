@@ -2,7 +2,7 @@
  * Nashmi Motors — Live Inventory API (Vercel)
  *
  * Fetches the DealerCenter XML feed on every request and returns clean JSON.
- * Falls back to the static /public/inventory.json if the feed is unreachable.
+ * Falls back to the static /inventory.json if the feed is unreachable.
  */
 
 const FEED_URL = 'https://feeds.dealercenter.net/inventory/29008363/feed.xml';
@@ -141,7 +141,7 @@ function parseXML(xml) {
 // ── Load static inventory.json as photo/badge cache ──────────────────────────
 async function buildStaticCache(siteUrl) {
   try {
-    const res = await fetch(`${siteUrl}/public/inventory.json`, {
+    const res = await fetch(`${siteUrl}/inventory.json`, {
       signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return {};
@@ -214,7 +214,7 @@ module.exports = async function handler(req, res) {
     console.log('Live feed failed, using static fallback:', liveErr.message);
     source = 'static-fallback';
     try {
-      const fbRes = await fetch(`${siteUrl}/public/inventory.json`, {
+      const fbRes = await fetch(`${siteUrl}/inventory.json`, {
         signal: AbortSignal.timeout(5000),
       });
       if (!fbRes.ok) throw new Error(`Static fetch HTTP ${fbRes.status}`);

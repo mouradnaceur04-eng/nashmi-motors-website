@@ -6,7 +6,7 @@
   },
   "headers": [
     {
-      "source": "/public/inventory.json",
+      "source": "/inventory.json",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=60, stale-while-revalidate=120" },
         { "key": "Access-Control-Allow-Origin", "value": "*" }
