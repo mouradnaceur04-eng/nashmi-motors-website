@@ -1,7 +1,8 @@
 {
   "functions": {
     "api/inventory.js": {
-      "maxDuration": 15
+      "maxDuration": 15,
+      "includeFiles": "public/inventory.json"
     }
   },
   "headers": [

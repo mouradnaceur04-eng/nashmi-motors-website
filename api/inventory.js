@@ -2,18 +2,16 @@
  * Nashmi Motors — Live Inventory API (Vercel)
  *
  * Fetches the DealerCenter XML feed on every request and returns clean JSON.
- * Falls back to the static /inventory.json if the feed is unreachable.
+ * Falls back to reading public/inventory.json from disk if feed is unreachable.
  */
 
-const FEED_URL = 'https://feeds.dealercenter.net/inventory/29008363/feed.xml';
-const IMG_BASE = 'https://imagescf.dealercenter.net/640/480/';
+const fs   = require('fs');
+const path = require('path');
 
-// Vercel: VERCEL_URL is just the hostname (no protocol)
-function getSiteUrl() {
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.URL) return process.env.URL; // fallback
-  return 'https://nashmi-motors.vercel.app';
-}
+const FEED_URL    = 'https://feeds.dealercenter.net/inventory/29008363/feed.xml';
+const IMG_BASE    = 'https://imagescf.dealercenter.net/640/480/';
+// public/inventory.json is one level up from api/
+const STATIC_JSON = path.join(__dirname, '..', 'public', 'inventory.json');
 
 // ── Body type detection ──────────────────────────────────────────────────────
 const BODY_MAP = {
@@ -138,27 +136,27 @@ function parseXML(xml) {
   }).filter(v => v.year && v.make && v.model && v.price);
 }
 
-// ── Load static inventory.json as photo/badge cache ──────────────────────────
-async function buildStaticCache(siteUrl) {
+// ── Read static inventory.json from disk (bundled with function) ──────────────
+function readStaticInventory() {
   try {
-    const res = await fetch(`${siteUrl}/inventory.json`, {
-      signal: AbortSignal.timeout(5000),
-    });
-    if (!res.ok) return {};
-    const data = await res.json();
-    const cache = {};
-    for (const v of (data.vehicles || [])) {
-      if (v.vin) cache[v.vin] = {
-        photos:      v.photos      || (v.imgUrl ? [v.imgUrl] : []),
-        carfax:      v.carfax      || null,
-        carfaxBadge: v.carfaxBadge || null,
-        features:    v.features    || [],
-      };
-    }
-    return cache;
+    return JSON.parse(fs.readFileSync(STATIC_JSON, 'utf8'));
   } catch {
-    return {};
+    return { vehicles: [] };
   }
+}
+
+function buildStaticCache() {
+  const data = readStaticInventory();
+  const cache = {};
+  for (const v of (data.vehicles || [])) {
+    if (v.vin) cache[v.vin] = {
+      photos:      v.photos      || (v.imgUrl ? [v.imgUrl] : []),
+      carfax:      v.carfax      || null,
+      carfaxBadge: v.carfaxBadge || null,
+      features:    v.features    || [],
+    };
+  }
+  return cache;
 }
 
 // ── Vercel handler ────────────────────────────────────────────────────────────
@@ -169,8 +167,7 @@ module.exports = async function handler(req, res) {
 
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 
-  const siteUrl = getSiteUrl();
-  const staticCache = await buildStaticCache(siteUrl);
+  const staticCache = buildStaticCache();
 
   let source   = 'live-feed';
   let vehicles = [];
@@ -210,18 +207,11 @@ module.exports = async function handler(req, res) {
       };
     });
   } catch (liveErr) {
-    // ── Fallback: static inventory.json ──
+    // ── Fallback: read static inventory.json from disk ──
     console.log('Live feed failed, using static fallback:', liveErr.message);
-    source = 'static-fallback';
-    try {
-      const fbRes = await fetch(`${siteUrl}/inventory.json`, {
-        signal: AbortSignal.timeout(5000),
-      });
-      if (!fbRes.ok) throw new Error(`Static fetch HTTP ${fbRes.status}`);
-      const data = await fbRes.json();
-      vehicles = data.vehicles || [];
-    } catch (fbErr) {
-      console.error('Static fallback also failed:', fbErr.message);
+    source   = 'static-fallback';
+    vehicles = readStaticInventory().vehicles || [];
+    if (vehicles.length === 0) {
       res.status(503).json({ error: 'Inventory temporarily unavailable' });
       return;
     }
