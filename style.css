@@ -2036,16 +2036,32 @@ img { max-width: 100%; height: auto; display: block; }
    ================================================================ */
 
 /* The widget sits in the header next to the hamburger on mobile */
-/* ── Google Translate — hide the raw widget, we use our own UI ── */
-#google_translate_element { display: none !important; position: absolute; pointer-events: none; height: 0; overflow: hidden; }
-/* Nuke every UI element Google Translate injects */
-.goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate,
-iframe.skiptranslate { display: none !important; height: 0 !important; }
-body { top: 0 !important; }           /* GT shifts body down — undo it */
-.skiptranslate { display: none !important; }
+/* ── Google Translate — widget must stay in the DOM to initialise ──
+   NEVER use display:none — it prevents .goog-te-combo from rendering,
+   so the select element never exists and setLanguage() has nothing to
+   trigger. Instead we park it far off-screen.                        ── */
+#google_translate_element {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/* Hide the top-bar Google injects without touching .skiptranslate globally.
+   CRITICAL: do NOT do `.skiptranslate { display:none }` — GT adds that
+   class to its own combo widget, which would hide the very engine we need. */
+.goog-te-banner-frame { display: none !important; }
+iframe.goog-te-banner-frame { display: none !important; }
+body { top: 0 !important; }   /* GT shifts body down by banner height — undo */
+
+/* Hide GT's own visible UI (we have our own switcher) */
 .goog-logo-link { display: none !important; }
 .goog-te-gadget { font-size: 0 !important; }
+.goog-te-gadget .goog-te-combo { font-size: 12px !important; }
 
 /* ── Custom Language Switcher ──────────────────────────────────── */
 .lang-switcher {

@@ -70,7 +70,8 @@
       </div>
     </div>
     <!-- Google Translate hidden widget — powers setLanguage() -->
-    <div id="google_translate_element" style="display:none;position:absolute;pointer-events:none;height:0;overflow:hidden"></div>
+    <!-- GT widget must stay renderable — CSS parks it off-screen -->
+    <div id="google_translate_element" aria-hidden="true"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -304,18 +305,129 @@ onInventoryLoaded = applyFilters;
 loadInventory();
 </script>
 <script>
-// ── Language Switcher ─────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  NASHMI MOTORS — Language Switcher  (Google Translate backend)
+// ══════════════════════════════════════════════════════════════════
+
 const LANG_LABELS = { en: 'EN', es: 'ES', ar: 'AR', fr: 'FR' };
 
-// ── UI helpers ────────────────────────────────────────────────────────────
+// ── readiness gate ────────────────────────────────────────────────
+// GT calls googleTranslateElementInit() when the engine is ready.
+// We set this flag there so setLanguage() knows it can use the combo.
+window._gtReady   = false;
+window._gtQueued  = null;   // language to apply once GT is ready
+
+// ── cookie helpers ────────────────────────────────────────────────
+function _setCookie(lang) {
+  var val = lang === 'en' ? '' : '/en/' + lang;
+  var exp = lang === 'en' ? 'expires=Thu, 01 Jan 1970 00:00:01 GMT;' : '';
+  // Set on root path AND domain prefix for cross-page persistence
+  document.cookie = 'googtrans=' + val + '; ' + exp + ' path=/; SameSite=Lax';
+  try {
+    document.cookie = 'googtrans=' + val + '; ' + exp +
+                      ' path=/; domain=.' + location.hostname + '; SameSite=Lax';
+  } catch(e) {}
+}
+
+function _readCookieLang() {
+  var m = document.cookie.match(/googtrans=\/en\/([a-z]{2,5})/);
+  return m ? m[1] : null;
+}
+
+// ── GT combo trigger ──────────────────────────────────────────────
+function _triggerCombo(lang) {
+  var sel = document.querySelector('.goog-te-combo');
+  if (!sel) return false;
+  sel.value = lang;
+  // Use both createEvent (legacy) and Event constructor for max compatibility
+  try {
+    var ev = document.createEvent('HTMLEvents');
+    ev.initEvent('change', true, true);
+    sel.dispatchEvent(ev);
+  } catch(e) {
+    sel.dispatchEvent(new Event('change'));
+  }
+  return true;
+}
+
+// ── UI helpers ────────────────────────────────────────────────────
+function _updateUI(lang) {
+  var lbl = document.getElementById('lang-label');
+  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
+  document.querySelectorAll('.lang-option').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.lang === lang);
+  });
+}
+
+// ── Google Translate initialisation callback ──────────────────────
+// GT calls this function when the engine + combo are fully ready.
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,es,ar,fr',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+
+  // Give the combo ~600 ms to appear in the DOM after init
+  setTimeout(function() {
+    window._gtReady = true;
+
+    // If setLanguage() was called before GT was ready, apply it now
+    if (window._gtQueued && window._gtQueued !== 'en') {
+      _triggerCombo(window._gtQueued);
+      window._gtQueued = null;
+    }
+  }, 600);
+}
+
+// ── Main switch function (called by custom dropdown buttons) ──────
+function setLanguage(lang) {
+  closeLangMenu();
+  _updateUI(lang);
+  try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
+  _setCookie(lang);
+
+  if (lang === 'en') {
+    // Reload without the cookie — GT shows original English page
+    location.reload();
+    return;
+  }
+
+  if (window._gtReady) {
+    // GT is ready — trigger immediately
+    if (!_triggerCombo(lang)) {
+      // combo not found (shouldn't happen) — fall back to reload
+      location.reload();
+    }
+  } else {
+    // GT still loading — queue the language; the init callback will apply it
+    window._gtQueued = lang;
+    // Also reload as safety net: cookie is set, so GT will auto-translate on load
+    // (only if GT takes > 5 s — very unlikely on a fast CDN)
+    setTimeout(function() {
+      if (window._gtQueued === lang) location.reload();
+    }, 5000);
+  }
+}
+
+// ── Restore language UI on every page load ────────────────────────
+// (Actual translation is handled by GT reading the googtrans cookie.)
+(function restoreUI() {
+  var lang = _readCookieLang() ||
+             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
+             'en';
+  if (lang !== 'en') _updateUI(lang);
+})();
+
+// ── Dropdown open / close ─────────────────────────────────────────
 function toggleLangMenu(e) {
   e && e.stopPropagation();
-  const menu = document.getElementById('lang-menu');
-  const btn  = document.getElementById('lang-btn');
-  const open = menu.classList.contains('open');
+  var menu = document.getElementById('lang-menu');
+  var btn  = document.getElementById('lang-btn');
+  var open = menu.classList.contains('open');
   if (!open) {
-    // On mobile the menu is position:fixed — anchor it just below the button
-    const rect = btn.getBoundingClientRect();
+    var rect = btn.getBoundingClientRect();
     if (window.innerWidth <= 900) {
       menu.style.top   = (rect.bottom + 8) + 'px';
       menu.style.right = (window.innerWidth - rect.right) + 'px';
@@ -329,96 +441,18 @@ function toggleLangMenu(e) {
 }
 
 function closeLangMenu() {
-  const menu = document.getElementById('lang-menu');
-  const btn  = document.getElementById('lang-btn');
+  var menu = document.getElementById('lang-menu');
+  var btn  = document.getElementById('lang-btn');
   if (menu) menu.classList.remove('open');
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
 
-function _updateLangUI(lang) {
-  const lbl = document.getElementById('lang-label');
-  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
-  document.querySelectorAll('.lang-option').forEach(el =>
-    el.classList.toggle('active', el.dataset.lang === lang)
-  );
-}
-
-// ── Cookie helpers (Google Translate reads googtrans cookie on page load) ──
-function _setCookie(lang) {
-  const val = lang === 'en' ? '' : '/en/' + lang;
-  document.cookie = 'googtrans=' + val + '; path=/; SameSite=Lax';
-  // also set on sub-domain so it persists across pages
-  document.cookie = 'googtrans=' + val + '; path=/; domain=.' + location.hostname + '; SameSite=Lax';
-}
-
-function _clearCookie() {
-  const exp = 'expires=Thu, 01 Jan 1970 00:00:01 GMT';
-  document.cookie = 'googtrans=; ' + exp + '; path=/; SameSite=Lax';
-  document.cookie = 'googtrans=; ' + exp + '; path=/; domain=.' + location.hostname + '; SameSite=Lax';
-}
-
-function _readCookieLang() {
-  const m = document.cookie.match(/googtrans=\/en\/([a-z]{2,})/);
-  return m ? m[1] : null;
-}
-
-// ── Poll for Google Translate's hidden <select> (it loads async) ──────────
-function _waitForGTSelect(callback) {
-  let tries = 0;
-  const id = setInterval(() => {
-    const sel = document.querySelector('.goog-te-combo');
-    if (sel) { clearInterval(id); callback(sel); }
-    else if (++tries > 40) clearInterval(id); // give up after ~8 s
-  }, 200);
-}
-
-// ── Main: switch language ─────────────────────────────────────────────────
-function setLanguage(lang) {
-  closeLangMenu();
-  _updateLangUI(lang);
-
-  // Persist so every subsequent page loads in this language
-  try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
-
-  if (lang === 'en') {
-    _clearCookie();
-    location.reload();   // reload without cookie = Google shows original English
-    return;
-  }
-
-  // Set cookie NOW — if user navigates to another page it will auto-translate
-  _setCookie(lang);
-
-  // Trigger the hidden Google Translate select (translates without page reload)
-  _waitForGTSelect(function(sel) {
-    sel.value = lang;
-    sel.dispatchEvent(new Event('change'));
-  });
-}
-
-// ── On every page load: restore the active language in the UI ─────────────
-(function restoreUI() {
-  // Priority: googtrans cookie > localStorage
-  const lang = _readCookieLang() || localStorage.getItem('nashmi_lang') || 'en';
-  if (lang !== 'en') {
-    _updateLangUI(lang);
-    _setCookie(lang); // ensure cookie is set so GT auto-translates this page
-  }
-})();
-
-// Close dropdown on outside click or Escape
-document.addEventListener('click',   e => { if (!e.target.closest('#lang-switcher')) closeLangMenu(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLangMenu(); });
-
-// ── Google Translate widget init (hidden, but powers the translation) ─────
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,es,ar,fr',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-}
+document.addEventListener('click',   function(e) {
+  if (!e.target.closest('#lang-switcher')) closeLangMenu();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLangMenu();
+});
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 </body>
