@@ -379,6 +379,38 @@ function googleTranslateElementInit() {
       window._gtQueued = null;
     }
   }, 600);
+
+  // ── MutationObserver: fight Google's inline style="top:40px" on body ──
+  // GT sets this inline style to make room for its banner iframe.
+  // CSS `body { top:0 !important }` loses to inline styles, so we watch
+  // for the attribute change and immediately reset it.
+  var bodyObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'style' && document.body.style.top) {
+        document.body.style.top = '';
+      }
+    });
+  });
+  bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['style', 'class'] });
+
+  // Also nuke the banner iframe whenever it appears in the DOM
+  var domObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1) {
+          if (node.classList && (
+            node.classList.contains('goog-te-banner-frame') ||
+            node.id === 'goog-gt-tt' ||
+            node.id === ':1.container'
+          )) {
+            node.style.display = 'none';
+            node.style.visibility = 'hidden';
+          }
+        }
+      });
+    });
+  });
+  domObserver.observe(document.body, { childList: true, subtree: false });
 }
 
 // ── Main switch function (called by custom dropdown buttons) ──────
