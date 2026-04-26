@@ -280,7 +280,7 @@ img { max-width: 100%; height: auto; display: block; }
 /* ── FULL-WIDTH HERO ─────────────────────────────────────────────────────── */
 .hero-full {
   position: relative;
-  min-height: calc(100vh - 90px);
+  min-height: calc(100dvh - 90px);
   display: flex;
   align-items: center;
   width: 100%;                 /* prevent hero from overflowing viewport */
@@ -463,7 +463,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* Legacy split classes — kept so pages with old markup still render */
-.hero-split { position: relative; min-height: calc(100vh - 90px); overflow: hidden; background: var(--dark); }
+.hero-split { position: relative; min-height: calc(100dvh - 90px); overflow: hidden; background: var(--dark); }
 .hero-split-left { display:flex; align-items:center; padding:60px 48px; position:relative; z-index:2; }
 .hero-split-content { max-width:520px; width:100%; }
 .hero-split-right { position:absolute; inset:0; }
@@ -1138,6 +1138,8 @@ img { max-width: 100%; height: auto; display: block; }
 
 .footer-bottom {
   padding: 18px 0;
+  /* push above iPhone home bar / Android gesture strip */
+  padding-bottom: max(18px, env(safe-area-inset-bottom));
   font-size: 12.5px;
   color: rgba(255,255,255,0.28);
 }

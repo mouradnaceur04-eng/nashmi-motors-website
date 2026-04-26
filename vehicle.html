@@ -5,7 +5,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="https://dcdws.blob.core.windows.net/dws-29008363-103887-media/sites/103887/2026/01/Snag_1986c202-removebg-preview-w286-1.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title id="page-title">Vehicle Details — Nashmi Motors</title>
 <meta name="description" content="View details, pricing, and CarFax for this vehicle at Nashmi Motors in Harrisburg, PA.">
 <meta property="og:title" content="Vehicle Details — Nashmi Motors">
@@ -734,6 +734,44 @@ html, body {
     height: 30px !important;
     max-width: none !important;
     object-fit: unset !important;
+  }
+}
+
+/* ── Safe-area / dynamic viewport fixes (mobile browser bars) ──────────
+   Fixes iPhone home bar and Chrome/Android navigation bar covering
+   the Schedule Test Drive section and Reserve button on mobile.      */
+@media (max-width: 768px) {
+
+  /* Last section before footer — ensure user can scroll past
+     the content even when the browser nav bar is visible */
+  .cta-banner {
+    padding-bottom: max(60px, calc(40px + env(safe-area-inset-bottom))) !important;
+  }
+
+  /* Action buttons — extra breathing room above the bottom edge */
+  .vd-actions {
+    margin-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Reserve button — never flush against anything */
+  .btn-reserve {
+    margin-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  }
+
+  /* Test-drive form section — extra scroll room */
+  .vd-form-section {
+    padding-bottom: max(60px, calc(40px + env(safe-area-inset-bottom))) !important;
+  }
+}
+
+/* ── Small phones: even more bottom clearance ───────────────────────── */
+@media (max-width: 480px) {
+  .cta-banner {
+    padding-bottom: max(80px, calc(60px + env(safe-area-inset-bottom))) !important;
+  }
+  .vd-form-section {
+    padding-bottom: max(80px, calc(60px + env(safe-area-inset-bottom))) !important;
   }
 }
 </style>
