@@ -399,66 +399,129 @@
 .vd-not-found h2 { font-size: 28px; margin-bottom: 12px; color: var(--dark); }
 .vd-not-found p  { color: var(--gray); margin-bottom: 28px; }
 
-/* ── Responsive: layout stacks at 768px (tablets + phones) ─────────────── */
+/* ══════════════════════════════════════════════════════════════
+   VEHICLE PAGE — MOBILE / TABLET RESPONSIVE
+   All breakpoints live here so nothing fights the global CSS.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 768px: tablet & phone — stack the two-column layout ───── */
 @media (max-width: 768px) {
-  /* Stack gallery above pricing panel — 100% width each */
+
+  /* 1. MAIN LAYOUT STACK: gallery on top, sidebar full-width below */
   .vd-layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;   /* explicit stack, no float side-effects */
     gap: 20px;
+    width: 100%;
   }
-  .vd-panel  { position: static; }
 
-  /* Test Drive section */
-  .vd-form-inner { display: block; width: 100%; }
-  .vd-form-left  { margin-bottom: 32px; width: 100%; }
-  .vd-form-left h2 { font-size: 22px; }
+  /* Un-stick the pricing sidebar — it scrolls normally */
+  .vd-panel  { position: static; width: 100%; }
 
-  /* Gallery — clamp to viewport */
+  /* 2. IMAGE + GALLERY: force 100% width, no fixed px */
   .vd-gallery-wrap,
-  .vd-photo-wrap {
+  .vd-photo-wrap,
+  .vd-gallery-wrap img,
+  .vd-photo-wrap img {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
 
-  /* Tighten padding on cards */
-  .vd-panel-card   { padding: 24px; }
-  .vd-title        { font-size: 22px; }
-  .vd-price-main   { font-size: 30px; }
-  .vd-form-section { padding: 40px 0; }
-  .vd-specs-card   { padding: 20px; }
+  /* 3. PRICING CARD: full-width, no fixed 30%, remove any float */
+  .vd-panel-card {
+    width: 100%;
+    float: none;
+    box-sizing: border-box;
+    padding: 24px 20px;
+  }
+
+  /* 4. FONT SCALING: big, readable vehicle title + price */
+  .vd-title      { font-size: 22px; line-height: 1.2; }
+  .vd-price-main { font-size: 32px; }
+
+  /* 5. SPEC CARDS */
+  .vd-specs-card    { padding: 20px; }
   .vd-features-card { padding: 20px; }
+
+  /* Test Drive section — single column */
+  .vd-form-section { padding: 40px 0; }
+  .vd-form-inner   { display: block; width: 100%; }
+  .vd-form-left    { margin-bottom: 32px; width: 100%; }
+  .vd-form-left h2 { font-size: 22px; }
 }
 
-/* ── Mobile: full-bleed gallery at 600px ───────────────────────────────── */
+/* ── 600px: small phones — full-bleed gallery, tighter padding ─ */
 @media (max-width: 600px) {
-  .vd-hero { width: 100%; max-width: 100vw; overflow: hidden; }
-  .vd-hero .container { padding: 0; width: 100%; max-width: 100%; }
-  .vd-breadcrumb { padding: 0 16px; }
-  .vd-left, .vd-right { padding: 0 16px; width: 100%; box-sizing: border-box; }
-  .vd-layout { gap: 16px; width: 100%; }
-  .vd-gallery-wrap { border-radius: 0; width: 100%; max-width: 100vw; overflow: hidden; }
 
-  /* Thumbnails wrap to multi-row on small screens, smaller size to fit more */
+  .vd-hero { width: 100%; max-width: 100vw; overflow: hidden; }
+
+  /* 6. CONTAINER PADDING: 15px so text never touches screen edge */
+  .vd-hero .container {
+    padding: 0 15px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Breadcrumb already inside container — inherits 15px padding */
+  .vd-breadcrumb { padding: 0; }
+
+  /* Left/right columns already in container — no extra padding needed */
+  .vd-left, .vd-right { padding: 0; width: 100%; box-sizing: border-box; }
+
+  .vd-layout {
+    gap: 14px;
+    width: 100%;
+  }
+
+  /* Gallery goes edge-to-edge (full-bleed look) */
+  .vd-gallery-wrap {
+    border-radius: 0;
+    width: calc(100% + 30px);   /* break out of the 15px container padding */
+    margin-left: -15px;
+    max-width: calc(100vw);
+    overflow: hidden;
+  }
+
+  /* Thumbnails: wrap to multi-row, compact size */
   .vd-gallery-thumbs {
-    padding: 0 16px 4px;
+    padding: 0 15px 4px;
     margin-top: 8px;
     max-width: 100%;
     flex-wrap: wrap;
     gap: 5px;
   }
-  .vd-thumb { width: 60px; height: 44px; }
+  .vd-thumb { width: 58px; height: 43px; }
 
-  .vd-specs-grid { grid-template-columns: 1fr 1fr; }
-  .vd-title { font-size: 20px; }
-  .vd-price-main { font-size: 28px; }
+  /* Specs grid: keep 2 columns so it's scannable */
+  .vd-specs-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Font sizes — clear & readable without zooming */
+  .vd-title      { font-size: 20px; }
+  .vd-subtitle   { font-size: 12px; }
+  .vd-price-main { font-size: 30px; }
+
+  /* Nav arrows */
   .vd-gal-btn { width: 44px; height: 44px; font-size: 22px; }
-  .vd-smtc img { height: 32px; }
-  .vd-actions { flex-wrap: wrap; gap: 10px; }
-  .vd-actions .btn { flex: 1 1 calc(50% - 5px); min-width: 0; text-align: center; min-height: 44px; }
-  .vd-panel-card { padding: 20px 16px; }
+
+  /* Action buttons: 2-up grid so they don't stack awkwardly */
+  .vd-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .vd-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    font-size: 12.5px;
+    padding: 11px 8px;
+    text-align: center;
+    justify-content: center;
+  }
+  /* Reserve button spans full width — it's the primary CTA */
+  .btn-reserve { grid-column: 1 / -1; }
+
+  /* Cards */
+  .vd-panel-card    { padding: 18px 15px; }
   .vd-specs-card,
-  .vd-features-card { padding: 18px 16px; margin-top: 16px; }
+  .vd-features-card { padding: 16px 15px; margin-top: 14px; }
 }
 
 /* ── Photo Gallery ──────────────────────────────────── */

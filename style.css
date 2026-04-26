@@ -1826,13 +1826,22 @@ img { max-width: 100%; height: auto; display: block; }
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   /* ── Nav collapses to hamburger at 900px ── */
-  /* This is the critical fix — the header has 6 links + CTA + translate widget
-     which overflows anything below ~900px, forcing the browser to zoom out. */
   .nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 12px 20px; box-shadow: var(--shadow); z-index: 800; }
   .nav.open { display: flex; }
   .hamburger { display: flex; }
   .header-cta { display: none; }
-  .header-inner { flex-wrap: nowrap; gap: 12px; }
+
+  /* Header layout on mobile: [lang] [LOGO centred] [☰]
+     Use flex order + margin:auto trick — no absolute positioning needed. */
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  /* Centre the logo between the two side controls */
+  .logo        { order: 2; flex: 1; display: flex; justify-content: center; }
+  .lang-switcher { order: 1; flex-shrink: 0; }
+  .hamburger   { order: 3; flex-shrink: 0; margin-left: 0; }
 
   .hero-full { min-height: 85vh; }
   .hero-full-content { padding: 60px 0; }
