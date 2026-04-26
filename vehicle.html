@@ -529,10 +529,26 @@
    defined above can override these rules at smaller widths.
    ══════════════════════════════════════════════════════════════ */
 
-/* ── html / body: kill horizontal scroll on every screen ─── */
+/* ── html / body: kill horizontal scroll, allow vertical growth ── */
 html, body {
   overflow-x: hidden !important;
+  overflow-y: visible !important;   /* never clip page height vertically */
   max-width: 100% !important;
+  height: auto !important;          /* don't lock body to a fixed viewport height */
+}
+
+/* ── Global box-sizing so padding never blows out widths ─────────── */
+*, *::before, *::after {
+  box-sizing: border-box !important;
+}
+
+/* ── Safety zone: 120px invisible floor after all content ────────── */
+/* Stops the mobile browser's address/nav bar from overlapping text  */
+body::after {
+  content: "";
+  display: block;
+  height: max(120px, calc(80px + env(safe-area-inset-bottom)));
+  width: 100%;
 }
 
 /* ── 768px — tablet & phone ─────────────────────────────── */
@@ -595,11 +611,40 @@ html, body {
   .vd-specs-card    { padding: 20px !important; }
   .vd-features-card { padding: 20px !important; }
 
-  /* TEST DRIVE SECTION */
-  .vd-form-section { padding: 40px 0 !important; }
-  .vd-form-inner   { display: block !important; width: 100% !important; }
-  .vd-form-left    { margin-bottom: 32px !important; width: 100% !important; }
+  /* TEST DRIVE SECTION: stack the two columns vertically */
+  .vd-form-section {
+    height: auto !important;
+    min-height: min-content !important;
+    padding: 40px 0 60px !important;
+    overflow: visible !important;
+  }
+  .vd-form-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    gap: 32px !important;
+    align-items: stretch !important;
+  }
+  /* Both columns go full width */
+  .vd-form-left,
+  .vd-form-inner > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    position: static !important;
+    float: none !important;
+  }
+  .vd-form-left    { margin-bottom: 0 !important; }
   .vd-form-left h2 { font-size: 22px !important; }
+
+  /* The form itself: full width, no overflow clip */
+  .testdrive-form {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
 }
 
 /* ── 600px — small phones ────────────────────────────────── */
@@ -737,41 +782,25 @@ html, body {
   }
 }
 
-/* ── Safe-area / dynamic viewport fixes (mobile browser bars) ──────────
-   Fixes iPhone home bar and Chrome/Android navigation bar covering
-   the Schedule Test Drive section and Reserve button on mobile.      */
+/* ── Safe-area / bottom clearance (mobile browser bars) ───────────────
+   body::after handles the global safety zone above.
+   These rules add extra breathing room to specific sections.         */
 @media (max-width: 768px) {
 
-  /* Last section before footer — ensure user can scroll past
-     the content even when the browser nav bar is visible */
+  /* CTA banner (last section before footer): solid bottom padding */
   .cta-banner {
-    padding-bottom: max(60px, calc(40px + env(safe-area-inset-bottom))) !important;
+    padding-bottom: 60px !important;
   }
 
-  /* Action buttons — extra breathing room above the bottom edge */
+  /* Action buttons in the pricing panel */
   .vd-actions {
-    margin-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    margin-bottom: 16px !important;
     padding-bottom: 8px !important;
   }
 
-  /* Reserve button — never flush against anything */
+  /* Reserve button */
   .btn-reserve {
-    margin-bottom: max(12px, env(safe-area-inset-bottom)) !important;
-  }
-
-  /* Test-drive form section — extra scroll room */
-  .vd-form-section {
-    padding-bottom: max(60px, calc(40px + env(safe-area-inset-bottom))) !important;
-  }
-}
-
-/* ── Small phones: even more bottom clearance ───────────────────────── */
-@media (max-width: 480px) {
-  .cta-banner {
-    padding-bottom: max(80px, calc(60px + env(safe-area-inset-bottom))) !important;
-  }
-  .vd-form-section {
-    padding-bottom: max(80px, calc(60px + env(safe-area-inset-bottom))) !important;
+    margin-bottom: 12px !important;
   }
 }
 </style>
