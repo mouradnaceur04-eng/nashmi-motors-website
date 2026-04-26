@@ -72,7 +72,22 @@
       <a href="contact.html" class="nav-link">Contact</a>
     </nav>
     <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
-    <div id="google_translate_element"></div>
+    <!-- Custom Language Switcher -->
+    <div class="lang-switcher" id="lang-switcher">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="lang-label">EN</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="lang-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu" role="menu">
+        <button class="lang-option active" data-lang="en" onclick="setLanguage('en')" role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
+        <button class="lang-option" data-lang="es" onclick="setLanguage('es')" role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
+        <button class="lang-option" data-lang="ar" onclick="setLanguage('ar')" role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
+        <button class="lang-option" data-lang="fr" onclick="setLanguage('fr')" role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
+      </div>
+    </div>
+    <!-- Google Translate hidden widget — powers setLanguage() -->
+    <div id="google_translate_element" style="display:none;position:absolute;pointer-events:none;height:0;overflow:hidden"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -1017,13 +1032,55 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
 <script>
+// ── Language Switcher ────────────────────────────────────────────
+const LANG_LABELS = { en: 'EN', es: 'ES', ar: 'AR', fr: 'FR' };
+
+function toggleLangMenu(e) {
+  e && e.stopPropagation();
+  const menu = document.getElementById('lang-menu');
+  const btn  = document.getElementById('lang-btn');
+  const open = menu.classList.contains('open');
+  menu.classList.toggle('open', !open);
+  btn.setAttribute('aria-expanded', String(!open));
+}
+function closeLangMenu() {
+  const menu = document.getElementById('lang-menu');
+  const btn  = document.getElementById('lang-btn');
+  if (menu) menu.classList.remove('open');
+  if (btn)  btn.setAttribute('aria-expanded', 'false');
+}
+function setLanguage(lang) {
+  const apply = () => {
+    const sel = document.querySelector('.goog-te-combo');
+    if (sel) {
+      sel.value = lang === 'en' ? '' : lang;
+      sel.dispatchEvent(new Event('change'));
+    }
+  };
+  apply();
+  setTimeout(apply, 700); // retry if GT not yet ready
+  const lbl = document.getElementById('lang-label');
+  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
+  document.querySelectorAll('.lang-option').forEach(el =>
+    el.classList.toggle('active', el.dataset.lang === lang)
+  );
+  closeLangMenu();
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#lang-switcher')) closeLangMenu();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLangMenu();
+});
+
+// Google Translate init (hidden widget powers the translation)
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
-    pageLanguage: "en",
-    includedLanguages: "en,es,ar,fr",
+    pageLanguage: 'en',
+    includedLanguages: 'en,es,ar,fr',
     layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
     autoDisplay: false
-  }, "google_translate_element");
+  }, 'google_translate_element');
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>

@@ -2031,44 +2031,100 @@ img { max-width: 100%; height: auto; display: block; }
    ================================================================ */
 
 /* The widget sits in the header next to the hamburger on mobile */
-#google_translate_element {
+/* ── Google Translate — hide the raw widget, we use our own UI ── */
+#google_translate_element { display: none !important; position: absolute; pointer-events: none; height: 0; overflow: hidden; }
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0 !important; }
+.goog-logo-link { display: none !important; }
+.goog-te-gadget { font-size: 0 !important; }
+
+/* ── Custom Language Switcher ──────────────────────────────────── */
+.lang-switcher {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  min-height: 44px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dark);
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.lang-btn:hover,
+.lang-btn[aria-expanded="true"] {
+  border-color: var(--green);
+  background: var(--green-glow);
+  color: var(--green-dark);
+}
+.lang-chevron {
+  transition: transform 0.2s var(--ease);
+  opacity: 0.6;
+}
+.lang-btn[aria-expanded="true"] .lang-chevron { transform: rotate(180deg); }
+
+/* Dropdown panel */
+.lang-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 168px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 1100;
+  overflow: hidden;
+  animation: langMenuIn 0.15s var(--ease);
+}
+.lang-menu.open { display: block; }
+
+@keyframes langMenuIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.lang-option {
   display: flex;
   align-items: center;
-}
-
-/* Strip Google's default styling so it matches our header */
-.goog-te-gadget-simple {
-  background: transparent !important;
-  border: 1.5px solid var(--border) !important;
-  border-radius: 8px !important;
-  padding: 4px 8px !important;
-  font-size: 12px !important;
-  font-family: 'Inter', sans-serif !important;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 16px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: var(--dark);
   cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+  box-sizing: border-box;
 }
-.goog-te-gadget-simple .goog-te-menu-value {
-  color: #374151 !important;
-  font-weight: 600 !important;
+.lang-option:last-child { border-bottom: none; }
+.lang-option:hover { background: var(--green-glow); color: var(--green-dark); }
+.lang-option.active {
+  background: var(--green-glow);
+  color: var(--green);
+  font-weight: 700;
 }
-.goog-te-gadget-simple .goog-te-menu-value span { color: #374151 !important; }
-.goog-te-gadget-simple img { display: none !important; }  /* hide flag icon */
+.lang-flag { font-size: 17px; line-height: 1; }
 
-/* Google injects a top bar that shifts the page down — remove it */
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0 !important; }                    /* override Google's body shift */
-
-/* Hide "Powered by Google" text in the dropdown */
-.goog-logo-link { display: none !important; }
-.goog-te-gadget { font-size: 0 !important; }   /* kills the label text */
-.goog-te-gadget .goog-te-gadget-simple { font-size: 12px !important; }
-
-/* On mobile, show translate widget in the header row */
-@media (max-width: 640px) {
-  #google_translate_element {
-    order: 3;           /* sits between logo and hamburger */
-    margin-left: auto;
-    margin-right: 8px;
-  }
-  /* pull the hamburger back to the end */
-  .hamburger { order: 4; margin-left: 0; }
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .lang-btn { padding: 7px 10px; font-size: 12px; gap: 5px; }
+  .lang-menu { right: 0; min-width: 150px; }
 }
