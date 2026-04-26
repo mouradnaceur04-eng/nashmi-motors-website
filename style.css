@@ -168,16 +168,21 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 900;
+  /* z-index must be above gallery, hero, cards (all ≤ 10) but
+     the lang-menu sits at 1100 so it punches through everything */
+  z-index: 1000;
   transition: box-shadow 0.3s var(--ease);
   width: 100%;
   max-width: 100vw;
-  overflow: hidden;
+  /* overflow: visible so the lang dropdown can escape the header box.
+     Horizontal overflow is already blocked by html/body overflow-x:hidden */
+  overflow: visible;
 }
 .topbar {
   width: 100%;
   max-width: 100vw;
-  overflow: hidden;
+  /* visible so nothing clips the dropdown */
+  overflow: visible;
 }
 .header.scrolled { box-shadow: var(--shadow); }
 
@@ -2073,7 +2078,7 @@ body { top: 0 !important; }
 }
 .lang-btn[aria-expanded="true"] .lang-chevron { transform: rotate(180deg); }
 
-/* Dropdown panel */
+/* Dropdown panel — sits above header (1000), gallery, modals, everything */
 .lang-menu {
   display: none;
   position: absolute;
@@ -2083,8 +2088,8 @@ body { top: 0 !important; }
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06);
-  z-index: 1100;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 9999;   /* above header (1000), gallery stacking contexts, modals */
   overflow: hidden;
   animation: langMenuIn 0.15s var(--ease);
 }
@@ -2093,6 +2098,14 @@ body { top: 0 !important; }
 @keyframes langMenuIn {
   from { opacity: 0; transform: translateY(-6px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* The switcher container itself needs a stacking context above the header */
+.lang-switcher {
+  position: relative;
+  flex-shrink: 0;
+  z-index: 9999;
+  isolation: isolate;  /* creates its own stacking context */
 }
 
 .lang-option {
@@ -2123,8 +2136,20 @@ body { top: 0 !important; }
 }
 .lang-flag { font-size: 17px; line-height: 1; }
 
-/* Mobile adjustments */
+/* Mobile: use position:fixed so the menu breaks out of EVERY container
+   (sticky headers, overflow:hidden parents, gallery stacking contexts) */
+@media (max-width: 900px) {
+  .lang-menu {
+    position: fixed;
+    /* JS sets top via data attribute; fallback to near top of screen */
+    top: 70px;
+    right: 12px;
+    left: auto;
+    min-width: 180px;
+    z-index: 9999;
+  }
+}
 @media (max-width: 480px) {
   .lang-btn { padding: 7px 10px; font-size: 12px; gap: 5px; }
-  .lang-menu { right: 0; min-width: 150px; }
+  .lang-menu { right: 8px; min-width: 165px; }
 }

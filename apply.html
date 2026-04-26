@@ -1040,6 +1040,17 @@ function toggleLangMenu(e) {
   const menu = document.getElementById('lang-menu');
   const btn  = document.getElementById('lang-btn');
   const open = menu.classList.contains('open');
+  if (!open) {
+    // On mobile the menu is position:fixed — anchor it just below the button
+    const rect = btn.getBoundingClientRect();
+    if (window.innerWidth <= 900) {
+      menu.style.top   = (rect.bottom + 8) + 'px';
+      menu.style.right = (window.innerWidth - rect.right) + 'px';
+      menu.style.left  = 'auto';
+    } else {
+      menu.style.top = menu.style.right = menu.style.left = '';
+    }
+  }
   menu.classList.toggle('open', !open);
   btn.setAttribute('aria-expanded', String(!open));
 }
