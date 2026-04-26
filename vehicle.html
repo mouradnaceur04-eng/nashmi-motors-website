@@ -624,10 +624,21 @@
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="lang-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="lang-menu" id="lang-menu" role="menu">
-        <button class="lang-option active" data-lang="en" onclick="setLanguage('en')" role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
-        <button class="lang-option" data-lang="es" onclick="setLanguage('es')" role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
-        <button class="lang-option" data-lang="ar" onclick="setLanguage('ar')" role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
-        <button class="lang-option" data-lang="fr" onclick="setLanguage('fr')" role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
+        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
+        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-flag">🇨🇳</span> 中文</button>
+        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-flag">🇮🇳</span> हिन्दी</button>
+        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
+        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
+        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
+        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-flag">🇧🇩</span> বাংলা</button>
+        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-flag">🇧🇷</span> Português</button>
+        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-flag">🇷🇺</span> Русский</button>
+        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-flag">🇵🇰</span> اردو</button>
+        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-flag">🇮🇩</span> Indonesia</button>
+        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
+        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-flag">🇯🇵</span> 日本語</button>
+        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-flag">🇳🇬</span> Pidgin</button>
+        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-flag">🇮🇳</span> मराठी</button>
       </div>
     </div>
     <!-- Google Translate hidden widget — powers setLanguage() -->
@@ -1228,7 +1239,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReserve
 //  NASHMI MOTORS — Language Switcher  (Google Translate backend)
 // ══════════════════════════════════════════════════════════════════
 
-const LANG_LABELS = { en: 'EN', es: 'ES', ar: 'AR', fr: 'FR' };
+const LANG_LABELS = {
+  en: 'EN', 'zh-CN': '中文', hi: 'HI', es: 'ES', fr: 'FR',
+  ar: 'AR', bn: 'BN', pt: 'PT', ru: 'RU', ur: 'UR',
+  id: 'ID', de: 'DE', ja: 'JA', pcm: 'PCM', mr: 'MR'
+};
 
 // ── readiness gate ────────────────────────────────────────────────
 // GT calls googleTranslateElementInit() when the engine is ready.
@@ -1249,7 +1264,7 @@ function _setCookie(lang) {
 }
 
 function _readCookieLang() {
-  var m = document.cookie.match(/googtrans=\/en\/([a-z]{2,5})/);
+  var m = document.cookie.match(/googtrans=\/en\/([^;]+)/);
   return m ? m[1] : null;
 }
 
@@ -1283,7 +1298,7 @@ function _updateUI(lang) {
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'en',
-    includedLanguages: 'en,es,ar,fr',
+    includedLanguages: 'en,zh-CN,hi,es,fr,ar,bn,pt,ru,ur,id,de,ja,pcm,mr',
     layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
     autoDisplay: false
   }, 'google_translate_element');

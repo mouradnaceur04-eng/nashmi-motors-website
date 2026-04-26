@@ -2138,7 +2138,8 @@ html                 { top: 0 !important; margin-top: 0 !important; }
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  min-width: 168px;
+  /* 2-column grid — 300px gives each column ~140px, comfortable for any flag+label */
+  min-width: 300px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -2147,7 +2148,11 @@ html                 { top: 0 !important; margin-top: 0 !important; }
   overflow: hidden;
   animation: langMenuIn 0.15s var(--ease);
 }
-.lang-menu.open { display: block; }
+/* Open state: grid with 2 equal columns */
+.lang-menu.open {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 @keyframes langMenuIn {
   from { opacity: 0; transform: translateY(-6px) scale(0.98); }
@@ -2165,14 +2170,16 @@ html                 { top: 0 !important; margin-top: 0 !important; }
 .lang-option {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  padding: 11px 16px;
+  padding: 10px 14px;
   min-height: 44px;
   background: none;
   border: none;
   border-bottom: 1px solid var(--border);
-  font-size: 13.5px;
+  /* Right-column items get a left divider so rows look clean */
+  border-right: none;
+  font-size: 13px;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
   color: var(--dark);
@@ -2181,29 +2188,35 @@ html                 { top: 0 !important; margin-top: 0 !important; }
   transition: background 0.15s;
   box-sizing: border-box;
 }
-.lang-option:last-child { border-bottom: none; }
+/* Add a subtle divider between columns */
+.lang-option:nth-child(odd) {
+  border-right: 1px solid var(--border);
+}
+/* Kill bottom border on last two items (both cells of last row) */
+.lang-option:nth-last-child(-n+2) { border-bottom: none; }
 .lang-option:hover { background: var(--green-glow); color: var(--green-dark); }
 .lang-option.active {
   background: var(--green-glow);
   color: var(--green);
   font-weight: 700;
 }
-.lang-flag { font-size: 17px; line-height: 1; }
+.lang-flag { font-size: 16px; line-height: 1; flex-shrink: 0; }
 
 /* Mobile: use position:fixed so the menu breaks out of EVERY container
    (sticky headers, overflow:hidden parents, gallery stacking contexts) */
 @media (max-width: 900px) {
   .lang-menu {
     position: fixed;
-    /* JS sets top via data attribute; fallback to near top of screen */
     top: 70px;
     right: 12px;
     left: auto;
-    min-width: 180px;
+    min-width: 300px;
     z-index: 9999;
   }
 }
-@media (max-width: 480px) {
+/* Very small phones: shrink slightly but keep 2-column layout */
+@media (max-width: 380px) {
   .lang-btn { padding: 7px 10px; font-size: 12px; gap: 5px; }
-  .lang-menu { right: 8px; min-width: 165px; }
+  .lang-menu { right: 6px; left: 6px; min-width: unset; width: calc(100vw - 12px); }
+  .lang-option { font-size: 12px; padding: 9px 10px; }
 }
