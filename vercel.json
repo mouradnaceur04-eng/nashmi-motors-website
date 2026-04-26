@@ -4,6 +4,9 @@
     "api/inventory.js": {
       "maxDuration": 15,
       "includeFiles": "public/inventory.json"
+    },
+    "api/reviews.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
