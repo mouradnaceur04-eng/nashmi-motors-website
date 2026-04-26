@@ -933,8 +933,35 @@ function renderVehicle(c) {
   // ── Features & Options ───────────────────────────────────────
   const featCard = document.getElementById('vd-features-card');
   const featList = document.getElementById('vd-features-list');
-  if (Array.isArray(c.features) && c.features.length > 0) {
-    featList.innerHTML     = c.features.map(f => `<span class="vd-feature-tag">${f}</span>`).join('');
+
+  // Strip garbage that the scraper may have picked up from DealerCenter's page:
+  // • Google Translate language names (English, Français, Deutsch, etc.)
+  // • Vehicle spec column headers (Trim, Drivetrain, Mileage, VIN, etc.)
+  // • Spec values that duplicate the spec grid (17-char VINs, "xxx mi", "xx/xx" MPG)
+  const FEAT_BLOCKLIST = new Set([
+    'english','français','deutsch','italiano','español','简体中文','中文',
+    'português','русский','한국어','日本語','العربية','عربي','français',
+    'stock number','trim','drivetrain','transmission','engine','mileage',
+    'doors','exterior color','interior color','vin','mpg','mpg(city/highway)',
+    'fuel type','body type','make','model','year','drive','type','color',
+    'price','msrp','invoice','stock','odometer','cylinders','displacement',
+  ]);
+  function cleanFeatures(feats) {
+    return (feats || []).filter(f => {
+      const lo = (f || '').toLowerCase().trim();
+      if (!lo || lo.length < 3) return false;
+      if (FEAT_BLOCKLIST.has(lo)) return false;
+      if (/^[a-z0-9]{17}$/i.test(f)) return false;   // VIN number
+      if (/^\d[\d,]+ mi$/i.test(f)) return false;     // "114,973 mi"
+      if (/^\d+\/\d+$/.test(f)) return false;          // "18/30" MPG ratio
+      if (/^\$[\d,]+$/.test(f)) return false;           // "$5,495" price
+      return true;
+    });
+  }
+
+  const cleanedFeatures = cleanFeatures(c.features);
+  if (cleanedFeatures.length > 0) {
+    featList.innerHTML     = cleanedFeatures.map(f => `<span class="vd-feature-tag">${f}</span>`).join('');
     featCard.style.display = '';
   } else {
     featCard.style.display = 'none';

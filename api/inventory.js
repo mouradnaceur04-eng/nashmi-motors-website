@@ -17,7 +17,9 @@ const STATIC_JSON = path.join(__dirname, '..', 'public', 'inventory.json');
 const BODY_MAP = {
   sedan:  ['OPTIMA','ALTIMA','MAXIMA','COROLLA','CAMRY','ACCORD','CIVIC','FIESTA',
             'FOCUS','FUSION','TAURUS','MALIBU','SONATA','A4','A6','Q50','G37',
-            'FORTE','ELANTRA','SENTRA','JETTA','PASSAT','IMPREZA','SOUL'],
+            'FORTE','ELANTRA','SENTRA','JETTA','PASSAT','IMPREZA','SOUL',
+            'IMPALA','LACROSSE','REGAL','CHARGER','CHALLENGER','300','DART',
+            'GENESIS','G80','K5','K900','AVALON','CROWN'],
   suv:    ['ESCAPE','ROGUE','EXPLORER','EXPEDITION','GRAND CHEROKEE','CHEROKEE',
             'COMPASS','WRANGLER','EQUINOX','TERRAIN','TRAVERSE','QX60','QX50','FX35',
             'SPORTAGE','TUCSON','SANTA FE','Q5','Q7','X3','X5','PATHFINDER',

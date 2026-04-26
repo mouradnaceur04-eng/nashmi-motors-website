@@ -28,7 +28,9 @@ HEADERS = {
 BODY_TYPES = {
     "sedan": ["OPTIMA","ALTIMA","MAXIMA","COROLLA","CAMRY","ACCORD","CIVIC","FIESTA",
               "FOCUS","FUSION","200","TAURUS","MALIBU","SONATA","A4","A6","Q50","G37",
-              "FORTE","ELANTRA","SENTRA","JETTA","PASSAT","IMPREZA"],
+              "FORTE","ELANTRA","SENTRA","JETTA","PASSAT","IMPREZA","IMPALA","LACROSSE",
+              "REGAL","CHARGER","CHALLENGER","300","DART","GENESIS","G80","K5","K900",
+              "AVALON","CROWN","VENZA"],
     "suv":   ["ESCAPE","ROGUE","EXPLORER","EXPEDITION","GRAND CHEROKEE","CHEROKEE",
               "COMPASS","WRANGLER","EQUINOX","TERRAIN","TRAVERSE","QX60","QX50","FX35",
               "SOUL","SPORTAGE","TUCSON","SANTA FE","Q5","Q7","X3","X5","PATHFINDER",
@@ -166,8 +168,30 @@ def fetch_xml_feed() -> list[dict] | None:
     def find_photo(el) -> str:
         return (find_photos(el) or [""])[0]
 
+    # Words / phrases that are NEVER real vehicle features — filter them out
+    FEAT_BLOCKLIST = {
+        'english','français','deutsch','italiano','español','简体中文','中文',
+        'português','русский','한국어','العربية','عربي',
+        'stock number','trim','drivetrain','transmission','engine','mileage',
+        'doors','exterior color','interior color','vin','mpg','mpg(city/highway)',
+        'fuel type','body type','make','model','year','drive','type','color',
+        'price','msrp','invoice','stock','odometer','cylinders','displacement',
+    }
+
+    def clean_feature(f: str) -> str | None:
+        """Return cleaned feature string, or None if it should be discarded."""
+        f = f.strip()
+        lo = f.lower()
+        if not f or len(f) < 3:                    return None
+        if lo in FEAT_BLOCKLIST:                   return None
+        if re.match(r'^[A-Z0-9]{17}$', f):        return None  # VIN
+        if re.match(r'^\d[\d,]+ mi$', f, re.I):   return None  # "114,973 mi"
+        if re.match(r'^\d+/\d+$', f):             return None  # "18/30"
+        if re.match(r'^\$[\d,]+$', f):            return None  # "$5,495"
+        return f
+
     def find_features(el) -> list:
-        """Return list of features/options from XML."""
+        """Return list of features/options from XML, stripped of spec labels and GT text."""
         for tag in ["features","options","Options","Features","equipment","Equipment",
                     "OptionList","option_list","Packages","packages"]:
             node = el.find(tag)
@@ -175,11 +199,14 @@ def fetch_xml_feed() -> list[dict] | None:
                 # Could be comma/newline-separated text, or child elements
                 children = list(node)
                 if children:
-                    feats = [c.text.strip() for c in children if c.text and c.text.strip()]
+                    feats = [clean_feature(c.text) for c in children if c.text]
+                    feats = [f for f in feats if f]
                     if feats:
                         return feats
                 if node.text:
-                    items = [f.strip() for f in re.split(r'[,\n|;]', node.text) if f.strip() and len(f.strip()) > 2]
+                    raw = [f.strip() for f in re.split(r'[,\n|;]', node.text) if f.strip() and len(f.strip()) > 2]
+                    items = [clean_feature(f) for f in raw]
+                    items = [f for f in items if f]
                     if items:
                         return items
         return []
@@ -589,11 +616,31 @@ def scrape_playwright() -> list[dict]:
                     const ogImg = (document.querySelector('meta[property="og:image"]')?.content || '');
                     const primaryPhoto = ogImg.includes('imagescf.dealercenter') ? ogImg : null;
 
-                    // Features — look for lists of options/features
-                    const featEls = [...document.querySelectorAll('[class*="feature"],[class*="option"],[class*="equip"]')];
-                    const features = featEls.flatMap(el =>
-                        [...el.querySelectorAll('li,span,p')].map(e => e.innerText.trim())
-                    ).filter(f => f && f.length > 2 && f.length < 60 && !/^\\d+$/.test(f));
+                    // Features — DealerCenter uses .dws-features, .dws-options, or similar
+                    // IMPORTANT: exclude Google Translate elements (goog-*) and spec tables
+                    const FEAT_BLOCK = new Set([
+                        'english','français','deutsch','italiano','español','简体中文','中文',
+                        'português','русский','العربية','stock number','trim','drivetrain',
+                        'transmission','engine','mileage','doors','exterior color',
+                        'interior color','vin','mpg','fuel type','body type','make','model',
+                        'year','drive','type','color','price',
+                    ]);
+                    const featEls = [...document.querySelectorAll(
+                        '.dws-features li, .dws-options li, .dws-equip li, ' +
+                        '[class*="feature-list"] li, [class*="option-list"] li, ' +
+                        '[class*="features"] li:not([class*="goog"]), ' +
+                        '[class*="equipment"] li'
+                    )];
+                    const features = featEls.map(e => e.innerText.trim()).filter(f => {
+                        if (!f || f.length < 3 || f.length > 80) return false;
+                        if (FEAT_BLOCK.has(f.toLowerCase())) return false;
+                        if (/^[A-Z0-9]{17}$/.test(f)) return false;  // VIN
+                        if (/^\\d[\\d,]+ mi$/i.test(f)) return false;  // mileage
+                        if (/^\\d+\\/\\d+$/.test(f)) return false;      // MPG ratio
+                        if (/^\\$[\\d,]+$/.test(f)) return false;       // price
+                        if (/^\\d+$/.test(f)) return false;             // bare number
+                        return true;
+                    });
                     const uniqueFeats = [...new Set(features)].slice(0, 30);
 
                     return { specs, photos, primaryPhoto, features: uniqueFeats };
