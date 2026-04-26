@@ -934,9 +934,13 @@ document.querySelectorAll('input[name="Trade Loan"]').forEach(r => {
   });
 });
 
-// Populate vehicle dropdown from live inventory
+// Populate vehicle dropdown from live inventory, then auto-select if VIN in URL
 onInventoryLoaded = function() {
   const sel = document.querySelector('select[name="Vehicle Interest"]');
+  const params = new URLSearchParams(location.search);
+  const vinFromUrl     = params.get('vin');
+  const vehicleFromUrl = params.get('vehicle');
+
   if (sel) {
     sel.innerHTML = '<option>Not sure yet — show me what I qualify for</option>';
     inventory.forEach(c => {
@@ -947,8 +951,18 @@ onInventoryLoaded = function() {
       const o = document.createElement('option');
       o.value = label;
       o.textContent = label;
+      // Auto-select if this VIN came from the vehicle page button
+      if (vinFromUrl && c.vin === vinFromUrl) o.selected = true;
       sel.appendChild(o);
     });
+    // Fallback: if VIN not found in list but vehicle name was passed, add it
+    if (vinFromUrl && vehicleFromUrl && !inventory.find(c => c.vin === vinFromUrl)) {
+      const o = document.createElement('option');
+      o.value = vehicleFromUrl;
+      o.textContent = vehicleFromUrl;
+      o.selected = true;
+      sel.appendChild(o);
+    }
   }
   // Sidebar deals
   const deals = inventory.filter(c => c.sale).slice(0, 4);

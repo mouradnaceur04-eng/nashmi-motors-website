@@ -190,7 +190,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Right — pricing + actions panel */
+/* ── Right — pricing + actions panel ─────────────────────────── */
 .vd-panel {
   position: sticky;
   top: 90px;
@@ -199,44 +199,51 @@
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: var(--shadow);
+  padding: 28px 28px 24px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
 }
+
+/* Vehicle name + subtitle */
 .vd-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--dark);
-  line-height: 1.2;
-  margin-bottom: 6px;
+  line-height: 1.25;
+  margin-bottom: 5px;
 }
 .vd-subtitle {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--gray);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
+
+/* ── Price block ── */
 .vd-price-block {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
 }
 .vd-price-main {
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 900;
   font-family: 'Poppins', sans-serif;
   color: var(--dark);
   line-height: 1;
 }
-.vd-price-main.sale-price { color: #e53e3e; }
+.vd-price-main.sale-price { color: #16a34a; }
 .vd-price-was {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--gray-light);
   text-decoration: line-through;
   margin-top: 4px;
 }
 .vd-savings-tag {
-  display: inline-block;
-  background: #fef2f2;
-  color: #e53e3e;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
   font-size: 12px;
   font-weight: 700;
   padding: 3px 10px;
@@ -250,18 +257,101 @@
   margin-top: 8px;
 }
 
+/* ── Action buttons ── */
 .vd-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
+  gap: 9px;
+  margin-bottom: 20px;
 }
 .vd-actions .btn {
   width: 100%;
   justify-content: center;
   font-size: 13px;
-  padding: 14px 20px;
+  padding: 13px 20px;
+  border-radius: 10px;
 }
+
+/* Reserve button — distinct gold/amber style */
+.btn-reserve {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 13px 20px;
+  background: #fff8e1;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.15s;
+}
+.btn-reserve:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+}
+.btn-reserve .reserve-note {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.75;
+  display: block;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+/* ── Reserve modal ── */
+.vd-modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.vd-modal-backdrop.open { display: flex; }
+.vd-modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.vd-modal h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+.vd-modal p.vd-modal-sub {
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+.vd-modal-close {
+  position: absolute;
+  top: 16px; right: 18px;
+  background: none; border: none;
+  font-size: 22px; color: var(--gray);
+  cursor: pointer; line-height: 1;
+}
+.vd-modal-close:hover { color: var(--dark); }
+.vd-modal .form-group { margin-bottom: 14px; }
+.vd-modal .form-group label { font-size: 12px; font-weight: 600; color: var(--gray); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+.vd-modal .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; box-sizing: border-box; }
+.vd-modal .form-group input:focus { border-color: var(--green); }
+.vd-modal-disclaimer { font-size: 11px; color: var(--gray-light); margin-top: 12px; line-height: 1.5; text-align: center; }
 
 .vd-contact-strip {
   display: flex;
@@ -639,7 +729,7 @@
     </section>
 
     <!-- TEST DRIVE FORM -->
-    <section class="vd-form-section">
+    <section class="vd-form-section" id="td-form-section">
       <div class="container">
         <div class="vd-form-inner">
           <div class="vd-form-left animate-on-scroll">
@@ -925,9 +1015,26 @@ function renderVehicle(c) {
   document.getElementById('vd-price-block').innerHTML = priceHtml;
 
   // ── Action buttons ────────────────────────────────────────────
+  // VIN is passed in the URL so the dealer knows which car on every action
+  const vinParam = c.vin ? `?vin=${encodeURIComponent(c.vin)}&vehicle=${encodeURIComponent(label)}` : '';
+
   let actionsHtml = `
-    <a href="apply.html" class="btn btn-primary">Apply for Financing</a>
-    <a href="index.html#test-drive" class="btn btn-outline-green">Schedule a Test Drive</a>`;
+    <a href="apply.html${vinParam}" class="btn btn-primary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" fill="currentColor"/></svg>
+      Apply for Financing
+    </a>
+    <button onclick="document.getElementById('td-form-section').scrollIntoView({behavior:'smooth'})" class="btn btn-outline-green" style="border:none;cursor:pointer;font-family:inherit">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M8 2v3M16 2v3M3 8h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Schedule a Test Drive
+    </button>
+    <button onclick="openReserveModal()" class="btn-reserve">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>
+        Reserve This Vehicle
+        <span class="reserve-note">Hold it with a $500 deposit</span>
+      </span>
+    </button>`;
+
   if (c.carfax) {
     const isOneOwner = (c.carfaxBadge || '').toLowerCase().includes('1own');
     const smtcSvg    = isOneOwner ? '1own.svg' : 'showme.svg';
@@ -937,6 +1044,10 @@ function renderVehicle(c) {
       </a>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
+
+  // Pre-fill the reserve modal with vehicle info
+  const modalVehicleField = document.getElementById('reserve-vehicle-field');
+  if (modalVehicleField) modalVehicleField.value = label + (c.vin ? ` (VIN: ${c.vin})` : '');
 
   // ── Specs ─────────────────────────────────────────────────────
   document.getElementById('spec-miles').textContent = fmtMiles(c.miles);
@@ -1025,6 +1136,78 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
+<!-- ── Reserve Vehicle Modal ────────────────────────────────────── -->
+<div class="vd-modal-backdrop" id="reserve-modal" onclick="if(event.target===this)closeReserveModal()">
+  <div class="vd-modal">
+    <button class="vd-modal-close" onclick="closeReserveModal()" aria-label="Close">&#x2715;</button>
+    <h3>Reserve This Vehicle</h3>
+    <p class="vd-modal-sub">
+      Hold this car for <strong>up to 7 days</strong> with a fully refundable $500 deposit.
+      We'll contact you within 1 hour to confirm.
+    </p>
+    <form id="reserve-form" onsubmit="submitReserve(event)">
+      <input type="hidden" id="reserve-vehicle-field" name="Vehicle">
+      <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" name="Name" placeholder="Full name" required>
+      </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="Email" placeholder="Optional">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:14px;font-size:14px;margin-top:6px">
+        Send Reservation Request
+      </button>
+    </form>
+    <div id="reserve-success" style="display:none;text-align:center;padding:16px 0 8px">
+      <div style="width:48px;height:48px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p style="font-weight:700;color:var(--dark);margin-bottom:6px">Request Sent!</p>
+      <p style="font-size:13px;color:var(--gray)">We'll call you within 1 hour to confirm your deposit and hold the vehicle.</p>
+    </div>
+    <p class="vd-modal-disclaimer">Deposit is 100% refundable if you decide not to purchase. No credit check required to reserve.</p>
+  </div>
+</div>
+
+<script>
+function openReserveModal() {
+  document.getElementById('reserve-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeReserveModal() {
+  document.getElementById('reserve-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function submitReserve(e) {
+  e.preventDefault();
+  const form   = e.target;
+  const name   = form.querySelector('[name="Name"]').value;
+  const phone  = form.querySelector('[name="Phone"]').value;
+  const email  = form.querySelector('[name="Email"]').value;
+  const vehicle = document.getElementById('reserve-vehicle-field').value;
+  const subject = encodeURIComponent(`Vehicle Reservation Request — ${vehicle}`);
+  const body    = encodeURIComponent(
+    `VEHICLE RESERVATION REQUEST\n\n` +
+    `Vehicle: ${vehicle}\n` +
+    `Name: ${name}\n` +
+    `Phone: ${phone}\n` +
+    `Email: ${email || 'Not provided'}\n\n` +
+    `Customer is requesting to hold this vehicle with a $500 deposit.\n` +
+    `Please contact them within 1 hour to confirm.`
+  );
+  window.location.href = `mailto:sales@nashmimotors.com?subject=${subject}&body=${body}`;
+  form.style.display = 'none';
+  document.getElementById('reserve-success').style.display = 'block';
+}
+// Close modal on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReserveModal(); });
+</script>
+
 <script>
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
