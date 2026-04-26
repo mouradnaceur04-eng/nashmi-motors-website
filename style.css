@@ -188,7 +188,21 @@ img { max-width: 100%; height: auto; display: block; }
   padding-top: 14px;
   padding-bottom: 14px;
 }
-.logo img { height: 52px; width: auto; }
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;        /* never let the logo compress on small screens */
+  text-decoration: none;
+}
+.logo img {
+  height: 50px;
+  max-height: 50px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 480px) {
+  .logo img { height: 38px; max-height: 38px; }
+}
 
 .nav {
   display: flex;
