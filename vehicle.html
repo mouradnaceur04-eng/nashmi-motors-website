@@ -36,10 +36,13 @@
 
 .vd-layout {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  /* Desktop: gallery ~66% | pricing panel ~34% */
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 40px;
   align-items: start;
   padding-bottom: 60px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Left — image + specs */
@@ -300,55 +303,60 @@
 .vd-not-found h2 { font-size: 28px; margin-bottom: 12px; color: var(--dark); }
 .vd-not-found p  { color: var(--gray); margin-bottom: 28px; }
 
-/* Responsive */
-@media (max-width: 960px) {
-  .vd-layout { grid-template-columns: 1fr; }
-  .vd-panel  { position: static; }
-  .vd-form-inner { grid-template-columns: 1fr; gap: 32px; }
-}
+/* ── Responsive: layout stacks at 768px (tablets + phones) ─────────────── */
 @media (max-width: 768px) {
-  /* Test Drive section — force single column, never squashed left */
-  .vd-form-inner {
-    display: block;
-    width: 100%;
+  /* Stack gallery above pricing panel — 100% width each */
+  .vd-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  .vd-form-left {
-    margin-bottom: 32px;
-    width: 100%;
-  }
+  .vd-panel  { position: static; }
+
+  /* Test Drive section */
+  .vd-form-inner { display: block; width: 100%; }
+  .vd-form-left  { margin-bottom: 32px; width: 100%; }
   .vd-form-left h2 { font-size: 22px; }
-  /* gallery wrap must never exceed viewport */
+
+  /* Gallery — clamp to viewport */
   .vd-gallery-wrap,
   .vd-photo-wrap {
     width: 100%;
-    max-width: 100vw;
+    max-width: 100%;
     box-sizing: border-box;
   }
-}
-/* Tablet — tighten panel padding */
-@media (max-width: 768px) {
-  .vd-panel-card { padding: 24px; }
-  .vd-title { font-size: 22px; }
-  .vd-price-main { font-size: 30px; }
+
+  /* Tighten padding on cards */
+  .vd-panel-card   { padding: 24px; }
+  .vd-title        { font-size: 22px; }
+  .vd-price-main   { font-size: 30px; }
   .vd-form-section { padding: 40px 0; }
-  .vd-specs-card { padding: 20px; }
+  .vd-specs-card   { padding: 20px; }
   .vd-features-card { padding: 20px; }
 }
+
+/* ── Mobile: full-bleed gallery at 600px ───────────────────────────────── */
 @media (max-width: 600px) {
-  /* Gallery goes full-bleed on mobile — but never past the viewport edge */
   .vd-hero { width: 100%; max-width: 100vw; overflow: hidden; }
   .vd-hero .container { padding: 0; width: 100%; max-width: 100%; }
   .vd-breadcrumb { padding: 0 16px; }
   .vd-left, .vd-right { padding: 0 16px; width: 100%; box-sizing: border-box; }
   .vd-layout { gap: 16px; width: 100%; }
   .vd-gallery-wrap { border-radius: 0; width: 100%; max-width: 100vw; overflow: hidden; }
-  .vd-gallery-thumbs { padding: 0 16px 4px; margin-top: 8px; max-width: 100vw; }
+
+  /* Thumbnails wrap to multi-row on small screens, smaller size to fit more */
+  .vd-gallery-thumbs {
+    padding: 0 16px 4px;
+    margin-top: 8px;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .vd-thumb { width: 60px; height: 44px; }
 
   .vd-specs-grid { grid-template-columns: 1fr 1fr; }
   .vd-title { font-size: 20px; }
   .vd-price-main { font-size: 28px; }
   .vd-gal-btn { width: 44px; height: 44px; font-size: 22px; }
-  .vd-thumb { width: 64px; height: 48px; }
   .vd-smtc img { height: 32px; }
   .vd-actions { flex-wrap: wrap; gap: 10px; }
   .vd-actions .btn { flex: 1 1 calc(50% - 5px); min-width: 0; text-align: center; min-height: 44px; }
@@ -404,11 +412,10 @@
 }
 .vd-gallery-thumbs {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;           /* wrap to multiple rows — never stretches page width */
+  gap: 6px;
   margin-top: 10px;
-  overflow-x: auto;
   padding-bottom: 4px;
-  scrollbar-width: thin;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -458,7 +465,8 @@
 }
 .vd-features-list {
   display: flex;
-  flex-wrap: wrap;       /* tags wrap to next line — never push page wider */
+  flex-wrap: wrap;
+  justify-content: center;   /* center-align like original nashmimotors.com */
   gap: 8px;
   max-width: 100%;
   overflow: hidden;
@@ -853,6 +861,9 @@ function renderVehicle(c) {
   }
 
   // ── Photo gallery ─────────────────────────────────────────────
+  // c.photos is already sorted by DealerCenter Position order (set by the
+  // scraper which reads data-slick-index from DealerCenter's gallery).
+  // We use the array as-is — index 0 = Position 1 in DealerCenter DMS.
   galleryPhotos = Array.isArray(c.photos) && c.photos.length ? c.photos : c.imgUrl ? [c.imgUrl] : [];
   galleryIdx    = 0;
   galleryMeta   = {
