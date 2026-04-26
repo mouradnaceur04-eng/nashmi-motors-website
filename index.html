@@ -121,7 +121,7 @@
   <!-- Background car image — swapped dynamically to Camry by heroImageInit() -->
   <div class="hero-bg">
     <img id="hero-bg-img"
-         src="https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
+         src="https://imagescf.dealercenter.net/1280/960/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
          alt="Nashmi Motors inventory" aria-hidden="true" loading="eager"
          fetchpriority="high">
   </div>
@@ -602,16 +602,14 @@ loadInventory();
 
       var vs = data.vehicles;
 
-      // Priority order: 2016 Camry > any Camry > any Toyota > any sedan/car with photo
+      // Priority order: KIA OPTIMA first, then other nice sedans, then anything with a photo
       function score(v) {
         var make  = (v.make  || '').toUpperCase();
         var model = (v.model || '').toUpperCase();
-        var yr    = parseInt(v.year, 10) || 0;
         if (!v.imgUrl) return 0;
-        if (make === 'TOYOTA' && model.includes('CAMRY') && yr === 2016) return 100;
-        if (make === 'TOYOTA' && model.includes('CAMRY'))                  return 80;
-        if (make === 'TOYOTA')                                              return 60;
-        if (['SEDAN','OPTIMA','IMPALA','TAURUS','JETTA','ALTIMA'].some(function(k){ return model.includes(k); })) return 40;
+        if (make === 'KIA'  && model.includes('OPTIMA'))  return 100;
+        if (make === 'KIA')                                return 60;
+        if (['CAMRY','ALTIMA','ACCORD','CIVIC','JETTA','PASSAT'].some(function(k){ return model.includes(k); })) return 40;
         return 10;
       }
 
