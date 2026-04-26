@@ -1902,10 +1902,47 @@ img { max-width: 100%; height: auto; display: block; }
   .reviews-grid { grid-template-columns: 1fr; }
   .body-types { gap: 10px; }
   .body-type-card { padding: 20px 22px; min-width: 100px; }
-  /* Mobile CarFax badge + actions fixes */
+  /* ── CarFax badge fixes (inventory cards) ──────────────────────────────
+     .car-img-wrap img above sets width:100%;height:100% on every img inside
+     the card — that rule stretches the CarFax badge SVG to fill the photo.
+     Override width and height here with !important so the badge stays small. */
+  .car-img-wrap, .car-img {
+    position: relative !important;   /* anchor for absolute-positioned badges */
+    overflow: hidden !important;
+  }
+  .cfx-badge-wrap {
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    width: auto !important;
+    z-index: 10 !important;
+    line-height: 0 !important;
+  }
+  .cfx-badge-wrap img {
+    width: auto !important;      /* cancel the width:100% from .car-img-wrap img */
+    height: 26px !important;
+    max-width: none !important;
+    display: block !important;
+    object-fit: unset !important;
+  }
+  /* Show Me The CarFax link in action row — keep it inline, no stretch */
+  .smtc-badge {
+    display: inline-flex !important;
+    width: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  .smtc-badge img {
+    width: auto !important;
+    height: 26px !important;
+    max-width: none !important;
+    object-fit: unset !important;
+  }
+  /* Mobile CarFax + actions */
   .car-actions { flex-wrap: wrap; gap: 8px; }
-  .smtc-badge img { height: 28px; }
-  .cfx-badge-wrap img { height: 28px !important; }
   .car-actions .btn { font-size: 12px; padding: 9px 12px; min-height: 44px; }
 }
 

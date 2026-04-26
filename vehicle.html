@@ -673,6 +673,69 @@ html, body {
   /* NAV ARROWS */
   .vd-gal-btn { width: 44px !important; height: 44px !important; font-size: 22px !important; }
 }
+
+/* ── CarFax badge fixes — vehicle detail page ───────────────
+   The gallery wrap uses overflow:hidden + margin-left breakout
+   on mobile which can knock the absolutely-positioned badge out
+   of its anchor. Force everything back in place. */
+@media (max-width: 768px) {
+
+  /* Photo wrap MUST be position:relative — it's the badge anchor */
+  .vd-photo-wrap {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* CarFax SVG overlay badge — stay pinned bottom-left of the photo */
+  .vd-cfx-badge-svg {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    width: auto !important;
+    z-index: 10 !important;
+    line-height: 0 !important;
+    display: block !important;
+  }
+  /* The actual SVG image — fixed small size, no stretch */
+  .vd-cfx-badge-svg img {
+    height: 32px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+    object-fit: unset !important;
+  }
+
+  /* Text pill badge (.cfx-label / .cfx-value) — also stays absolute */
+  .vd-cfx-badge {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+  }
+  /* Keep individual pill segments their correct brand colours */
+  .vd-cfx-badge .cfx-label { background: #003399 !important; }
+
+  /* Show Me The CarFax link in the actions panel — inline, no stretch */
+  .vd-smtc {
+    display: inline-flex !important;
+    width: auto !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+  .vd-smtc img {
+    width: auto !important;
+    height: 30px !important;
+    max-width: none !important;
+    object-fit: unset !important;
+  }
+}
 </style>
 </head>
 <body>
