@@ -137,6 +137,23 @@ img { max-width: 100%; height: auto; display: block; }
   color: #fff;
 }
 
+/* Google Review button — white card with subtle border, G logo inline */
+.btn-google-review {
+  background: #fff;
+  color: #3c4043;
+  border-color: #dadce0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  font-weight: 600;
+  min-height: 48px;    /* large enough for thumb tap on mobile */
+}
+.btn-google-review:hover {
+  background: #f8f9fa;
+  border-color: #4285F4;
+  box-shadow: 0 4px 16px rgba(66,133,244,0.20);
+  transform: translateY(-2px);
+  color: #3c4043;
+}
+
 /* ---- TOP BAR ---- */
 .topbar {
   background: var(--dark);
