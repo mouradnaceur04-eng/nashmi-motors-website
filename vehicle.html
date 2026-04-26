@@ -616,6 +616,26 @@ body::after {
   .vd-specs-card    { padding: 20px !important; }
   .vd-features-card { padding: 20px !important; }
 
+  /* ── ANIMATION KILL: the real cause of the drift ──────────────────
+     .animate-on-scroll starts at opacity:0 + translateY(24px).
+     On mobile the IntersectionObserver (threshold:0.1) can fail to
+     fire if the element starts below the viewport, leaving the
+     columns invisible and 24px lower than they should be.
+     Fix: force every animated element in this section to its final
+     visible state immediately — no scroll-triggered fade needed.   */
+  #td-form-section .animate-on-scroll,
+  #td-form-section .animate-on-scroll.visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ── DEBUG BORDER (remove after confirming layout is correct) ── */
+  #td-form-section {
+    outline: 5px solid red !important;
+  }
+
   /* TEST DRIVE SECTION: full-width box, no horizontal escape */
   #td-form-section,
   .vd-form-section {
