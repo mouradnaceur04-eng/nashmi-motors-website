@@ -121,7 +121,7 @@
   <!-- Background car image — swapped dynamically to Camry by heroImageInit() -->
   <div class="hero-bg">
     <img id="hero-bg-img"
-         src="https://imagescf.dealercenter.net/1280/960/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
+         src="https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
          alt="Nashmi Motors inventory" aria-hidden="true" loading="eager"
          fetchpriority="high">
   </div>
@@ -593,56 +593,6 @@ onInventoryLoaded = function() {
 
 loadInventory();
 
-// ── Dynamic hero image — pulls Camry (or best sedan) from live inventory ──
-(function heroImageInit() {
-  fetch('/api/inventory')
-    .then(function(r) { return r.ok ? r.json() : null; })
-    .then(function(data) {
-      if (!data || !data.vehicles || !data.vehicles.length) return;
-
-      var vs = data.vehicles;
-
-      // Priority order: KIA OPTIMA first, then other nice sedans, then anything with a photo
-      function score(v) {
-        var make  = (v.make  || '').toUpperCase();
-        var model = (v.model || '').toUpperCase();
-        if (!v.imgUrl) return 0;
-        if (make === 'KIA'  && model.includes('OPTIMA'))  return 100;
-        if (make === 'KIA')                                return 60;
-        if (['CAMRY','ALTIMA','ACCORD','CIVIC','JETTA','PASSAT'].some(function(k){ return model.includes(k); })) return 40;
-        return 10;
-      }
-
-      var best = vs.slice().sort(function(a, b) { return score(b) - score(a); })[0];
-      if (!best || !best.imgUrl) return;
-
-      // Upgrade to highest available resolution on DealerCenter CDN
-      var hiRes = best.imgUrl.replace(
-        /imagescf\.dealercenter\.net\/\d+\/\d+\//,
-        'imagescf.dealercenter.net/1280/960/'
-      );
-
-      var heroImg = document.getElementById('hero-bg-img');
-      if (!heroImg) return;
-
-      // Pre-load before swapping so there's no flash
-      var preload = new Image();
-      preload.onload = function() {
-        heroImg.src = hiRes;
-        heroImg.setAttribute('alt', (best.year || '') + ' ' + (best.make || '') + ' ' + (best.model || ''));
-      };
-      preload.onerror = function() {
-        // 1280/960 not available — use 1024/768 fallback
-        var med = best.imgUrl.replace(
-          /imagescf\.dealercenter\.net\/\d+\/\d+\//,
-          'imagescf.dealercenter.net/1024/768/'
-        );
-        heroImg.src = med;
-      };
-      preload.src = hiRes;
-    })
-    .catch(function() { /* keep placeholder on any error */ });
-})();
 
 // Test drive form
 function handleTestDrive(e) {
