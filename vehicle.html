@@ -631,10 +631,7 @@ body::after {
     animation: none !important;
   }
 
-  /* ── DEBUG BORDER (remove after confirming layout is correct) ── */
-  #td-form-section {
-    outline: 5px solid red !important;
-  }
+
 
   /* TEST DRIVE SECTION: full-width box, no horizontal escape */
   #td-form-section,
@@ -757,22 +754,26 @@ body::after {
   .vd-subtitle   { font-size: 12px !important; }
   .vd-price-main { font-size: 28px !important; }
 
-  /* ACTION BUTTONS: 2-up grid, reserve spans full row */
+  /* ACTION BUTTONS: single column stack — "SCHEDULE A TEST DRIVE"
+     is too long for a 2-column grid on a phone without clipping */
   .vd-actions {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 8px !important;
-  }
-  .vd-actions .btn {
     width: 100% !important;
-    min-height: 46px !important;
-    font-size: 13px !important;
-    padding: 11px 8px !important;
-    justify-content: center !important;
   }
+  .vd-actions .btn,
   .btn-reserve {
-    grid-column: 1 / -1 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+    font-size: 14px !important;
+    padding: 13px 16px !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   /* CARDS */
