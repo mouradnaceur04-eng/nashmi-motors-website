@@ -1223,9 +1223,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReserve
 </script>
 
 <script>
-// ── Language Switcher ────────────────────────────────────────────
+// ── Language Switcher ─────────────────────────────────────────────────────
 const LANG_LABELS = { en: 'EN', es: 'ES', ar: 'AR', fr: 'FR' };
 
+// ── UI helpers ────────────────────────────────────────────────────────────
 function toggleLangMenu(e) {
   e && e.stopPropagation();
   const menu = document.getElementById('lang-menu');
@@ -1245,37 +1246,90 @@ function toggleLangMenu(e) {
   menu.classList.toggle('open', !open);
   btn.setAttribute('aria-expanded', String(!open));
 }
+
 function closeLangMenu() {
   const menu = document.getElementById('lang-menu');
   const btn  = document.getElementById('lang-btn');
   if (menu) menu.classList.remove('open');
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
-function setLanguage(lang) {
-  const apply = () => {
-    const sel = document.querySelector('.goog-te-combo');
-    if (sel) {
-      sel.value = lang === 'en' ? '' : lang;
-      sel.dispatchEvent(new Event('change'));
-    }
-  };
-  apply();
-  setTimeout(apply, 700); // retry if GT not yet ready
+
+function _updateLangUI(lang) {
   const lbl = document.getElementById('lang-label');
   if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
   document.querySelectorAll('.lang-option').forEach(el =>
     el.classList.toggle('active', el.dataset.lang === lang)
   );
-  closeLangMenu();
 }
-document.addEventListener('click', e => {
-  if (!e.target.closest('#lang-switcher')) closeLangMenu();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeLangMenu();
-});
 
-// Google Translate init (hidden widget powers the translation)
+// ── Cookie helpers (Google Translate reads googtrans cookie on page load) ──
+function _setCookie(lang) {
+  const val = lang === 'en' ? '' : '/en/' + lang;
+  document.cookie = 'googtrans=' + val + '; path=/; SameSite=Lax';
+  // also set on sub-domain so it persists across pages
+  document.cookie = 'googtrans=' + val + '; path=/; domain=.' + location.hostname + '; SameSite=Lax';
+}
+
+function _clearCookie() {
+  const exp = 'expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  document.cookie = 'googtrans=; ' + exp + '; path=/; SameSite=Lax';
+  document.cookie = 'googtrans=; ' + exp + '; path=/; domain=.' + location.hostname + '; SameSite=Lax';
+}
+
+function _readCookieLang() {
+  const m = document.cookie.match(/googtrans=\/en\/([a-z]{2,})/);
+  return m ? m[1] : null;
+}
+
+// ── Poll for Google Translate's hidden <select> (it loads async) ──────────
+function _waitForGTSelect(callback) {
+  let tries = 0;
+  const id = setInterval(() => {
+    const sel = document.querySelector('.goog-te-combo');
+    if (sel) { clearInterval(id); callback(sel); }
+    else if (++tries > 40) clearInterval(id); // give up after ~8 s
+  }, 200);
+}
+
+// ── Main: switch language ─────────────────────────────────────────────────
+function setLanguage(lang) {
+  closeLangMenu();
+  _updateLangUI(lang);
+
+  // Persist so every subsequent page loads in this language
+  try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
+
+  if (lang === 'en') {
+    _clearCookie();
+    location.reload();   // reload without cookie = Google shows original English
+    return;
+  }
+
+  // Set cookie NOW — if user navigates to another page it will auto-translate
+  _setCookie(lang);
+
+  // Trigger the hidden Google Translate select (translates without page reload)
+  _waitForGTSelect(function(sel) {
+    sel.value = lang;
+    sel.dispatchEvent(new Event('change'));
+  });
+}
+
+// ── On every page load: restore the active language in the UI ─────────────
+(function restoreUI() {
+  // Priority: googtrans cookie > localStorage
+  const lang = _readCookieLang() || localStorage.getItem('nashmi_lang') || 'en';
+  if (lang !== 'en') {
+    _updateLangUI(lang);
+    _setCookie(lang); // ensure cookie is set so GT auto-translates this page
+  }
+})();
+
+// Close dropdown on outside click or Escape
+document.addEventListener('click',   e => { if (!e.target.closest('#lang-switcher')) closeLangMenu(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLangMenu(); });
+
+// ── Google Translate widget init (hidden, but powers the translation) ─────
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'en',

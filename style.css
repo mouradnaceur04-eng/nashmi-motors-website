@@ -2038,8 +2038,12 @@ img { max-width: 100%; height: auto; display: block; }
 /* The widget sits in the header next to the hamburger on mobile */
 /* ── Google Translate — hide the raw widget, we use our own UI ── */
 #google_translate_element { display: none !important; position: absolute; pointer-events: none; height: 0; overflow: hidden; }
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-body { top: 0 !important; }
+/* Nuke every UI element Google Translate injects */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.skiptranslate { display: none !important; height: 0 !important; }
+body { top: 0 !important; }           /* GT shifts body down — undo it */
+.skiptranslate { display: none !important; }
 .goog-logo-link { display: none !important; }
 .goog-te-gadget { font-size: 0 !important; }
 
