@@ -118,8 +118,43 @@ function parseXML(xml) {
       if (!photos.includes(am[1])) photos.push(am[1]);
     }
 
-    const cfxUrl  = tag(b, 'carfax_url') || tag(b, 'carfax') || '';
-    const isSale  = sale && sale < price;
+    const cfxUrl = tag(b, 'carfax_url') || tag(b, 'carfax') || '';
+
+    // ── CarFax badge: try every field name DealerCenter might use ───────────
+    const cfxBadgeRaw =
+      tag(b, 'carfax_badge')     || tag(b, 'CarFaxBadge')    ||
+      tag(b, 'carfax_value')     || tag(b, 'CarFaxValue')     ||
+      tag(b, 'value_badge')      || tag(b, 'ValueBadge')      ||
+      tag(b, 'carfax_highlight') || tag(b, 'CarFaxHighlight') ||
+      tag(b, 'carfaxhighlight')  || tag(b, 'cfx_highlight')   || '';
+
+    // ── 1-Owner: dedicated fields OR keyword in badge/highlight field ────────
+    const ownerRaw =
+      tag(b, 'carfax_one_owner') || tag(b, 'CarFaxOneOwner') ||
+      tag(b, 'one_owner')        || tag(b, 'OneOwner')        ||
+      tag(b, 'owners')           || tag(b, 'ownercount')      || '';
+    const isOneOwner =
+      /1[\s\-]?owner/i.test(cfxBadgeRaw + ' ' + ownerRaw) ||
+      /^1$/.test(ownerRaw.trim());   // owners = "1" means single owner
+
+    // ── Normalise to strings app.js badge logic understands ─────────────────
+    // app.js checks badge.includes('1own') and badge.includes('great/good/fair')
+    let carfaxBadge = null;
+    if (cfxBadgeRaw || isOneOwner) {
+      const bl    = cfxBadgeRaw.toLowerCase();
+      const great = bl.includes('great');
+      const good  = bl.includes('good');
+      const fair  = bl.includes('fair');
+      if      (isOneOwner && great) carfaxBadge = '1own_great';
+      else if (isOneOwner && good)  carfaxBadge = '1own_good';
+      else if (isOneOwner && fair)  carfaxBadge = '1own_fair';
+      else if (isOneOwner)          carfaxBadge = '1own';
+      else if (great)               carfaxBadge = 'Great Value';
+      else if (good)                carfaxBadge = 'Good Value';
+      else if (fair)                carfaxBadge = 'Fair Value';
+    }
+
+    const isSale = sale && sale < price;
 
     return {
       year, make, model, trim, vin, miles,
@@ -131,7 +166,7 @@ function parseXML(xml) {
       img:         photos[0] || null,
       photos:      photos.slice(0, 20),
       carfax:      cfxUrl || null,
-      carfaxBadge: null,
+      carfaxBadge,
       bodyType:    bodyType(model),
       id: vin || `${year}-${make}-${model}`.replace(/\s+/g, '-').toLowerCase(),
     };

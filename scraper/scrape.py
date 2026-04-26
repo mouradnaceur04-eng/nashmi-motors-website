@@ -237,7 +237,8 @@ def fetch_xml_feed() -> list[dict] | None:
         fuel_raw   = t(el, "fuel","FuelType","fuel_type","Fuel")
         carfax     = t(el, "carfax","CarFax","carfax_url","CarFaxURL")
         url_raw    = t(el, "url","URL","link","Link","detail_url","DetailURL")
-        badge_raw  = t(el, "carfax_badge","CarFaxBadge","carfax_value","CarFaxValue","value_badge")
+        badge_raw  = t(el, "carfax_badge","CarFaxBadge","carfax_value","CarFaxValue",
+                          "value_badge","carfax_highlight","CarFaxHighlight","cfx_highlight")
 
         if not (vin or (year and make and model)):
             continue
@@ -266,10 +267,20 @@ def fetch_xml_feed() -> list[dict] | None:
             url_raw = f"https://www.nashmimotors.com/inventory/{make_slug}/{model_slug}/"
 
         # Normalise carfax badge from XML feed
+        # Also check dedicated 1-owner fields DealerCenter may send
+        owner_raw  = t(el, "carfax_one_owner","CarFaxOneOwner","one_owner","OneOwner",
+                          "owners","ownercount")
+        is_one_own = bool(re.search(r'1[\s\-]?owner', (badge_raw or '') + ' ' + (owner_raw or ''), re.I) \
+                     or (owner_raw or '').strip() == '1')
         xml_badge = None
-        if re.search(r'great', badge_raw or '', re.I):   xml_badge = "Great Value"
-        elif re.search(r'good',  badge_raw or '', re.I): xml_badge = "Good Value"
-        elif re.search(r'fair',  badge_raw or '', re.I): xml_badge = "Fair Value"
+        bl = (badge_raw or '').lower()
+        if   is_one_own and 'great' in bl: xml_badge = '1own_great'
+        elif is_one_own and 'good'  in bl: xml_badge = '1own_good'
+        elif is_one_own and 'fair'  in bl: xml_badge = '1own_fair'
+        elif is_one_own:                   xml_badge = '1own'
+        elif 'great' in bl:                xml_badge = 'Great Value'
+        elif 'good'  in bl:                xml_badge = 'Good Value'
+        elif 'fair'  in bl:                xml_badge = 'Fair Value'
 
         vehicles.append({
             "vin":    vin    or None,
@@ -500,14 +511,21 @@ def scrape_playwright() -> list[dict]:
                     // CarFax badge — DealerCenter uses partnerstatic.carfax.com/img/valuebadge/{type}.svg
                     // Badge filenames: great.svg, good.svg, 1own_good.svg, 1own_fair.svg, fair.svg, etc.
                     let carfaxBadge = null;
+                    // Map CarFax CDN SVG filename → internal badge string
+                    // Filenames: showme.svg, 1own.svg, great.svg, good.svg, fair.svg,
+                    //            1own_great.svg, 1own_good.svg, 1own_fair.svg
                     const cfxBadgeImgs = [...item.querySelectorAll('img[src*="partnerstatic.carfax.com/img/valuebadge/"]')];
                     for (const img of cfxBadgeImgs) {
                         const src = img.src || '';
-                        const filename = src.split('/').pop().replace('.svg','').toLowerCase();
-                        if (filename.includes('great'))     { carfaxBadge = 'Great Value'; break; }
-                        if (filename.includes('good'))      { carfaxBadge = 'Good Value';  break; }
-                        if (filename.includes('fair'))      { carfaxBadge = 'Fair Value';  break; }
-                        // showme.svg / 1own.svg = no value rating, skip
+                        const fn  = src.split('/').pop().replace('.svg','').toLowerCase();
+                        if (fn === 'showme') break; // no badge info
+                        if (fn.includes('1own') && fn.includes('great')) { carfaxBadge = '1own_great'; break; }
+                        if (fn.includes('1own') && fn.includes('good'))  { carfaxBadge = '1own_good';  break; }
+                        if (fn.includes('1own') && fn.includes('fair'))  { carfaxBadge = '1own_fair';  break; }
+                        if (fn.includes('1own'))                         { carfaxBadge = '1own';        break; }
+                        if (fn.includes('great'))                        { carfaxBadge = 'Great Value'; break; }
+                        if (fn.includes('good'))                         { carfaxBadge = 'Good Value';  break; }
+                        if (fn.includes('fair'))                         { carfaxBadge = 'Fair Value';  break; }
                     }
 
                     return {
@@ -540,11 +558,17 @@ def scrape_playwright() -> list[dict]:
                 miles_raw = c.get('miles','').replace(',','')
                 miles = int(miles_raw) if miles_raw.isdigit() else None
                 # Normalise carfax badge — from DOM first, then from network intercept map
+                # DOM scraper now returns internal strings like '1own', '1own_good', etc.
                 raw_badge = (c.get('carfaxBadge') or '').strip()
                 badge = None
-                if re.search(r'great', raw_badge, re.I):   badge = "Great Value"
-                elif re.search(r'good',  raw_badge, re.I): badge = "Good Value"
-                elif re.search(r'fair',  raw_badge, re.I): badge = "Fair Value"
+                bl = raw_badge.lower()
+                if   '1own' in bl and 'great' in bl: badge = '1own_great'
+                elif '1own' in bl and 'good'  in bl: badge = '1own_good'
+                elif '1own' in bl and 'fair'  in bl: badge = '1own_fair'
+                elif '1own' in bl:                   badge = '1own'
+                elif 'great' in bl:                  badge = 'Great Value'
+                elif 'good'  in bl:                  badge = 'Good Value'
+                elif 'fair'  in bl:                  badge = 'Fair Value'
                 # Fallback: check network-intercepted badge map by VIN
                 if not badge and c.get('vin'):
                     badge = cfx_badge_map.get((c['vin'] or '').upper())

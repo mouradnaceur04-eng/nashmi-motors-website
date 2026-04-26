@@ -57,30 +57,47 @@ function carCard(c) {
   const savings = c.sale
     ? `<span class="car-savings">Save ${fmtPrice(c.price - c.sale)}</span>`
     : (wasPrice && c.price ? `<span class="car-savings">Save ${fmtPrice(wasPrice - c.price)}</span>` : '');
-  // "SHOW ME THE CARFAX" badge — real SVG from CarFax's CDN, same source as nashmimotors.com
-  const CFX_CDN = 'https://partnerstatic.carfax.com/img/valuebadge/';
-  const isOneOwner = (c.carfaxBadge || '').toLowerCase().includes('1own');
-  const smtcSvg  = isOneOwner ? '1own.svg' : 'showme.svg';
+  // ── CarFax badges ──────────────────────────────────────────────────────────
+  // carfaxBadge values from API: '1own' | '1own_great' | '1own_good' | '1own_fair'
+  //                              | 'Great Value' | 'Good Value' | 'Fair Value' | null
+  const CFX_CDN  = 'https://partnerstatic.carfax.com/img/valuebadge/';
+  const badge    = (c.carfaxBadge || '').toLowerCase();
+  const hasOwner = badge.includes('1own');
+
+  // Pick the most informative SVG for the "Show Me The CARFAX" link button
+  const smtcSvg = hasOwner && badge.includes('great') ? '1own_great.svg'
+                : hasOwner && badge.includes('good')  ? '1own_good.svg'
+                : hasOwner && badge.includes('fair')  ? '1own_fair.svg'
+                : hasOwner                            ? '1own.svg'
+                : badge.includes('great')             ? 'great.svg'
+                : badge.includes('good')              ? 'good.svg'
+                : badge.includes('fair')              ? 'fair.svg'
+                : 'showme.svg';
+
   const cfBtn = c.carfax
     ? `<a href="${c.carfax}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
         <img src="${CFX_CDN}${smtcSvg}" alt="Show Me The CARFAX" loading="lazy">
       </a>`
     : '';
 
-  // CarFax value badge overlay on photo — real SVG from CarFax CDN
+  // CarFax value badge overlay pinned to the photo corner
   let cfxBadgeHtml = '';
   if (c.carfaxBadge) {
-    const badge = c.carfaxBadge.toLowerCase();
-    const svg = badge.includes('1own') && badge.includes('great') ? '1own_great.svg'
-              : badge.includes('1own') && badge.includes('good')  ? '1own_good.svg'
-              : badge.includes('1own') && badge.includes('fair')  ? '1own_fair.svg'
-              : badge.includes('great') ? 'great.svg'
-              : badge.includes('good')  ? 'good.svg'
-              : 'fair.svg';
-    const imgTag = `<img src="${CFX_CDN}${svg}" alt="${c.carfaxBadge}" loading="lazy" style="height:36px;display:block">`;
-    cfxBadgeHtml = c.carfax
-      ? `<div class="cfx-badge-wrap" onclick="event.preventDefault();event.stopPropagation();window.open('${c.carfax}','_blank')" role="link" tabindex="0" title="${c.carfaxBadge}">${imgTag}</div>`
-      : `<div class="cfx-badge-wrap">${imgTag}</div>`;
+    const overlaySvg = hasOwner && badge.includes('great') ? '1own_great.svg'
+                     : hasOwner && badge.includes('good')  ? '1own_good.svg'
+                     : hasOwner && badge.includes('fair')  ? '1own_fair.svg'
+                     : hasOwner                            ? '1own.svg'
+                     : badge.includes('great')             ? 'great.svg'
+                     : badge.includes('good')              ? 'good.svg'
+                     : badge.includes('fair')              ? 'fair.svg'
+                     : null;
+    if (overlaySvg) {
+      const altText = c.carfaxBadge;
+      const imgTag  = `<img src="${CFX_CDN}${overlaySvg}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
+      cfxBadgeHtml  = c.carfax
+        ? `<div class="cfx-badge-wrap" onclick="event.preventDefault();event.stopPropagation();window.open('${c.carfax}','_blank')" role="link" tabindex="0" title="${altText}">${imgTag}</div>`
+        : `<div class="cfx-badge-wrap">${imgTag}</div>`;
+    }
   }
 
   return `
