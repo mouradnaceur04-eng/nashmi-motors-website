@@ -2263,21 +2263,35 @@ html                 { top: 0 !important; margin-top: 0 !important; }
 }
 .lang-flag { font-size: 16px; line-height: 1; flex-shrink: 0; }
 
-/* Mobile: use position:fixed so the menu breaks out of EVERY container
-   (sticky headers, overflow:hidden parents, gallery stacking contexts) */
+/* Mobile: position:fixed breaks out of every stacking context.
+   left/width are set dynamically by toggleLangMenu() JS so the
+   menu always anchors to wherever the globe button actually is. */
 @media (max-width: 900px) {
   .lang-menu {
-    position: fixed;
+    position: fixed !important;
+    /* top is set by JS; these are CSS fallbacks */
     top: 70px;
-    right: 12px;
-    left: auto;
-    min-width: 300px;
-    z-index: 9999;
+    /* left & width controlled by JS — CSS just guards against overflow */
+    max-width: calc(100vw - 20px) !important;
+    min-width: 280px !important;
+    z-index: 9999 !important;
+    /* Scrollable if 15 languages exceed screen height */
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+    /* Green-themed border + shadow so it pops over hero/images */
+    border: 1.5px solid var(--green) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.28), 0 2px 8px rgba(74,124,89,0.18) !important;
+    border-radius: 12px !important;
+  }
+  /* Bigger touch targets on mobile */
+  .lang-option {
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+    font-size: 14px !important;
   }
 }
-/* Very small phones: shrink slightly but keep 2-column layout */
+/* Very small phones — menu fills near-full width */
 @media (max-width: 380px) {
   .lang-btn { padding: 7px 10px; font-size: 12px; gap: 5px; }
-  .lang-menu { right: 6px; left: 6px; min-width: unset; width: calc(100vw - 12px); }
-  .lang-option { font-size: 12px; padding: 9px 10px; }
+  .lang-option { font-size: 13px !important; padding: 11px 10px !important; }
 }

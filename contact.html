@@ -428,13 +428,19 @@ function toggleLangMenu(e) {
   var btn  = document.getElementById('lang-btn');
   var open = menu.classList.contains('open');
   if (!open) {
-    var rect = btn.getBoundingClientRect();
-    if (window.innerWidth <= 900) {
+    var rect    = btn.getBoundingClientRect();
+    var vw      = window.innerWidth;
+    if (vw <= 900) {
+      // Menu width: fill most of the screen but cap at 340px
+      var mw = Math.min(vw - 20, 340);
+      // Anchor from the button's left edge; clamp so it never goes off-screen
+      var left = Math.max(10, Math.min(rect.left, vw - mw - 10));
       menu.style.top   = (rect.bottom + 8) + 'px';
-      menu.style.right = (window.innerWidth - rect.right) + 'px';
-      menu.style.left  = 'auto';
+      menu.style.left  = left + 'px';
+      menu.style.right = 'auto';
+      menu.style.width = mw + 'px';
     } else {
-      menu.style.top = menu.style.right = menu.style.left = '';
+      menu.style.top = menu.style.left = menu.style.right = menu.style.width = '';
     }
   }
   menu.classList.toggle('open', !open);
