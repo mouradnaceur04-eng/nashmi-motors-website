@@ -44,7 +44,7 @@ function fmtMiles(n) {
 
 function carCard(c) {
   const displayPrice = c.sale || c.price;
-  const detailUrl    = `vehicle.html?vin=${encodeURIComponent(c.vin || '')}`;
+  const detailUrl    = `/vehicle?vin=${encodeURIComponent(c.vin || '')}`;
   const imgHtml = c.imgUrl
     ? `<img src="${c.imgUrl}" alt="${c.year} ${c.make} ${c.model}" loading="lazy">`
     : `<div class="car-no-photo"><span>📷</span><p>Photos Coming Soon</p></div>`;
@@ -154,7 +154,7 @@ function runSearch() {
   if (make)  params.set('make', make);
   if (model) params.set('model', model);
   if (price) params.set('price', price);
-  window.location.href = 'inventory.html' + (params.toString() ? '?' + params.toString() : '');
+  window.location.href = '/inventory' + (params.toString() ? '?' + params.toString() : '');
 }
 
 // ─── Sticky header & hamburger ────────────────────────────────────────────────
