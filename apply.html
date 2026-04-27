@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://nashmimotors.com/apply.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
 <style>
@@ -149,7 +150,7 @@
 
     <!-- FORM -->
     <div class="apply-form-wrap animate-on-scroll">
-      <form class="apply-form" id="apply-form" onsubmit="handleApply(event)" autocomplete="on">
+      <form class="apply-form" id="apply-form" onsubmit="handleApply(event)" autocomplete="on"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <!-- ═══════════════════════════════════════════════ -->
         <!--  SECTION 1 — PERSONAL INFO                     -->
@@ -944,7 +945,7 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 // Collapsible section toggle
 function toggleSection(id, open) {

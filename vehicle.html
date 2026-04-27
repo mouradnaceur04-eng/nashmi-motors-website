@@ -20,6 +20,7 @@
 <meta name="twitter:image" content="logo.png">
 <meta name="twitter:image:alt" content="Nashmi Motors Logo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
 <style>
@@ -1071,7 +1072,7 @@ body::after {
             </ul>
           </div>
           <div class="animate-on-scroll delay-1">
-            <form class="testdrive-form" id="td-form" onsubmit="handleTestDrive(event)">
+            <form class="testdrive-form" id="td-form" onsubmit="handleTestDrive(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
               <h3 id="td-form-title">Request a Test Drive</h3>
               <div class="form-group">
                 <label>Your Name *</label>
@@ -1188,7 +1189,7 @@ body::after {
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 // ── Gallery state ──────────────────────────────────────────────────
 let galleryPhotos = [];

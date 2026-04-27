@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://nashmimotors.com/contact.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
 </head>
@@ -163,7 +164,7 @@
       <h2 style="font-family:var(--font-head);font-size:1.6rem;margin-bottom:6px;color:var(--dark)">Send Us a Message</h2>
       <p style="color:var(--gray);margin-bottom:28px;font-size:14px">Fill out the form and we'll get back to you during business hours. Or just call — it's faster.</p>
 
-      <form class="contact-form" id="contact-form" onsubmit="handleContact(event)">
+      <form class="contact-form" id="contact-form" onsubmit="handleContact(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
           <div class="form-group">
             <label for="c-first">First Name *</label>
@@ -260,7 +261,7 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 function handleContact(e) {
   e.preventDefault();

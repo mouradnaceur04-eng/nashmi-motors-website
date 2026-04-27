@@ -18,6 +18,7 @@
 <meta name="twitter:image:alt" content="Nashmi Motors Logo">
 <link rel="canonical" href="https://nashmimotors.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
 <script type="application/ld+json">
@@ -384,7 +385,7 @@
         </div>
       </div>
       <div class="testdrive-form-wrap animate-on-scroll delay-1">
-        <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)">
+        <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
           <h3>Request a Test Drive</h3>
           <div class="form-group">
             <label>Your Name *</label>
@@ -472,7 +473,7 @@
     </div>
     <div class="about-strip-img animate-on-scroll delay-2">
       <div class="about-img-card">
-        <img src="https://imagescf.dealercenter.net/640/480/202603-1840d1c50d5044be86b7ee316b636217.jpg" alt="2020 Kia Forte at Nashmi Motors">
+        <img src="https://imagescf.dealercenter.net/640/480/202603-1840d1c50d5044be86b7ee316b636217.jpg" alt="2020 Kia Forte at Nashmi Motors" loading="lazy">
         <div class="about-img-badge">
           <span class="badge-num">$4,995</span>
           <span class="badge-text">Starting<br>Price</span>
@@ -546,7 +547,7 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 // Wire featured grid to async inventory loader
 onInventoryLoaded = function() {

@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://nashmimotors.com/sell.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="style.css?v=2">
 </head>
@@ -131,7 +132,7 @@
       <h2 style="font-family:var(--font-head);font-size:1.6rem;color:var(--dark);margin-bottom:6px">Tell Us About Your Vehicle</h2>
       <p style="color:var(--gray);font-size:14px;margin-bottom:28px">Fill out the form and we'll get back to you with an offer. Or call <a href="tel:7177435175" style="color:var(--green);font-weight:600">(717) 743-5175</a> and we can discuss over the phone.</p>
 
-      <form class="apply-form" id="sell-form" onsubmit="handleSell(event)">
+      <form class="apply-form" id="sell-form" onsubmit="handleSell(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="apply-section">
           <h3 class="apply-section-title"><span class="apply-step">1</span> Your Contact Info</h3>
@@ -349,7 +350,7 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 function handleSell(e) {
   e.preventDefault();

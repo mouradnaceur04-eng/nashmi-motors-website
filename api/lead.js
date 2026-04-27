@@ -47,6 +47,9 @@ module.exports = async function handler(req, res) {
   }
 
   const data = req.body || {};
+
+  // Honeypot — bots fill this, humans don't
+  if (data._hp) return res.status(200).json({ ok: true }); // silent discard
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
