@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-26T21:59:45Z",
+  "updated": "2026-04-27T08:00:21Z",
   "count": 22,
   "vehicles": [
     {
@@ -19,7 +19,7 @@
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/rBNTAdMRu9E8RtNBhBvzqR-P2DgKXzSycJaetzr4_VL2Q4dhPMQtgsgIDAyeN4TB3DPkps_wXIdOABHZfDvL5H2VDb2pcQRb2Js",
-      "carfaxBadge": null,
+      "carfaxBadge": "1own",
       "features": [
         "CD/MP3 (SINGLE DISC)",
         "ABS (4-WHEEL)",
@@ -52,7 +52,7 @@
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/ford/escape/a1033/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/K1m1UsO2mIcZLaEgGCPAAilcbVBiBwyl7N5UhO3J3QccsNxpZKnxbzTUEl8XuNP6Oo236fZXEzJgZJ8nMyHbaO80unF9-q6MhbQ",
-      "carfaxBadge": null,
+      "carfaxBadge": "1own",
       "features": [
         "ALLOY WHEELS",
         "DUAL AIR BAGS",
@@ -654,7 +654,7 @@
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/taurus/a1044/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/Ne5Q4D6pBkjOHHhxj7s-ImLpnS1vnuzlerl_ljiLaiFg5OdcfVlSmJ8tbX9wEP183qdG9gv5SF23RyuzFdoZHvFetWA6X8Ag3Z4",
-      "carfaxBadge": "Great Value",
+      "carfaxBadge": "1own_great",
       "features": [
         "SIRIUSXM SATELLITE",
         "ALLOY WHEELS",
@@ -858,7 +858,7 @@
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/RK5j_OlySqpy_prMBIkHvsx7r8W2k03PrPHKoGDju0i56yTzsSt7WBpdHRekNU3ThuIwC_leFcaAwAJmQtE5zHJxC8RMiJQtzMQ",
-      "carfaxBadge": "Good Value",
+      "carfaxBadge": "1own_good",
       "features": [
         "HEAD CURTAIN AIR BAGS",
         "TOWING PKG",
@@ -904,7 +904,7 @@
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/yfWsB5ibPl4i4TrqQOvdtWVtdpPFL1FkDI_JyZny7Iq8h4DwKWOZbcGdeEf8SiY5vuxMtkayT5EQJsEQ5UhDL-nH9i9D0FhaPpk",
-      "carfaxBadge": null,
+      "carfaxBadge": "1own",
       "features": [
         "BLIND-SPOT WARNING",
         "HILL START ASSIST",
@@ -955,7 +955,7 @@
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/naDoOstrZvDNhkdHibGpAdKjLGn7ZuvVBGNOd_aQEO6IMwcpI1BBQh7AO2w8Wx3lzqcVmYU61yjMg_XAlXzuvHrC7nYB932f6hA",
-      "carfaxBadge": null,
+      "carfaxBadge": "1own",
       "features": [
         "POWER LIFTGATE RELEASE",
         "HEATED SEATS",
@@ -1150,7 +1150,7 @@
       ],
       "url": "https://www.nashmimotors.com/inventory/kia/optima/a1014/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/mHV-MFyaYv0YS0nPDsXuf5h_QF1ACZHo4DHWBwZDuSxvjhzdbAxGOIz4toMF9IRa-Ko2yLTMK-kUAFZG3yIN6Vwuw1q_tmyy-Kk",
-      "carfaxBadge": "Good Value",
+      "carfaxBadge": "1own_good",
       "features": [
         "BLUETOOTH WIRELESS",
         "BLIND-SPOT COLLISION WARNING",
