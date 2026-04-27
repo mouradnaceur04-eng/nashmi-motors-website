@@ -234,10 +234,11 @@ exports.handler = async (event) => {
       ? `Nashmi Motors <${useVerifiedDomain}>`
       : `Nashmi Motors Website <onboarding@resend.dev>`;
 
-    // Recipients — when using verified domain we can send anywhere; otherwise owner only
+    // Recipients — DealerCenter CRM always primary, owner CC'd for awareness
     const toList = useVerifiedDomain
-      ? [LEAD_EMAIL, "sales@nashmimotors.com"]
-      : [OWNER_EMAIL];
+      ? [LEAD_EMAIL]
+      : [OWNER_EMAIL]; // free plan restriction: can only send to account owner until domain verified
+    const ccList = useVerifiedDomain ? ["sales@nashmimotors.com"] : [];
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -248,6 +249,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         from:    fromAddr,
         to:      toList,
+        ...(ccList.length ? { cc: ccList } : {}),
         subject: `${subjectPrefix} ${name} — ${vehicle}`,
         html:    htmlBody,
         // Plain text fallback includes the raw ADF XML so DealerCenter can parse it
