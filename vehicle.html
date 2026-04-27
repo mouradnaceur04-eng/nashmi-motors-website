@@ -1435,10 +1435,7 @@ function renderVehicle(c) {
 
 function handleTestDrive(e) {
   e.preventDefault();
-  const mailto = formToMailto(e.target, 'Test Drive Request — Nashmi Motors');
-  window.location.href = mailto;
-  document.getElementById('td-form').style.display    = 'none';
-  document.getElementById('td-success').style.display = 'block';
+  submitLead(e.target, 'Test Drive Request', 'We\'ll call you within a few hours to confirm your time.');
 }
 
 // Load inventory then find this VIN
@@ -1513,24 +1510,20 @@ function closeReserveModal() {
 }
 function submitReserve(e) {
   e.preventDefault();
-  const form   = e.target;
-  const name   = form.querySelector('[name="Name"]').value;
-  const phone  = form.querySelector('[name="Phone"]').value;
-  const email  = form.querySelector('[name="Email"]').value;
+  const form    = e.target;
   const vehicle = document.getElementById('reserve-vehicle-field').value;
-  const subject = encodeURIComponent(`Vehicle Reservation Request — ${vehicle}`);
-  const body    = encodeURIComponent(
-    `VEHICLE RESERVATION REQUEST\n\n` +
-    `Vehicle: ${vehicle}\n` +
-    `Name: ${name}\n` +
-    `Phone: ${phone}\n` +
-    `Email: ${email || 'Not provided'}\n\n` +
-    `Customer is requesting to hold this vehicle with a $500 deposit.\n` +
-    `Please contact them within 1 hour to confirm.`
-  );
-  window.location.href = `mailto:29008363@leadsprod.dealercenter.net?subject=${subject}&body=${body}`;
-  form.style.display = 'none';
-  document.getElementById('reserve-success').style.display = 'block';
+  // Add vehicle and note to form data before submitting
+  const noteInput = document.createElement('input');
+  noteInput.type  = 'hidden';
+  noteInput.name  = 'Vehicle Interest';
+  noteInput.value = vehicle;
+  form.appendChild(noteInput);
+  const noteInput2 = document.createElement('input');
+  noteInput2.type  = 'hidden';
+  noteInput2.name  = 'Note';
+  noteInput2.value = 'Customer requesting to hold vehicle with $500 deposit. Please contact within 1 hour.';
+  form.appendChild(noteInput2);
+  submitLead(form, 'Vehicle Reservation', 'We\'ll contact you within 1 hour to arrange the $500 hold deposit.');
 }
 // Close modal on Escape key
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReserveModal(); });

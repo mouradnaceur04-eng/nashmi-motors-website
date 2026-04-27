@@ -168,14 +168,39 @@ document.getElementById('hamburger')?.addEventListener('click', function () {
   document.getElementById('nav')?.classList.toggle('open');
 });
 
-// ─── Mailto helper (for forms) ────────────────────────────────────────────────
+// ─── Lead submission helper ───────────────────────────────────────────────────
+// POSTs form data silently to /api/lead (Vercel function → Resend → DealerCenter CRM)
+// Shows a success or error message inline — no email app opens.
 
-function formToMailto(form, subject) {
-  const lines = [];
+async function submitLead(form, type, successMsg) {
+  const btn = form.querySelector('button[type="submit"], input[type="submit"]');
+  const data = { _type: type };
   for (const [k, v] of new FormData(form).entries()) {
-    if (v?.toString().trim()) lines.push(`${k}: ${v}`);
+    if (v?.toString().trim()) data[k] = v.toString().trim();
   }
-  return `mailto:29008363@leadsprod.dealercenter.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  try {
+    const res = await fetch('/api/lead', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Server error');
+
+    // Success — hide form, show message
+    form.style.display = 'none';
+    const div = document.createElement('div');
+    div.style.cssText = 'margin-top:20px;padding:24px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;text-align:center';
+    div.innerHTML = `<p style="font-size:18px;font-weight:700;color:#166534;margin:0 0 8px">✓ Sent!</p><p style="color:#166534;margin:0">${successMsg}</p>`;
+    form.parentNode.insertBefore(div, form.nextSibling);
+    div.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  } catch (err) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit'; }
+    alert('Something went wrong. Please call us at (717) 743-5175.');
+  }
 }
 
 // ─── Fallback inventory (shown if JSON fetch fails) ───────────────────────────

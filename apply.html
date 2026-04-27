@@ -1002,17 +1002,10 @@ onInventoryLoaded = function() {
 };
 loadInventory();
 
-// Submit form → mailto → DealerCenter CRM
+// Submit form → /api/lead → Resend → DealerCenter CRM
 function handleApply(e) {
   e.preventDefault();
-  const form = e.target;
-  const lines = [];
-  for (const [k, v] of new FormData(form).entries()) {
-    if (v?.toString().trim()) lines.push(`${k}: ${v.toString().trim()}`);
-  }
-  const subject = encodeURIComponent('Finance Application — Nashmi Motors');
-  const body    = encodeURIComponent(lines.join('\n'));
-  window.location.href = `mailto:29008363@leadsprod.dealercenter.net?subject=${subject}&body=${body}`;
+  submitLead(e.target, 'Finance Application', 'Your application was received. We\'ll be in touch within 1 business day.');
 }
 
 const observer = new IntersectionObserver((entries) => {

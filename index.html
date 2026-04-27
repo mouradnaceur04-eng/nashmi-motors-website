@@ -563,10 +563,7 @@ loadInventory();
 // Test drive form
 function handleTestDrive(e) {
   e.preventDefault();
-  const mailto = formToMailto(e.target, 'Test Drive Request — Nashmi Motors');
-  window.location.href = mailto;
-  document.getElementById('testdrive-form').style.display = 'none';
-  document.getElementById('td-success').style.display = 'block';
+  submitLead(e.target, 'Test Drive Request', 'We\'ll call you within a few hours to confirm your time.');
 }
 
 // Scroll animations

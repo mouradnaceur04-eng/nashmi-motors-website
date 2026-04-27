@@ -353,11 +353,7 @@
 <script>
 function handleSell(e) {
   e.preventDefault();
-  const mailto = formToMailto(e.target, 'We Buy Cars Inquiry — Nashmi Motors Website');
-  window.location.href = mailto;
-  document.getElementById('sell-success').style.display = 'block';
-  e.target.querySelectorAll('input,select,textarea,button[type="submit"]').forEach(el => el.disabled = true);
-  document.getElementById('sell-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  submitLead(e.target, 'We Buy Cars Inquiry', 'We\'ll be in touch within 24 hours with an offer.');
 }
 
 const observer = new IntersectionObserver((entries) => {
