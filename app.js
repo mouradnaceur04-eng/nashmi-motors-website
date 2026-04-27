@@ -64,7 +64,11 @@ function carCard(c) {
   const badge    = (c.carfaxBadge || '').toLowerCase();
   const hasOwner = badge.includes('1own');
 
-  // Pick the most informative SVG for the "Show Me The CARFAX" link button
+  // Effective CarFax URL: use dealer-specific URL if available,
+  // otherwise generate a free VIN-based SMTC link (works for any VIN)
+  const cfxUrl = c.carfax || (c.vin ? `https://www.carfax.com/showmethefax/${c.vin}` : null);
+
+  // Pick the most informative SVG for the "Show Me The CARFAX" button
   const smtcSvg = hasOwner && badge.includes('great') ? '1own_great.svg'
                 : hasOwner && badge.includes('good')  ? '1own_good.svg'
                 : hasOwner && badge.includes('fair')  ? '1own_fair.svg'
@@ -74,15 +78,16 @@ function carCard(c) {
                 : badge.includes('fair')              ? 'fair.svg'
                 : 'showme.svg';
 
-  const cfBtn = c.carfax
-    ? `<a href="${c.carfax}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
+  // Show SMTC badge on every vehicle that has a VIN (even without a dealer URL)
+  const cfBtn = cfxUrl
+    ? `<a href="${cfxUrl}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
         <img src="${CFX_CDN}${smtcSvg}" alt="Show Me The CARFAX" loading="lazy">
       </a>`
     : '';
 
-  // CarFax value badge overlay pinned to the photo corner
+  // CarFax value badge overlay pinned to the photo corner (only for rated vehicles)
   let cfxBadgeHtml = '';
-  if (c.carfaxBadge) {
+  if (c.carfaxBadge && cfxUrl) {
     const overlaySvg = hasOwner && badge.includes('great') ? '1own_great.svg'
                      : hasOwner && badge.includes('good')  ? '1own_good.svg'
                      : hasOwner && badge.includes('fair')  ? '1own_fair.svg'
@@ -94,9 +99,7 @@ function carCard(c) {
     if (overlaySvg) {
       const altText = c.carfaxBadge;
       const imgTag  = `<img src="${CFX_CDN}${overlaySvg}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
-      cfxBadgeHtml  = c.carfax
-        ? `<div class="cfx-badge-wrap" onclick="event.preventDefault();event.stopPropagation();window.open('${c.carfax}','_blank')" role="link" tabindex="0" title="${altText}">${imgTag}</div>`
-        : `<div class="cfx-badge-wrap">${imgTag}</div>`;
+      cfxBadgeHtml  = `<div class="cfx-badge-wrap" onclick="event.preventDefault();event.stopPropagation();window.open('${cfxUrl}','_blank')" role="link" tabindex="0" title="${altText}">${imgTag}</div>`;
     }
   }
 

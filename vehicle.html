@@ -1255,20 +1255,27 @@ function renderVehicle(c) {
   document.getElementById('vd-subtitle').innerHTML           =
     [fmtMiles(c.miles), c.drive || 'N/A', c.fuel || 'Gas'].join(' &bull; ');
 
-  // ── CarFax value badge — real SVG from CarFax CDN ─────────────
+  // ── CarFax badges ──────────────────────────────────────────────
+  // Effective URL: dealer-specific link first, free VIN-based link as fallback
+  const cfxLink = c.carfax || (c.vin ? `https://www.carfax.com/showmethefax/${c.vin}` : null);
+  const cfxB    = (c.carfaxBadge || '').toLowerCase();
+  const cfxIs1Own = cfxB.includes('1own');
+
+  // Photo-corner overlay badge (only for vehicles with a value/owner rating)
   let cfxValueBadge = '';
-  if (c.carfaxBadge) {
-    const b   = c.carfaxBadge.toLowerCase();
-    const svg = b.includes('1own') && b.includes('great') ? '1own_great.svg'
-              : b.includes('1own') && b.includes('good')  ? '1own_good.svg'
-              : b.includes('1own') && b.includes('fair')  ? '1own_fair.svg'
-              : b.includes('great') ? 'great.svg'
-              : b.includes('good')  ? 'good.svg'
-              : 'fair.svg';
-    const imgEl = `<img src="${CFX_CDN}${svg}" alt="${c.carfaxBadge}" loading="lazy" style="height:48px;display:block">`;
-    cfxValueBadge = c.carfax
-      ? `<a href="${c.carfax}" target="_blank" rel="noopener" class="vd-cfx-badge-svg" title="${c.carfaxBadge}">${imgEl}</a>`
-      : `<div class="vd-cfx-badge-svg" title="${c.carfaxBadge}">${imgEl}</div>`;
+  if (c.carfaxBadge && cfxLink) {
+    const overlaySvg = cfxIs1Own && cfxB.includes('great') ? '1own_great.svg'
+                     : cfxIs1Own && cfxB.includes('good')  ? '1own_good.svg'
+                     : cfxIs1Own && cfxB.includes('fair')  ? '1own_fair.svg'
+                     : cfxIs1Own                           ? '1own.svg'
+                     : cfxB.includes('great')              ? 'great.svg'
+                     : cfxB.includes('good')               ? 'good.svg'
+                     : cfxB.includes('fair')               ? 'fair.svg'
+                     : null;
+    if (overlaySvg) {
+      const imgEl = `<img src="${CFX_CDN}${overlaySvg}" alt="${c.carfaxBadge}" loading="lazy" style="height:48px;display:block">`;
+      cfxValueBadge = `<a href="${cfxLink}" target="_blank" rel="noopener" class="vd-cfx-badge-svg" title="${c.carfaxBadge}">${imgEl}</a>`;
+    }
   }
 
   // ── Photo gallery ─────────────────────────────────────────────
@@ -1350,11 +1357,18 @@ function renderVehicle(c) {
       </span>
     </button>`;
 
-  if (c.carfax) {
-    const isOneOwner = (c.carfaxBadge || '').toLowerCase().includes('1own');
-    const smtcSvg    = isOneOwner ? '1own.svg' : 'showme.svg';
+  // Show SMTC badge on every vehicle with a VIN — use dealer URL or free VIN fallback
+  if (cfxLink) {
+    const smtcSvg = cfxIs1Own && cfxB.includes('great') ? '1own_great.svg'
+                  : cfxIs1Own && cfxB.includes('good')  ? '1own_good.svg'
+                  : cfxIs1Own && cfxB.includes('fair')  ? '1own_fair.svg'
+                  : cfxIs1Own                           ? '1own.svg'
+                  : cfxB.includes('great')              ? 'great.svg'
+                  : cfxB.includes('good')               ? 'good.svg'
+                  : cfxB.includes('fair')               ? 'fair.svg'
+                  : 'showme.svg';
     actionsHtml += `
-      <a href="${c.carfax}" target="_blank" rel="noopener" class="smtc-badge vd-smtc" title="Show Me The CARFAX Report">
+      <a href="${cfxLink}" target="_blank" rel="noopener" class="smtc-badge vd-smtc" title="Show Me The CARFAX Report">
         <img src="${CFX_CDN}${smtcSvg}" alt="Show Me The CARFAX" loading="lazy">
       </a>`;
   }
