@@ -861,16 +861,14 @@ img { max-width: 100%; height: auto; display: block; }
 /* Value badge overlay on car photo (real SVG) */
 .cfx-badge-wrap {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   left: 10px;
   z-index: 2;
   cursor: pointer;
   transition: transform 0.15s;
   line-height: 0;
-  width: 120px;   /* reserve space before image loads → zero CLS */
-  height: 36px;
 }
-.cfx-badge-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.cfx-badge-wrap img { height: 54px; width: auto; display: block; }
 .cfx-badge-wrap:hover { transform: translateY(-1px); }
 
 .car-save {
@@ -2062,7 +2060,8 @@ img { max-width: 100%; height: auto; display: block; }
   }
   .cfx-badge-wrap {
     position: absolute !important;
-    bottom: 10px !important;
+    top: 10px !important;
+    bottom: auto !important;
     left: 10px !important;
     background: transparent !important;
     background-color: transparent !important;
@@ -2072,8 +2071,8 @@ img { max-width: 100%; height: auto; display: block; }
     line-height: 0 !important;
   }
   .cfx-badge-wrap img {
-    width: auto !important;      /* cancel the width:100% from .car-img-wrap img */
-    height: 26px !important;
+    width: auto !important;
+    height: 44px !important;
     max-width: none !important;
     display: block !important;
     object-fit: unset !important;
