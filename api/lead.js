@@ -15,6 +15,22 @@ const LEAD_EMAIL   = '29008363@leadsprod.dealercenter.net';
 const DEALER_NAME  = 'Nashmi Motors';
 const DEALER_PHONE = '(717) 743-5175';
 
+// ── Rate limit: max 5 submissions per IP per hour ─────────────────────────────
+const rateMap = new Map();
+function isRateLimited(ip) {
+  const now = Date.now();
+  const window = 60 * 60 * 1000; // 1 hour
+  const hits = (rateMap.get(ip) || []).filter(t => now - t < window);
+  hits.push(now);
+  rateMap.set(ip, hits);
+  return hits.length > 5;
+}
+
+// ── HTML escape to prevent injection in email body ────────────────────────────
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -23,6 +39,11 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || 'unknown';
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests' });
   }
 
   const data = req.body || {};
@@ -58,8 +79,8 @@ module.exports = async function handler(req, res) {
     .filter(([k, v]) => !skip.has(k) && v?.toString().trim())
     .map(([k, v]) => `
       <tr>
-        <td style="padding:8px 12px;font-weight:600;color:#374151;background:#f9fafb;border:1px solid #e5e7eb;white-space:nowrap">${k}</td>
-        <td style="padding:8px 12px;color:#111827;border:1px solid #e5e7eb">${v.toString().trim()}</td>
+        <td style="padding:8px 12px;font-weight:600;color:#374151;background:#f9fafb;border:1px solid #e5e7eb;white-space:nowrap">${esc(k)}</td>
+        <td style="padding:8px 12px;color:#111827;border:1px solid #e5e7eb">${esc(v.toString().trim())}</td>
       </tr>`).join('');
 
   const htmlBody = `
