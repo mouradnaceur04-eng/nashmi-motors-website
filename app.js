@@ -175,7 +175,7 @@ function formToMailto(form, subject) {
   for (const [k, v] of new FormData(form).entries()) {
     if (v?.toString().trim()) lines.push(`${k}: ${v}`);
   }
-  return `mailto:sales@nashmimotors.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+  return `mailto:29008363@leadsprod.dealercenter.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
 }
 
 // ─── Fallback inventory (shown if JSON fetch fails) ───────────────────────────
