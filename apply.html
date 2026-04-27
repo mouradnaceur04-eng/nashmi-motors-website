@@ -1004,6 +1004,24 @@ onInventoryLoaded = function() {
 loadInventory();
 
 // Submit form → /api/lead → Resend → DealerCenter CRM
+// ── Phone auto-format: (717) 743-5175 ────────────────────────────
+function fmtPhone(e) {
+  var d = e.target.value.replace(/\D/g,'').slice(0,10);
+  if (d.length >= 7)      e.target.value = '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+  else if (d.length >= 4) e.target.value = '(' + d.slice(0,3) + ') ' + d.slice(3);
+  else if (d.length)      e.target.value = '(' + d;
+}
+// ── SSN auto-format: 123-45-6789 ─────────────────────────────────
+function fmtSSN(e) {
+  var d = e.target.value.replace(/\D/g,'').slice(0,9);
+  if (d.length >= 6)      e.target.value = d.slice(0,3) + '-' + d.slice(3,5) + '-' + d.slice(5);
+  else if (d.length >= 4) e.target.value = d.slice(0,3) + '-' + d.slice(3);
+  else                    e.target.value = d;
+}
+document.querySelectorAll('input[type="tel"]').forEach(function(el){ el.addEventListener('input', fmtPhone); });
+var ssnEl = document.querySelector('input[name="SSN"]');
+if (ssnEl) ssnEl.addEventListener('input', fmtSSN);
+
 function handleApply(e) {
   e.preventDefault();
   submitLead(e.target, 'Finance Application', 'Your application was received. We\'ll be in touch within 1 business day.');

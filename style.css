@@ -855,7 +855,7 @@ img { max-width: 100%; height: auto; display: block; }
   transition: transform 0.15s, opacity 0.15s;
   cursor: pointer;
 }
-.smtc-badge img { height: 34px; display: block; max-width: 100%; }
+.smtc-badge img { height: 34px; width: auto; display: block; max-width: 100%; aspect-ratio: auto; }
 .smtc-badge:hover { transform: translateY(-1px); opacity: 0.9; }
 
 /* Value badge overlay on car photo (real SVG) */
@@ -867,7 +867,10 @@ img { max-width: 100%; height: auto; display: block; }
   cursor: pointer;
   transition: transform 0.15s;
   line-height: 0;
+  width: 120px;   /* reserve space before image loads → zero CLS */
+  height: 36px;
 }
+.cfx-badge-wrap img { width: 100%; height: 100%; object-fit: contain; }
 .cfx-badge-wrap:hover { transform: translateY(-1px); }
 
 .car-save {
