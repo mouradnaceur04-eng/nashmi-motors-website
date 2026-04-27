@@ -1002,40 +1002,17 @@ onInventoryLoaded = function() {
 };
 loadInventory();
 
-// Submit form → Netlify function → email to dealer
-async function handleApply(e) {
+// Submit form → mailto → DealerCenter CRM
+function handleApply(e) {
   e.preventDefault();
   const form = e.target;
-  const btn  = form.querySelector('button[type="submit"]');
-  const data = {};
+  const lines = [];
   for (const [k, v] of new FormData(form).entries()) {
-    if (v?.toString().trim()) data[k] = v.toString().trim();
+    if (v?.toString().trim()) lines.push(`${k}: ${v.toString().trim()}`);
   }
-
-  btn.disabled    = true;
-  btn.textContent = 'Sending...';
-
-  try {
-    const res = await fetch('/.netlify/functions/lead', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(data),
-    });
-    if (res.ok) {
-      form.style.display = 'none';
-      const s = document.getElementById('apply-success');
-      s.style.display = 'block';
-      s.scrollIntoView({ behavior:'smooth', block:'center' });
-    } else {
-      throw new Error('Server ' + res.status);
-    }
-  } catch (err) {
-    btn.disabled    = false;
-    btn.textContent = 'Submit Application →';
-    const errEl = document.getElementById('apply-error');
-    errEl.style.display = 'block';
-    errEl.scrollIntoView({ behavior:'smooth', block:'center' });
-  }
+  const subject = encodeURIComponent('Finance Application — Nashmi Motors');
+  const body    = encodeURIComponent(lines.join('\n'));
+  window.location.href = `mailto:29008363@leadsprod.dealercenter.net?subject=${subject}&body=${body}`;
 }
 
 const observer = new IntersectionObserver((entries) => {
