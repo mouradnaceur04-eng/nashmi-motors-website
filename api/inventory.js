@@ -98,6 +98,9 @@ function parseXML(xml) {
     const color  = tag(b, 'exterior_color') || tag(b, 'color') || tag(b, 'extcolor');
     const engine = tag(b, 'engine') || tag(b, 'enginedescription');
 
+    const stock = tag(b, 'stock') || tag(b, 'stock_number') || tag(b, 'stockno') ||
+                  tag(b, 'stocknumber') || tag(b, 'stock_no') || '';
+
     const photos = [];
     function addPhoto(p) {
       if (!p) return;
@@ -157,7 +160,7 @@ function parseXML(xml) {
     const isSale = sale && sale < price;
 
     return {
-      year, make, model, trim, vin, miles,
+      year, make, model, trim, vin, stock, miles,
       price:     isSale ? price : price,
       salePrice: isSale ? sale  : null,
       wasPrice:  isSale ? price : null,
@@ -229,9 +232,13 @@ module.exports = async function handler(req, res) {
       const salePrice     = (v.sale === true && v.salePrice) ? v.salePrice : null;
       return {
         vin:         v.vin,
+        stock:       v.stock  || null,
         year:        parseInt(v.year, 10) || null,
         make:        (v.make  || '').toUpperCase(),
         model:       (v.model || '').toUpperCase(),
+        trim:        v.trim   || null,
+        color:       v.color  || null,
+        engine:      v.engine || null,
         type:        v.bodyType || 'suv',
         price:       originalPrice,
         sale:        salePrice,

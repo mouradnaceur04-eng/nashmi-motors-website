@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<!-- Built by VoxDigital · voxdigital.agency -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dealer Documents — Nashmi Motors</title>
+<style>
+/* ── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green:       #2d5a27;
+  --green-mid:   #3d7a35;
+  --green-pale:  #e8f5e9;
+  --gray:        #6b7280;
+  --gray-light:  #f3f4f6;
+  --border:      #e5e7eb;
+  --text:        #111827;
+  --radius:      8px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f0f4f0;
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Auth ──────────────────────────────────────────────────────────── */
+#auth {
+  position: fixed; inset: 0;
+  background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.auth-card {
+  background: white; border-radius: 16px; padding: 48px 40px;
+  text-align: center; max-width: 360px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+.auth-card img   { height: 52px; margin-bottom: 24px; }
+.auth-card h2    { font-size: 20px; margin-bottom: 6px; }
+.auth-card p     { color: var(--gray); font-size: 14px; margin-bottom: 24px; }
+.auth-card input {
+  width: 100%; padding: 12px 16px;
+  border: 2px solid var(--border); border-radius: var(--radius);
+  font-size: 16px; margin-bottom: 12px; outline: none;
+  transition: border-color .2s;
+}
+.auth-card input:focus { border-color: var(--green); }
+.auth-card button {
+  width: 100%; padding: 12px;
+  background: var(--green); color: white;
+  border: none; border-radius: var(--radius);
+  font-size: 16px; font-weight: 600; cursor: pointer;
+}
+.auth-card button:hover { background: var(--green-mid); }
+.auth-error { color: #dc2626; font-size: 13px; margin-top: 10px; min-height: 20px; }
+
+/* ── App shell ─────────────────────────────────────────────────────── */
+#app { display: none; height: 100vh; flex-direction: column; }
+#app.visible { display: flex; }
+
+.app-header {
+  background: var(--green); color: white;
+  padding: 11px 20px; display: flex; align-items: center; gap: 14px;
+  flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.app-header img  { height: 34px; filter: brightness(0) invert(1); }
+.app-header h1   { font-size: 17px; font-weight: 700; }
+.app-header .badge {
+  background: rgba(255,255,255,.2); padding: 3px 10px;
+  border-radius: 20px; font-size: 12px;
+}
+#inv-status { margin-left: auto; font-size: 13px; opacity: .7; }
+
+.app-body { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ───────────────────────────────────────────────────────── */
+.sidebar {
+  width: 300px; background: white;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; flex-shrink: 0;
+}
+.sidebar-top { padding: 14px; border-bottom: 1px solid var(--border); }
+.sidebar-top input {
+  width: 100%; padding: 9px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 14px; outline: none;
+}
+.sidebar-top input:focus { border-color: var(--green); }
+.car-count { font-size: 12px; color: var(--gray); margin-top: 7px; }
+.car-list   { flex: 1; overflow-y: auto; }
+
+.car-item {
+  padding: 11px 14px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .12s;
+  display: flex; gap: 11px; align-items: center;
+}
+.car-item:hover  { background: var(--green-pale); }
+.car-item.active { background: var(--green-pale); border-left: 3px solid var(--green); padding-left: 11px; }
+
+.car-thumb {
+  width: 70px; height: 48px; object-fit: cover;
+  border-radius: 4px; background: var(--gray-light); flex-shrink: 0;
+}
+.car-thumb-ph {
+  width: 70px; height: 48px; background: var(--gray-light);
+  border-radius: 4px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; flex-shrink: 0;
+}
+.car-info-sm strong { font-size: 13px; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px; }
+.car-info-sm span   { font-size: 12px; color: var(--gray); }
+.car-vin-sm         { font-size: 10px; color: #aaa; font-family: monospace; margin-top: 1px; }
+
+/* ── Main panel ────────────────────────────────────────────────────── */
+.main-content {
+  flex: 1; overflow-y: auto; padding: 18px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.empty-state {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--gray); text-align: center; gap: 10px;
+}
+.empty-state svg { opacity: .25; }
+.empty-state h3  { font-size: 17px; font-weight: 600; }
+.empty-state p   { font-size: 14px; }
+
+/* Car summary bar */
+.car-summary-card {
+  background: white; border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 14px 18px;
+  display: flex; gap: 18px; align-items: center;
+}
+.car-sum-img {
+  width: 110px; height: 74px; object-fit: cover;
+  border-radius: 6px; background: var(--gray-light); flex-shrink: 0;
+}
+.car-sum-info h2  { font-size: 18px; font-weight: 700; }
+.car-sum-price    { font-size: 20px; font-weight: 800; color: var(--green); margin: 3px 0; }
+.car-sum-meta     { font-size: 12px; color: var(--gray); display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Section toggle (buyer form) */
+.toggle-section   { background: white; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.toggle-header    { padding: 13px 18px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.toggle-header:hover { background: var(--gray-light); }
+.arrow            { font-size: 11px; transition: transform .2s; }
+.arrow.open       { transform: rotate(180deg); }
+.toggle-body      { display: none; padding: 16px 18px; border-top: 1px solid var(--border); }
+.toggle-body.open { display: block; }
+
+/* Form grid */
+.fg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fg3 { grid-template-columns: 1fr 1fr 1fr; }
+.fg1 { grid-template-columns: 1fr; }
+.full { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; gap: 3px; }
+.form-group label {
+  font-size: 11px; font-weight: 600; color: var(--gray);
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.form-group input, .form-group select {
+  padding: 7px 10px; border: 1px solid var(--border);
+  border-radius: 6px; font-size: 13px; outline: none; font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--green); }
+.fsec {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  color: var(--green); letter-spacing: .8px;
+  margin: 14px 0 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border);
+}
+.fsec:first-child { margin-top: 0; }
+
+/* Doc tabs */
+.doc-tabs { background: white; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.doc-tabs-nav { display: flex; overflow-x: auto; border-bottom: 1px solid var(--border); }
+.doc-tab {
+  padding: 11px 16px; font-size: 13px; font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent; color: var(--gray); transition: all .12s;
+}
+.doc-tab:hover  { color: var(--green); background: var(--green-pale); }
+.doc-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+
+.print-bar {
+  display: flex; justify-content: flex-end; align-items: center;
+  gap: 10px; padding: 11px 16px;
+  border-top: 1px solid var(--border); background: var(--gray-light);
+}
+.btn-print {
+  background: var(--green); color: white; border: none;
+  padding: 9px 22px; border-radius: var(--radius);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+}
+.btn-print:hover { background: var(--green-mid); }
+.btn-sec {
+  background: white; color: var(--text); border: 1px solid var(--border);
+  padding: 9px 14px; border-radius: var(--radius);
+  font-size: 13px; cursor: pointer;
+}
+.btn-sec:hover { background: var(--gray-light); }
+
+.doc-preview { padding: 20px; }
+
+/* ══════════════════════════════════════════════════
+   DOCUMENT STYLES (print-ready)
+══════════════════════════════════════════════════ */
+.doc-page {
+  width: 100%; max-width: 720px; margin: 0 auto;
+  font-family: 'Times New Roman', serif;
+  font-size: 13px; line-height: 1.5; color: #000;
+  background: white; padding: 30px 38px;
+  border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+.doc-hdr         { text-align: center; margin-bottom: 22px; border-bottom: 2.5px solid #000; padding-bottom: 14px; }
+.doc-dealer      { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+.doc-sub         { font-size: 11px; color: #444; margin-top: 3px; }
+.doc-title       { font-size: 17px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-decoration: underline; margin: 10px 0 4px; }
+.doc-sec         { margin-bottom: 18px; }
+.doc-sec-title   { font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 8px; }
+.doc-row         { display: flex; gap: 18px; margin-bottom: 9px; }
+.doc-field       { flex: 1; }
+.doc-field label { font-size: 10px; text-transform: uppercase; letter-spacing: .4px; color: #666; display: block; margin-bottom: 1px; }
+.doc-field .val  { border-bottom: 1px solid #000; min-height: 20px; font-size: 13px; padding: 1px 0; }
+.doc-notice      { background: #f8f8f8; border: 1px solid #bbb; padding: 9px 12px; font-size: 11px; line-height: 1.6; margin: 14px 0; }
+.doc-sigs        { display: flex; gap: 36px; margin-top: 28px; }
+.doc-sig         { flex: 1; }
+.doc-sig .line   { border-bottom: 1px solid #000; height: 30px; margin-bottom: 3px; }
+.doc-sig .lbl    { font-size: 11px; color: #555; }
+
+.price-tbl       { width: 100%; border-collapse: collapse; margin: 6px 0; }
+.price-tbl td    { padding: 5px 8px; border: 1px solid #ccc; font-size: 13px; }
+.price-tbl td:last-child { text-align: right; }
+.price-tbl .tot td { background: #000; color: #fff; font-weight: bold; }
+
+.chk-row         { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0; font-size: 12px; }
+.chk-box         { width: 13px; height: 13px; border: 1px solid #000; flex-shrink: 0; margin-top: 2px; }
+.chk-box.on      { background: #000; }
+
+/* Buyer's Guide special */
+.bg-wrap         { border: 3px solid #000; padding: 16px; font-family: Arial, sans-serif; }
+.bg-head         { text-align: center; font-size: 26px; font-weight: bold; letter-spacing: 3px; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 12px; }
+.bg-asis         { font-size: 20px; font-weight: bold; letter-spacing: 2px; margin: 10px 0 4px; }
+
+/* Window sticker — premium branded */
+.ws-wrap         { border: 3px solid #1a3d15; font-family: Arial, sans-serif; overflow: hidden; }
+.ws-banner       {
+  background: var(--green); color: white; padding: 16px 24px;
+  display: flex; align-items: center; gap: 18px;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.ws-banner img   { height: 46px; filter: brightness(0) invert(1); flex-shrink: 0; }
+.ws-banner-text  { flex: 1; }
+.ws-banner-name  { font-size: 22px; font-weight: 900; letter-spacing: 2px; line-height: 1; }
+.ws-banner-tag   { font-size: 11px; opacity: .8; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; }
+.ws-banner-right { text-align: right; font-size: 12px; opacity: .85; line-height: 1.6; }
+.ws-body         { padding: 20px 24px; }
+.ws-vtitle       { font-size: 22px; font-weight: 800; color: #1a1a1a; border-bottom: 2px solid var(--green); padding-bottom: 8px; margin-bottom: 14px; }
+.ws-vin-bar      { background: #f5f5f5; border: 1px solid #ddd; padding: 7px 12px; margin-bottom: 14px; display: flex; align-items: center; gap: 16px; font-size: 12px; }
+.ws-vin-bar .label { color: #888; text-transform: uppercase; letter-spacing: .5px; font-size: 10px; }
+.ws-vin-bar .val   { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; letter-spacing: 2px; }
+.ws-meta         { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.ws-meta-item    { background: #f9f9f9; border: 1px solid #e8e8e8; padding: 8px 10px; }
+.ws-meta-item .mlabel { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: #888; }
+.ws-meta-item .mval   { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
+.ws-features     { margin-bottom: 14px; }
+.ws-features h4  { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--green); font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+.ws-feat-grid    { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px 10px; }
+.ws-feat-grid li { font-size: 11px; list-style: none; display: flex; gap: 5px; align-items: flex-start; line-height: 1.4; }
+.ws-feat-grid li::before { content: '✓'; color: var(--green); font-weight: bold; flex-shrink: 0; font-size: 10px; margin-top: 1px; }
+.ws-price-section { display: flex; gap: 12px; margin-top: 4px; }
+.ws-price-box    {
+  background: var(--green); color: white; flex: 1;
+  padding: 16px 20px; text-align: center; border-radius: 4px;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.ws-price-label  { font-size: 10px; opacity: .8; text-transform: uppercase; letter-spacing: 1px; }
+.ws-price-amt    { font-size: 34px; font-weight: 900; line-height: 1.1; }
+.ws-price-was    { font-size: 12px; text-decoration: line-through; opacity: .6; }
+.ws-price-note   { font-size: 10px; opacity: .7; margin-top: 4px; }
+.ws-disclaimer   { text-align: center; font-size: 10px; color: #aaa; margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee; }
+
+/* Recall */
+.recall-ok  { background: #d1fae5; border: 2px solid #10b981; padding: 14px; border-radius: 6px; text-align: center; margin: 14px 0; }
+.recall-warn{ background: #fef3c7; border: 2px solid #f59e0b; padding: 14px; border-radius: 6px; text-align: center; margin: 14px 0; }
+.recall-ok h3, .recall-warn h3 { font-size: 17px; font-weight: bold; margin-top: 6px; }
+.recall-item { border: 1px solid #ccc; border-radius: 4px; padding: 11px; margin-bottom: 8px; font-size: 12px; }
+.recall-item h4 { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+
+/* We Owe, Trade-In, Test Drive, POA, Privacy — shared additions */
+.doc-two-col  { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.doc-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin: 8px 0; }
+.doc-fullrow  { grid-column: 1 / -1; }
+.stamp-box    { border: 2px dashed #999; padding: 16px; text-align: center; margin: 12px 0; font-size: 12px; color: #666; }
+.green-bar    {
+  background: var(--green); color: white; padding: 8px 14px;
+  font-weight: bold; font-size: 13px; margin-bottom: 10px;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+
+/* ══════════════════════════════════════════════════
+   PRINT STYLES
+══════════════════════════════════════════════════ */
+@media print {
+  html, body { background: white !important; overflow: visible !important; height: auto !important; }
+
+  #auth, .app-header, .sidebar,
+  .car-summary-card, .toggle-section,
+  .doc-tabs-nav, .print-bar, .empty-state { display: none !important; }
+
+  #app       { display: block !important; height: auto !important; }
+  .app-body  { display: block !important; overflow: visible !important; }
+  .main-content { padding: 0 !important; overflow: visible !important; display: block !important; }
+  #car-panel { display: block !important; }
+  .doc-tabs  { border: none !important; box-shadow: none !important; display: block !important; }
+  .doc-preview { padding: 0 !important; }
+  .doc-page  { border: none !important; box-shadow: none !important; max-width: 100% !important; padding: 0 !important; }
+
+  /* keep green for sticker & buyer guide */
+  .ws-price-box, .ws-wrap, .ws-feat-grid li::before { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .recall-ok, .recall-warn { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Password screen ─────────────────────────────────────────────── -->
+<div id="auth">
+  <div class="auth-card">
+    <img src="logo.png" alt="Nashmi Motors">
+    <h2>Dealer Documents</h2>
+    <p>Staff access only — enter password to continue</p>
+    <input type="password" id="pw" placeholder="Password" autocomplete="off">
+    <button onclick="checkPw()">Unlock →</button>
+    <p class="auth-error" id="pw-err"></p>
+  </div>
+</div>
+
+<!-- ── Main app ────────────────────────────────────────────────────── -->
+<div id="app">
+  <header class="app-header">
+    <img src="logo.png" alt="Nashmi Motors">
+    <h1>Dealer Documents</h1>
+    <span class="badge">Nashmi Motors — Harrisburg, PA</span>
+    <span id="inv-status">Loading inventory…</span>
+  </header>
+
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <input type="text" id="car-search" placeholder="Search year, make, model, VIN…" oninput="filterCars()">
+        <div class="car-count" id="car-count"></div>
+      </div>
+      <div class="car-list" id="car-list"></div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content" id="main-content">
+
+      <div class="empty-state" id="empty-state">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h3>Select a Vehicle</h3>
+        <p>Click any vehicle on the left to generate documents</p>
+      </div>
+
+      <div id="car-panel" style="display:none;flex-direction:column;gap:14px">
+
+        <!-- Car summary -->
+        <div class="car-summary-card" id="car-summary"></div>
+
+        <!-- Buyer / transaction info -->
+        <div class="toggle-section">
+          <div class="toggle-header" onclick="toggleForm(this)">
+            <span>📋 Buyer &amp; Transaction Info</span>
+            <span class="arrow open">▲</span>
+          </div>
+          <div class="toggle-body open">
+
+            <div class="fsec">Buyer Information</div>
+            <div class="fg">
+              <div class="form-group full">
+                <label>Full Name</label>
+                <input id="b-name" type="text" placeholder="First Last" oninput="updateDoc()">
+              </div>
+              <div class="form-group full">
+                <label>Street Address</label>
+                <input id="b-addr" type="text" placeholder="123 Main St" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>City</label>
+                <input id="b-city" type="text" placeholder="Harrisburg" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>State / ZIP</label>
+                <div style="display:flex;gap:6px">
+                  <input id="b-state" type="text" value="PA" maxlength="2" style="width:54px" oninput="updateDoc()">
+                  <input id="b-zip" type="text" placeholder="17111" oninput="updateDoc()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input id="b-phone" type="text" placeholder="(717) 000-0000" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Driver's License #</label>
+                <input id="b-dl" type="text" placeholder="PA12345678" oninput="updateDoc()">
+              </div>
+            </div>
+
+            <div class="fsec">Transaction Details</div>
+            <div class="fg">
+              <div class="form-group">
+                <label>Sale Price ($)</label>
+                <input id="t-price" type="number" placeholder="From inventory" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Down Payment ($)</label>
+                <input id="t-down" type="number" value="0" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Trade-In Value ($)</label>
+                <input id="t-trade" type="number" value="0" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Trade-In Payoff ($)</label>
+                <input id="t-payoff" type="number" value="0" oninput="updateDoc()">
+              </div>
+            </div>
+            <div class="fg fg3" style="margin-top:8px">
+              <div class="form-group">
+                <label>Doc Fee ($)</label>
+                <input id="t-doc" type="number" value="199" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Title / Reg ($)</label>
+                <input id="t-reg" type="number" value="85" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Sale Date</label>
+                <input id="t-date" type="date" oninput="updateDoc()">
+              </div>
+            </div>
+
+            <div class="fsec">Vehicle Overrides</div>
+            <div class="fg">
+              <div class="form-group">
+                <label>Exterior Color</label>
+                <input id="v-color" type="text" placeholder="Auto-filled" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Trim Level</label>
+                <input id="v-trim" type="text" placeholder="Auto-filled" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Engine</label>
+                <input id="v-engine" type="text" placeholder="Auto-filled" oninput="updateDoc()">
+              </div>
+              <div class="form-group">
+                <label>Stock #</label>
+                <input id="v-stock" type="text" placeholder="Auto-filled" oninput="updateDoc()">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Document tabs -->
+        <div class="doc-tabs">
+          <div class="doc-tabs-nav">
+            <div class="doc-tab active"  onclick="switchTab('bill',    this)">PA Bill of Sale</div>
+            <div class="doc-tab"         onclick="switchTab('recall',  this)">Recall Status</div>
+            <div class="doc-tab"         onclick="switchTab('odo',     this)">Odometer Statement</div>
+            <div class="doc-tab"         onclick="switchTab('order',   this)">Buyer's Order</div>
+            <div class="doc-tab"         onclick="switchTab('guide',   this)">Buyer's Guide</div>
+            <div class="doc-tab"         onclick="switchTab('sticker', this)">Window Sticker</div>
+            <div class="doc-tab"         onclick="switchTab('weowe',   this)">We Owe</div>
+            <div class="doc-tab"         onclick="switchTab('tradein', this)">Trade-In Agreement</div>
+            <div class="doc-tab"         onclick="switchTab('testdrive',this)">Test Drive Waiver</div>
+            <div class="doc-tab"         onclick="switchTab('poa',     this)">Power of Attorney</div>
+            <div class="doc-tab"         onclick="switchTab('privacy', this)">Privacy Notice</div>
+          </div>
+
+          <div class="doc-preview" id="doc-render"></div>
+
+          <div class="print-bar">
+            <button class="btn-sec" id="recall-btn" onclick="refreshRecall()" style="display:none">↻ Refresh Recalls</button>
+            <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+          </div>
+        </div>
+
+      </div><!-- /car-panel -->
+    </main>
+  </div>
+</div>
+
+<script>
+
+/* ── Static fallback inventory (embedded at build time) ── */
+const STATIC_INV = {"updated":"2026-04-27T17:53:42Z","count":22,"vehicles":[{"vin":"1FMYU03152KD52361","stock":"A1033","year":2002,"make":"FORD","model":"ESCAPE","type":"suv","price":3995,"sale":null,"miles":150695,"drive":"2WD","fuel":"Gasoline","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/ford/escape/a1033/","carfax":"https://www.carfax.com/vehiclehistory/ar20/MYa9175hBXqy681hdw5jZVJvxhxzTSZ0BKoq4XcqYJRfOpurQoFst1Pp6SLdySLXRQCcS4XTGvYh-UX2Cg4CGkWn_DkkVd6_Bsg","carfaxBadge":"1own","features":["ALLOY WHEELS","DUAL AIR BAGS","TILT WHEEL","CRUISE CONTROL","POWER DOOR LOCKS","POWER WINDOWS","ABS (4-WHEEL)","AM/FM STEREO","AIR CONDITIONING","CD/MP3 (MULTI DISC)","DUAL POWER SEATS","POWER STEERING"]},{"vin":"1FAFP55284A197003","stock":"TW3","year":2004,"make":"FORD","model":"TAURUS","type":"sedan","price":3995,"sale":null,"miles":68431,"drive":"FWD","fuel":"Flex","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/ford/taurus/tw3/","carfax":"https://www.carfax.com/vehiclehistory/ar20/eSYXcXqQitQQ9rfwCe44l2-VfZr3Yd6Uzr5uxHt6TT_EM4WFI0ABYnSAzwjL7ngRjCYVLuQcBveYGINL3Xe71C8x0brtFInth78","carfaxBadge":"1own","features":["CD/MP3 (SINGLE DISC)","ABS (4-WHEEL)","TILT WHEEL","CRUISE CONTROL","POWER STEERING","POWER WINDOWS","POWER SEAT","AIR CONDITIONING","POWER DOOR LOCKS","DUAL AIR BAGS","ALLOY WHEELS","AM/FM STEREO"]},{"vin":"2G1WF5E37C1298427","stock":"A1046","year":2012,"make":"CHEVROLET","model":"IMPALA","type":"sedan","price":5495,"sale":null,"miles":114973,"drive":"FWD","fuel":"Gasoline","img":"202604-65b0d2b9d1ec4013b40992f49f26c8f8","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-65b0d2b9d1ec4013b40992f49f26c8f8.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-65b0d2b9d1ec4013b40992f49f26c8f8.jpg","https://imagescf.dealercenter.net/1024/768/202604-bebc37b230584907a18fd15784e4926d.jpg","https://imagescf.dealercenter.net/1024/768/202604-d630547d5d7147359159288d5a20906b.jpg","https://imagescf.dealercenter.net/1024/768/202604-8d0954a9ebe2472da8b6f234016a3b7e.jpg","https://imagescf.dealercenter.net/1024/768/202604-22f646a0fd9849818ca900a2adf05707.jpg","https://imagescf.dealercenter.net/1024/768/202604-72f5585eb80f4219a8bb7ea604728303.jpg","https://imagescf.dealercenter.net/1024/768/202604-49597036d9d7493287c301d121f5791d.jpg","https://imagescf.dealercenter.net/1024/768/202604-76ab7557000942fcb46083543f06b6c0.jpg","https://imagescf.dealercenter.net/1024/768/202604-7d0e3af0344c42ea95adb1d2106bbf74.jpg","https://imagescf.dealercenter.net/1024/768/202604-402b0fe116ff4e6e9a865957eb94fe6c.jpg","https://imagescf.dealercenter.net/1024/768/202604-ff128ba7c5bb4d10b7c425c4f6dea25b.jpg","https://imagescf.dealercenter.net/1024/768/202604-bf8f33a07aff45db83875974022c4fa8.jpg","https://imagescf.dealercenter.net/1024/768/202604-c3206660fbce42caa00dc8b9d345520f.jpg","https://imagescf.dealercenter.net/1024/768/202604-964f6cb41cad473ca4c42c1c24870995.jpg","https://imagescf.dealercenter.net/1024/768/202604-973636ad661e41e294049e00bf4bd920.jpg","https://imagescf.dealercenter.net/1024/768/202604-d4e7dc216b454d3a9c4d2191786535c0.jpg","https://imagescf.dealercenter.net/1024/768/202604-0e5720e8af4248bbba5da47f9f7e6a58.jpg"],"url":"https://www.nashmimotors.com/inventory/chevrolet/impala/a1046/","carfax":"https://www.carfax.com/vehiclehistory/ar20/9c3MvWz8dNof2hcqfRvbxAEF1qKS1oGlfmkpKtjil55ThYB8UOJpjqSfpOfh1E8f7ks5d7cqLC7LXK8iU8jT9afwlZMJniGkA5Q","carfaxBadge":"Great Value","features":["STABILITRAK","AIR CONDITIONING","POWER DOOR LOCKS","SIDE AIR BAGS","POWER WINDOWS","KEYLESS ENTRY","DAYTIME RUNNING LIGHTS","ABS (4-WHEEL)","ALLOY WHEELS","TILT WHEEL","DUAL AIR BAGS","CD/MP3 (SINGLE DISC)","CRUISE CONTROL","POWER SEAT","F&R HEAD CURTAIN AIR BAGS","TRACTION CONTROL","AM/FM STEREO","XM SATELLITE","POWER STEERING","TOURING SUSPENSION","ONSTAR"]},{"vin":"JN8AS5MV7CW394605","stock":"A1038","year":2012,"make":"NISSAN","model":"ROGUE","type":"suv","price":5995,"sale":null,"miles":146441,"drive":"AWD","fuel":"Gasoline","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/nissan/rogue/a1038/","carfax":"https://www.carfax.com/vehiclehistory/ar20/KdHx5BjnA22WpMqhUxeivHwI7RFiL1LdccJXvxSYgswZuO1yB6uEks_AWF0MKc6k-lzjC4uYUTU-Wx6VT_9cQreEd73U0TuUuCc","carfaxBadge":null,"features":["SIDE AIR BAGS","F&R HEAD CURTAIN AIR BAGS","CRUISE CONTROL","POWER STEERING","VEHICLE DYNAMIC CONTROL","ABS (4-WHEEL)","DUAL AIR BAGS","POWER WINDOWS","POWER SEAT","CD/MP3 (MULTI DISC)","BACKUP CAMERA","BLUETOOTH WIRELESS","TRACTION CONTROL","XM SATELLITE","ALLOY WHEELS","KEYLESS ENTRY","TILT WHEEL","ANTI-THEFT SYSTEM","POWER DOOR LOCKS","AM/FM STEREO","AIR CONDITIONING"]},{"vin":"5XXGM4A74DG145701","stock":"A1034","year":2013,"make":"KIA","model":"OPTIMA","type":"sedan","price":5995,"sale":null,"miles":125490,"drive":"FWD","fuel":"Gasoline","img":"202604-b67a2027fd0541a2b950f2e5e20d9b72","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg","https://imagescf.dealercenter.net/1024/768/202604-dc131c84b44b43238248a6cda460c793.jpg","https://imagescf.dealercenter.net/1024/768/202604-04d15ae6dfff4715924f7246677ff370.jpg","https://imagescf.dealercenter.net/1024/768/202604-963bef7c6b07470abc57e27ee196ed19.jpg","https://imagescf.dealercenter.net/1024/768/202604-d9ea5b730a424e27befbd8b2a3646341.jpg","https://imagescf.dealercenter.net/1024/768/202604-bd142eee753146a39948c662e374679a.jpg","https://imagescf.dealercenter.net/1024/768/202604-883503f7af314020ab8bc099c6888f00.jpg","https://imagescf.dealercenter.net/1024/768/202604-0a6c5adfd3bc45c1b1bee27b5c0ea8b6.jpg","https://imagescf.dealercenter.net/1024/768/202604-fed5c9d21cd940ca8118ec2ded6b47e0.jpg","https://imagescf.dealercenter.net/1024/768/202604-c148ebb6225243258f2f39e4aeaae3ca.jpg","https://imagescf.dealercenter.net/1024/768/202604-6bc5de475ce24159905788d82d11cf53.jpg","https://imagescf.dealercenter.net/1024/768/202604-2043d0eb1cf74b399ad2d93695e6d69d.jpg","https://imagescf.dealercenter.net/1024/768/202604-8ff3b55b9549413c872cbad093528fb9.jpg","https://imagescf.dealercenter.net/1024/768/202604-eb5d1f7869934fe8bc259ab5e2f462c6.jpg","https://imagescf.dealercenter.net/1024/768/202604-8076c5927ccc4220ad6aeacf988f2c6a.jpg","https://imagescf.dealercenter.net/1024/768/202604-814b4ec0c05446a696e5c34e88c0da34.jpg","https://imagescf.dealercenter.net/1024/768/202604-002f117daba94775b57debacf3eb81b0.jpg"],"url":"https://www.nashmimotors.com/inventory/kia/optima/a1034/","carfax":"https://www.carfax.com/vehiclehistory/ar20/JexngH6h7G12rREsELYBd2dOPLrbKToYhv55-wCEHROxB3gaBgUh4p6FwaElXUtk3PQlN-Bl5wBU4X8SIo1vHxMX64wBMhJlu6o","carfaxBadge":"Good Value","features":["STABILITY CONTROL","AM/FM STEREO","POWER WINDOWS","TRACTION CONTROL","FOG LIGHTS","ANTI-THEFT SYSTEM","SIRIUSXM SATELLITE","ALLOY WHEELS","DUAL AIR BAGS","BLUETOOTH WIRELESS","AIR CONDITIONING","POWER SEAT","KEYLESS ENTRY","TILT & TELESCOPING WHEEL","CRUISE CONTROL","ABS (4-WHEEL)","CD/MP3 (SINGLE DISC)","POWER STEERING","F&R HEAD CURTAIN AIR BAGS","SIDE AIR BAGS","HILL START ASSIST CONTROL","POWER DOOR LOCKS"]},{"vin":"2G1WB5E39E1116158","stock":"A1045","year":2014,"make":"CHEVROLET","model":"IMPALA LIMITED","type":"sedan","price":5995,"sale":null,"miles":111044,"drive":"FWD","fuel":"Gasoline","img":"202604-62bdc266996c4db4875590572703e53d","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-62bdc266996c4db4875590572703e53d.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-62bdc266996c4db4875590572703e53d.jpg","https://imagescf.dealercenter.net/1024/768/202604-63399976ac244ca5ba80f4abe85c35d5.jpg","https://imagescf.dealercenter.net/1024/768/202604-05e17a37c8214bfa9477e9836ae88505.jpg","https://imagescf.dealercenter.net/1024/768/202604-3cecb34b719340809d1de1d8bff0f237.jpg","https://imagescf.dealercenter.net/1024/768/202604-447f6b66ed744ec4891c93ca9a2fccbe.jpg","https://imagescf.dealercenter.net/1024/768/202604-01c9c4c0ee72408591a702aa7caf3902.jpg","https://imagescf.dealercenter.net/1024/768/202604-563c4491ab404721b143afff78d47dae.jpg","https://imagescf.dealercenter.net/1024/768/202604-475f4b92ba19438eb48cb15a8dea2d3a.jpg","https://imagescf.dealercenter.net/1024/768/202604-75a8e37c9e274f92a7339048ebe58df8.jpg","https://imagescf.dealercenter.net/1024/768/202604-91e0aff9807f43f182c1bcda3bd05838.jpg","https://imagescf.dealercenter.net/1024/768/202604-e287a29fe3e2439a90eaa8d6a3dcf0d3.jpg","https://imagescf.dealercenter.net/1024/768/202604-33ce799e4445451db8f1818d81d964bf.jpg","https://imagescf.dealercenter.net/1024/768/202604-3cd438a8d318494fb9ee2d9525a09049.jpg","https://imagescf.dealercenter.net/1024/768/202604-94fbfda9b35c4ddba73d21aadeecb383.jpg","https://imagescf.dealercenter.net/1024/768/202604-9166dc210e3343da8dca144e861e5f29.jpg","https://imagescf.dealercenter.net/1024/768/202604-2c51994bbd2b47bda70c19dfda4ed8e1.jpg","https://imagescf.dealercenter.net/1024/768/202604-de455f56c5884c84a912621ae9619295.jpg","https://imagescf.dealercenter.net/1024/768/202604-705595755493464081442e1a4939a078.jpg"],"url":"https://www.nashmimotors.com/inventory/chevrolet/impala-limited/a1045/","carfax":"https://www.carfax.com/vehiclehistory/ar20/s7QaZ00jJbTpZcd_KffDGiurvhfM0r6-DwDFz69xvp2EP-94fZOKuRT-hWjQIHaeirhiTcnfDiRhCXP9rAeeD1BBPrcQyIjM3oQ","carfaxBadge":"Great Value","features":["KEYLESS ENTRY","POWER STEERING","SIDE AIR BAGS","F&R HEAD CURTAIN AIR BAGS","DUAL AIR BAGS","STABILITRAK","ALLOY WHEELS","NAVIGATION SYSTEM","CD/MP3 (SINGLE DISC)","POWER WINDOWS","AM/FM STEREO","TILT WHEEL","SIRIUSXM SATELLITE","BLUETOOTH WIRELESS","POWER DOOR LOCKS","ABS (4-WHEEL)","ONSTAR","TRACTION CONTROL","AIR CONDITIONING","POWER SEAT","CRUISE CONTROL"]},{"vin":"3FADP4BJ2KM108166","stock":"R1002","year":2019,"make":"FORD","model":"FIESTA","type":"sedan","price":6995,"sale":6495,"miles":90319,"drive":"FWD","fuel":"Gasoline","img":"202604-039a484af9f5493d9a9d5c051585aa6f","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-039a484af9f5493d9a9d5c051585aa6f.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-039a484af9f5493d9a9d5c051585aa6f.jpg","https://imagescf.dealercenter.net/1024/768/202604-951c7771b15c44ad919cf4c252f7513d.jpg","https://imagescf.dealercenter.net/1024/768/202604-9638b7779e07418eae2a83686fc0b4bb.jpg","https://imagescf.dealercenter.net/1024/768/202604-ea0b9e33ff5447168f8fd74221351fbd.jpg","https://imagescf.dealercenter.net/1024/768/202604-3b42418c2b8b41ca95f53b678c2ead84.jpg","https://imagescf.dealercenter.net/1024/768/202604-39c4a440e42e40729a5347c48eac363e.jpg","https://imagescf.dealercenter.net/1024/768/202604-eb6922fc9e314a48bdcdfcf0bdf20a64.jpg","https://imagescf.dealercenter.net/1024/768/202604-4385c81176994d7690e9d64d6fa62715.jpg","https://imagescf.dealercenter.net/1024/768/202604-371d27a4a6a34569bd38683615b7d4b0.jpg","https://imagescf.dealercenter.net/1024/768/202604-1afe419a8e16463b94fcf7fe83df3fef.jpg","https://imagescf.dealercenter.net/1024/768/202604-32f7309c3e8c44b79c88b056aeab36c4.jpg","https://imagescf.dealercenter.net/1024/768/202604-7ee9dab821a54bdf920c4c0a9c36a6f8.jpg","https://imagescf.dealercenter.net/1024/768/202604-ba5438eeadfb48eebd945f5c4431092a.jpg","https://imagescf.dealercenter.net/1024/768/202604-3e4badd220f3490fb2316fe06428ecf5.jpg","https://imagescf.dealercenter.net/1024/768/202604-287433bfb8c44825921ba5342101664e.jpg","https://imagescf.dealercenter.net/1024/768/202604-ff717893604f4801a58010aa95635f13.jpg","https://imagescf.dealercenter.net/1024/768/202604-b4ed36c4539a47f4937db5e7f79c1d4f.jpg","https://imagescf.dealercenter.net/1024/768/202604-c1f46ca3e51847a98d5c388e03ddf146.jpg"],"url":"https://www.nashmimotors.com/inventory/ford/fiesta/r1002/","carfax":null,"carfaxBadge":null,"features":["CRUISE CONTROL","AM/FM STEREO","HEAD CURTAIN AIR BAGS","SYNC","TRACTION CONTROL","BACKUP CAMERA","POWER STEERING","ELECTRONIC STABILITY CONTROL","KNEE AIR BAGS","DUAL AIR BAGS","ABS (4-WHEEL)","AIR CONDITIONING","KEYLESS ENTRY","SIRIUSXM SATELLITE","POWER WINDOWS","PERIMETER ALARM SYSTEM","TILT & TELESCOPING WHEEL","POWER DOOR LOCKS","HILL START ASSIST CONTROL","CD/MP3 (SINGLE DISC)","ALLOY WHEELS","SIDE AIR BAGS"]},{"vin":"1FMCU0GD6HUB33923","stock":"A1024","year":2017,"make":"FORD","model":"ESCAPE","type":"suv","price":8995,"sale":7995,"miles":123212,"drive":"FWD","fuel":"Gasoline","img":"202603-de7f64126bdd4473984fc245269cbf86","imgUrl":"https://imagescf.dealercenter.net/1024/768/202603-de7f64126bdd4473984fc245269cbf86.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202603-de7f64126bdd4473984fc245269cbf86.jpg","https://imagescf.dealercenter.net/1024/768/202603-c89f2c1c8abc4b8c83c8d2c7afb2ee56.jpg","https://imagescf.dealercenter.net/1024/768/202603-6207a5eeb57f4a71854e35f70d5196fe.jpg","https://imagescf.dealercenter.net/1024/768/202603-fe0dd6d4a3fd403b8334680542a9324b.jpg","https://imagescf.dealercenter.net/1024/768/202603-fb48acfb2a574018a2c71da08f44d5db.jpg","https://imagescf.dealercenter.net/1024/768/202603-0053b8504f7e4314b9fa93b3f5b2be69.jpg","https://imagescf.dealercenter.net/1024/768/202603-d9e810a51274489098bb81275f0840dc.jpg","https://imagescf.dealercenter.net/1024/768/202603-be50b653dcbd49b694fdb3e29ec570ef.jpg","https://imagescf.dealercenter.net/1024/768/202603-4f62dd6e0f684739b87ae7c34003d7c2.jpg","https://imagescf.dealercenter.net/1024/768/202603-64e9f8c47e7b4f25ac68652704e5d707.jpg","https://imagescf.dealercenter.net/1024/768/202603-77968571a52542359c6f6e0df0383288.jpg","https://imagescf.dealercenter.net/1024/768/202603-ae1083e723564d8bb72553d4fa01a748.jpg","https://imagescf.dealercenter.net/1024/768/202603-692558d360ef43baa830c918d86cfd6a.jpg","https://imagescf.dealercenter.net/1024/768/202603-1b9b77ce43ee4e8cb071be87fdf02bc1.jpg","https://imagescf.dealercenter.net/1024/768/202603-ff1f1b82190b44e798f0aef1429c8d7f.jpg","https://imagescf.dealercenter.net/1024/768/202603-8dc6ac7f558e4c39af3b54db2ee50390.jpg","https://imagescf.dealercenter.net/1024/768/202603-248a05f1e9134ff1be155f97b43c71a2.jpg","https://imagescf.dealercenter.net/1024/768/202603-0d420dc377584e26b9a3bcfd3535f121.jpg","https://imagescf.dealercenter.net/1024/768/202603-a98480af94f84349b1347438fabb051c.jpg","https://imagescf.dealercenter.net/1024/768/202603-fa211e615f36420cb3e16b4c4727696f.jpg","https://imagescf.dealercenter.net/1024/768/202603-2404299544894817b8aff33f32306dd4.jpg","https://imagescf.dealercenter.net/1024/768/202603-e22ad310542a4fb6959e16cfe676cd4c.jpg"],"url":"https://www.nashmimotors.com/inventory/ford/escape/a1024/","carfax":"https://www.carfax.com/vehiclehistory/ar20/o_Z817VvtAWF6l1fuwwA7PQAe0n6TQpiFwGOxoOkvOkM7M_S7heH-mW6t-XYAB3E9AvkJE5rTsfM6b8Eq5k_Wkcr3fC2M_2eD1A","carfaxBadge":"Good Value","features":["AM/FM STEREO","SIDE AIR BAGS","POWER SEAT","ELECTRONIC TRACTION CONTROL","ABS (4-WHEEL)","F&R HEAD CURTAIN AIR BAGS","SIRIUSXM SATELLITE","KNEE AIR BAGS","CRUISE CONTROL","ADVANCETRAC","DUAL AIR BAGS","CD/MP3 (SINGLE DISC)","DAYTIME RUNNING LIGHTS","ALLOY WHEELS","KEYLESS START","KEYLESS ENTRY","HILL START ASSIST CONTROL","FOG LIGHTS","SYNC","ELECTRIC POWER STEERING","POWER WINDOWS","BACKUP CAMERA","AIR CONDITIONING","REAR SPOILER","TILT & TELESCOPING WHEEL","POWER DOOR LOCKS"]},{"vin":"5XYZUDLB1EG228476","stock":"A1048","year":2014,"make":"HYUNDAI","model":"SANTA FE SPORT","type":"suv","price":7995,"sale":null,"miles":121046,"drive":"AWD","fuel":"Gasoline","img":"202604-21088e02348445a98de409b04dc265f3","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-21088e02348445a98de409b04dc265f3.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-21088e02348445a98de409b04dc265f3.jpg","https://imagescf.dealercenter.net/1024/768/202604-5e470655b5f84b78a2cac62dfb07cc32.jpg","https://imagescf.dealercenter.net/1024/768/202604-45eb3295a2de46daa8a906becd339d51.jpg","https://imagescf.dealercenter.net/1024/768/202604-abb14d2215784c16a050e3ce744bf555.jpg","https://imagescf.dealercenter.net/1024/768/202604-1cf17d74a4fd4f0baf57ad17736c76a5.jpg","https://imagescf.dealercenter.net/1024/768/202604-31e22457d2924eb4954245ec4345044f.jpg","https://imagescf.dealercenter.net/1024/768/202604-5f5e321d6aac459c9b93e09fb2ac801b.jpg","https://imagescf.dealercenter.net/1024/768/202604-41b3e8ad1f464d488285200a8fafb630.jpg","https://imagescf.dealercenter.net/1024/768/202604-4f67717263de4997a757b0e9c121df6c.jpg","https://imagescf.dealercenter.net/1024/768/202604-7d6109c6c2d94258be8d02f1db77e021.jpg","https://imagescf.dealercenter.net/1024/768/202604-12150af55bb642bf848ed20578e66ac5.jpg","https://imagescf.dealercenter.net/1024/768/202604-8ab72ff1ef30472e9c2acc10f61b55af.jpg","https://imagescf.dealercenter.net/1024/768/202604-79858db54fed444a8f326183b0122e2b.jpg","https://imagescf.dealercenter.net/1024/768/202604-57a1eba2e828460ba11652bc5d5b7983.jpg","https://imagescf.dealercenter.net/1024/768/202604-bfb635c686d440759ea009358d6ba43b.jpg","https://imagescf.dealercenter.net/1024/768/202604-d062910e7ba14cd9a6bee1c2409c3c9c.jpg","https://imagescf.dealercenter.net/1024/768/202604-d57fbd64c1f14998b51a6c16ee155aee.jpg","https://imagescf.dealercenter.net/1024/768/202604-375817a3451b4b6eadc9a8998e6c04a8.jpg","https://imagescf.dealercenter.net/1024/768/202604-bc71a7f7b18a4a18b08f5012a34170d6.jpg","https://imagescf.dealercenter.net/1024/768/202604-fb171d1ba5bd45d7aca604d93cb97031.jpg","https://imagescf.dealercenter.net/1024/768/202604-7abb21ce671f4492bdca9b5454382ab8.jpg"],"url":"https://www.nashmimotors.com/inventory/hyundai/santa-fe-sport/a1048/","carfax":"https://www.carfax.com/vehiclehistory/ar20/3PP5Y1kYtNDkG1cczNollpt8UIQeDP8vKsiNxOT5FekcIV3oTWPkt7A1lpECFeFQQzmk37gbKvybnc_nO9wxTP2rZTLeLsvTYnI","carfaxBadge":"Great Value","features":["DOWNHILL ASSIST CONTROL","ELECTRONIC STABILITY CONTROL","HEAD CURTAIN AIR BAGS","CD/MP3 (SINGLE DISC)","TILT & TELESCOPING WHEEL","POWER STEERING","CRUISE CONTROL","BLUETOOTH WIRELESS","BACKUP CAMERA","TRACTION CONTROL","BLUE LINK TELEMATICS","ABS (4-WHEEL)","KNEE AIR BAGS","ALLOY WHEELS","SIRIUSXM SATELLITE","REAR SPOILER","HILL START ASSIST CONTROL","DUAL AIR BAGS","SIDE AIR BAGS","POWER DOOR LOCKS","KEYLESS ENTRY","AIR CONDITIONING","POWER WINDOWS","ALARM SYSTEM","AM/FM STEREO"]},{"vin":"5N1AT2MV1FC890556","stock":"A1040","year":2015,"make":"NISSAN","model":"ROGUE","type":"suv","price":8995,"sale":null,"miles":139501,"drive":"AWD","fuel":"Gasoline","img":"202604-04863681eb7a477d912eac4575326cc9","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-04863681eb7a477d912eac4575326cc9.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-04863681eb7a477d912eac4575326cc9.jpg","https://imagescf.dealercenter.net/1024/768/202604-fc005777ead3487ab966e01e8f27224e.jpg","https://imagescf.dealercenter.net/1024/768/202604-a90af12acb7f48089c2f91a944b3cdba.jpg","https://imagescf.dealercenter.net/1024/768/202604-6ca75a9da0b5412aaae67a5b6fd7c7cf.jpg","https://imagescf.dealercenter.net/1024/768/202604-8babbb5aeb8f434eaa51db65afaad5a0.jpg","https://imagescf.dealercenter.net/1024/768/202604-de683e540a4a4343bf1dae4c3a3abb7d.jpg","https://imagescf.dealercenter.net/1024/768/202604-baebe98e46a8489094fd59dd3e57ba40.jpg","https://imagescf.dealercenter.net/1024/768/202604-754cd74ca6e04ddd87c6f1e2c012a31d.jpg","https://imagescf.dealercenter.net/1024/768/202604-5f5cd040962f4b709e343eea62e6fdee.jpg","https://imagescf.dealercenter.net/1024/768/202604-7f6eb69f8fa6433ab9dd7b1e02b25424.jpg","https://imagescf.dealercenter.net/1024/768/202604-951360d43ad44caa8f5eab63f8273df8.jpg","https://imagescf.dealercenter.net/1024/768/202604-236904152c974fe8aad72d16f6162c93.jpg","https://imagescf.dealercenter.net/1024/768/202604-685c9c93068840e198e0df7c3aad3d56.jpg","https://imagescf.dealercenter.net/1024/768/202604-48061971bcc8428eb63a50215279da2a.jpg","https://imagescf.dealercenter.net/1024/768/202604-df3a0d3ed83644cebf8ae214d8c5c2bf.jpg","https://imagescf.dealercenter.net/1024/768/202604-b687f69f2f824aa3b119289382ac9db6.jpg","https://imagescf.dealercenter.net/1024/768/202604-1eb1c6b42fa14ca3a95f3e86fc0b9a0c.jpg","https://imagescf.dealercenter.net/1024/768/202604-6f569a942470407cb42ac53454181cd5.jpg","https://imagescf.dealercenter.net/1024/768/202604-382b69bab3df44dfbf93c14c2b115760.jpg","https://imagescf.dealercenter.net/1024/768/202604-759e16885a00492eb9ba46e1329abd3d.jpg"],"url":"https://www.nashmimotors.com/inventory/nissan/rogue/a1040/","carfax":"https://www.carfax.com/vehiclehistory/ar20/G5mn9iZbxB-Lm6Q_sE3uhSmaYzhZ4wMDiwctEPZ7o4VpsxWe9BkuisKX_TyUzNpdqlTmQU8iFnHJm9uYPyMWuhUGJ5zKTZSRAkc","carfaxBadge":"Good Value","features":["DUAL AIR BAGS","BLUETOOTH WIRELESS","PREMIUM SOUND","TILT & TELESCOPING WHEEL","DAYTIME RUNNING LIGHTS","ANTI-THEFT SYSTEM","KEYLESS START","ALLOY WHEELS","TRACTION CONTROL","VEHICLE DYNAMIC CONTROL","POWER LIFTGATE RELEASE","AIR CONDITIONING","KEYLESS ENTRY","POWER STEERING","POWER SEAT","AM/FM STEREO","SIDE AIR BAGS","POWER DOOR LOCKS","HILL DESCENT CONTROL","REAR SPOILER","CD/MP3 (SINGLE DISC)","HILL START ASSIST CONTROL","FOG LIGHTS","SIRIUSXM SATELLITE","NISSANCONNECT","ABS (4-WHEEL)","BACKUP CAMERA","F&R HEAD CURTAIN AIR BAGS","POWER WINDOWS","CRUISE CONTROL"]},{"vin":"1C4RJFCG1EC247856","stock":"A1039","year":2014,"make":"JEEP","model":"GRAND CHEROKEE","type":"suv","price":8995,"sale":null,"miles":173710,"drive":"4WD","fuel":"Flex","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1039/","carfax":"https://www.carfax.com/vehiclehistory/ar20/UBXfb4qGc61gA54WH842LdV0XTxvlECsSQJl4N8VGNmxpSYFA_Xs7GCU3JbXpbIVFTaA6Kty1afyb4bEosxikXiSvag3lc0eLYw","carfaxBadge":null,"features":["CRUISE CONTROL","TOWING PKG","AM/FM STEREO","ABS (4-WHEEL)","BACKUP CAMERA","DUAL AIR BAGS","KEYLESS ENTRY","PANORAMA ROOF","LEATHER","COOLED SEATS","ANTI-THEFT SYSTEM","TILT WHEEL","HILL START ASSIST","POWER STEERING","TRACTION CONTROL","HILL DESCENT CONTROL","CD/MP3 (SINGLE DISC)","SIRIUSXM SATELLITE","STABILITY CONTROL","F&R HEAD CURTAIN AIR BAGS","UCONNECT","HEATED SEATS","FOG LIGHTS","POWER DOOR LOCKS","SIDE AIR BAGS","REAR PARK ASSIST","POWER WINDOWS","NAVIGATION SYSTEM","DAYTIME RUNNING LIGHTS","AIR CONDITIONING"]},{"vin":"1FAHP2E84HG131823","stock":"A1044","year":2017,"make":"FORD","model":"TAURUS","type":"sedan","price":8995,"sale":null,"miles":122073,"drive":"FWD","fuel":"Gasoline","img":"202604-940abb31352d4b608bb8db28b1dd8e2e","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-940abb31352d4b608bb8db28b1dd8e2e.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-940abb31352d4b608bb8db28b1dd8e2e.jpg","https://imagescf.dealercenter.net/1024/768/202604-3b24b59ccfd14d709d1b2e0e38828453.jpg","https://imagescf.dealercenter.net/1024/768/202604-79d07bc0b06d4d549adebbf132b2a596.jpg","https://imagescf.dealercenter.net/1024/768/202604-e2fcee53c27c4fe1950bf1001175f7ed.jpg","https://imagescf.dealercenter.net/1024/768/202604-e974449639424a7ba042107d7c0a8d8a.jpg","https://imagescf.dealercenter.net/1024/768/202604-888799a527694a6ca755e46413d15ce7.jpg","https://imagescf.dealercenter.net/1024/768/202604-41d53a0d69294bb2a1d070d96d6ce0d2.jpg","https://imagescf.dealercenter.net/1024/768/202604-72401e08475a4d9f871f650c5a1a40a5.jpg","https://imagescf.dealercenter.net/1024/768/202604-20890c33e8544cd086ce57f860b1d26c.jpg","https://imagescf.dealercenter.net/1024/768/202604-3469e132e1034d9e90b52c963afb0c68.jpg","https://imagescf.dealercenter.net/1024/768/202604-693d64148617476a92d13c3b8e3d5416.jpg","https://imagescf.dealercenter.net/1024/768/202604-c8710934b78445ed98c71ffdf5502089.jpg","https://imagescf.dealercenter.net/1024/768/202604-bb574937d8f94c88b805149568e9f68f.jpg","https://imagescf.dealercenter.net/1024/768/202604-0c58a354dadd48dca0230a720991d0f6.jpg","https://imagescf.dealercenter.net/1024/768/202604-3c76c101be31407eae9e16c25cc859d0.jpg","https://imagescf.dealercenter.net/1024/768/202604-3de9eb7db3424f16ac8e59f07edf0cc0.jpg","https://imagescf.dealercenter.net/1024/768/202604-540ecea10466459d95f78320dbf9acea.jpg","https://imagescf.dealercenter.net/1024/768/202604-150971f3845e434cb0e07befe9a7d564.jpg","https://imagescf.dealercenter.net/1024/768/202604-10e34975f6374f708aea2da404c5f6b8.jpg","https://imagescf.dealercenter.net/1024/768/202604-495273259e8d4ae6a066c313a0cc69de.jpg","https://imagescf.dealercenter.net/1024/768/202604-27ec59bc31284b11b9a1ba01afa674e9.jpg"],"url":"https://www.nashmimotors.com/inventory/ford/taurus/a1044/","carfax":"https://www.carfax.com/vehiclehistory/ar20/TM7zYUIV3HpNKbMTikVvpv0uo_O67TpciLwMoADHWqt2SwFt3a5bMUynZ_lnHZO-5nfF5Jle1zprLScyfzGrCl__P8YcaFs3uW8","carfaxBadge":"1own_great","features":["SIRIUSXM SATELLITE","ALLOY WHEELS","ADVANCETRAC","POWER DOOR LOCKS","BACKUP CAMERA","KEYLESS START","KEYLESS ENTRY","SYNC","TILT & TELESCOPING WHEEL","HEAD CURTAIN AIR BAGS","DUAL AIR BAGS","AIR CONDITIONING","F&R SIDE AIR BAGS","CD/MP3 (SINGLE DISC)","ABS (4-WHEEL)","POWER STEERING","TRACTION CONTROL","REVERSE SENSING SYSTEM","CRUISE CONTROL","BLUETOOTH WIRELESS","POWER WINDOWS","ALARM SYSTEM","DUAL POWER SEATS","KNEE AIR BAGS","AM/FM STEREO"]},{"vin":"1FMCU9HD0JUB66196","stock":"A1025","year":2018,"make":"FORD","model":"ESCAPE","type":"suv","price":10995,"sale":9995,"miles":99203,"drive":"4WD","fuel":"Gasoline","img":"202603-a20d08755c204b30905a7dbb89efa304","imgUrl":"https://imagescf.dealercenter.net/1024/768/202603-a20d08755c204b30905a7dbb89efa304.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202603-a20d08755c204b30905a7dbb89efa304.jpg","https://imagescf.dealercenter.net/1024/768/202603-73016d7a52c847698e9f0082e4f2ff78.jpg","https://imagescf.dealercenter.net/1024/768/202603-8fdfa0eef4ed4d939b0992916e2f34b8.jpg","https://imagescf.dealercenter.net/1024/768/202603-2606b60da2ae437ab0dab68ff12ca590.jpg","https://imagescf.dealercenter.net/1024/768/202603-463a8235b1464c6697087c8026d6bc07.jpg","https://imagescf.dealercenter.net/1024/768/202603-5d6b0d267ea847aa8b9988aaeeebe8f5.jpg","https://imagescf.dealercenter.net/1024/768/202603-2b14ae08bb04467490c716a5abb05445.jpg","https://imagescf.dealercenter.net/1024/768/202603-ffe733d9ae9f4897959cf2cfc0914438.jpg","https://imagescf.dealercenter.net/1024/768/202603-3555700bfa384bfdb504ae774f64fa43.jpg","https://imagescf.dealercenter.net/1024/768/202603-d1e97bf818ea458d957e63275b97873a.jpg","https://imagescf.dealercenter.net/1024/768/202603-902dadfd3b83468c94390842c3e588e6.jpg","https://imagescf.dealercenter.net/1024/768/202603-37e4606bb5d7465fbe636c223026e76e.jpg","https://imagescf.dealercenter.net/1024/768/202603-6643c255359f47178de2138d88c64a99.jpg","https://imagescf.dealercenter.net/1024/768/202603-35e8d6797b5c459c990c9bf8cbd6d5db.jpg","https://imagescf.dealercenter.net/1024/768/202603-205afc9df4af46ceaf03744e7133be9f.jpg","https://imagescf.dealercenter.net/1024/768/202603-d4b3be0d09da4dca82ccb3d109ea24a1.jpg","https://imagescf.dealercenter.net/1024/768/202603-d9eb3af43ae3454dbd421f77a9ea1899.jpg","https://imagescf.dealercenter.net/1024/768/202603-397642782e574d32b2cec97c4295d6a0.jpg","https://imagescf.dealercenter.net/1024/768/202603-eba20233c83d4171bc0489fd42455b50.jpg"],"url":"https://www.nashmimotors.com/inventory/ford/escape/a1025/","carfax":"https://www.carfax.com/vehiclehistory/ar20/mXAs5V-1K2gn0kavT6tI_eQ9vZkRCMToQKCmR1vSDeoQlV-mD4ElaBdrhFKA2420AeZhDnYlen15UQVJYomeM7EBE0FEX-Jlab0","carfaxBadge":"Great Value","features":["ELECTRONIC TRACTION CONTROL","AIR CONDITIONING","F&R HEAD CURTAIN AIR BAGS","POWER SEAT","BACKUP CAMERA","TILT & TELESCOPING WHEEL","SIDE AIR BAGS","AM/FM RADIO W/SYNC","SIRIUSXM SATELLITE","CD/MP3 (SINGLE DISC)","ALLOY WHEELS","PERIMETER ALARM SYSTEM","KNEE AIR BAGS","HILL START ASSIST CONTROL","ABS (4-WHEEL)","POWER WINDOWS","REAR SPOILER","ADVANCETRAC","ELECTRIC POWER STEERING","LEATHER","DUAL AIR BAGS","KEYLESS ENTRY","HEATED SEATS","FOG LIGHTS","CRUISE CONTROL","REVERSE SENSING SYSTEM","POWER DOOR LOCKS"]},{"vin":"2C4RC1BG0HR503978","stock":"A1032","year":2017,"make":"CHRYSLER","model":"PACIFICA","type":"van","price":9995,"sale":null,"miles":131087,"drive":"FWD","fuel":"Gasoline","img":"202604-b0c555734bb04fd99a60b752ed23e5d7","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-b0c555734bb04fd99a60b752ed23e5d7.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-b0c555734bb04fd99a60b752ed23e5d7.jpg","https://imagescf.dealercenter.net/1024/768/202604-9e8f300647f94fe6ade7efd13d3f42fc.jpg","https://imagescf.dealercenter.net/1024/768/202604-a2fec0f71ec94282860b1e4c818895f7.jpg","https://imagescf.dealercenter.net/1024/768/202604-bc536d49162743b0b51843fb4f4143fa.jpg","https://imagescf.dealercenter.net/1024/768/202604-8a4402797fc74b05a9196562a2b3a45f.jpg","https://imagescf.dealercenter.net/1024/768/202604-5843981f2931467e89624e4496e272f7.jpg","https://imagescf.dealercenter.net/1024/768/202604-38ff1ed0665549c49ca115346ea56f14.jpg","https://imagescf.dealercenter.net/1024/768/202604-38bd38f507564c228b016f08bd4e3512.jpg","https://imagescf.dealercenter.net/1024/768/202604-7fd5851767ed4e569e9e0a305f5eb9a0.jpg","https://imagescf.dealercenter.net/1024/768/202604-0b9a183cc5ab42edbea06766012910dc.jpg","https://imagescf.dealercenter.net/1024/768/202604-ddc310ceda994964a2a78b1f8fcbdc55.jpg","https://imagescf.dealercenter.net/1024/768/202604-70ad04b2f13542c99bfb4ba47a53726e.jpg","https://imagescf.dealercenter.net/1024/768/202604-5ee3080528554e2caab9bbeec84ed791.jpg","https://imagescf.dealercenter.net/1024/768/202604-ab16bf2aaa4a44268cc962252230f376.jpg","https://imagescf.dealercenter.net/1024/768/202604-02ca91d8b91345198887ec5f91528848.jpg","https://imagescf.dealercenter.net/1024/768/202604-10d16ddfd6fd446ba5e34b91ceb25706.jpg","https://imagescf.dealercenter.net/1024/768/202604-f356f1e9dae341d99c10b50c24ec6ce8.jpg","https://imagescf.dealercenter.net/1024/768/202604-e15c874d4b5c4185a84b0e5bc82bc231.jpg","https://imagescf.dealercenter.net/1024/768/202604-57a108bc707849e4bdc035c2ec734e75.jpg"],"url":"https://www.nashmimotors.com/inventory/chrysler/pacifica/a1032/","carfax":"https://www.carfax.com/vehiclehistory/ar20/OIA63Z5849VmRd7XWfpLTgnMpyEdVaJOF4-10XQs1Cm3cNsu24TjubDZx3vTQAbN6AFIvMWhGrqJILbBT60cG9UCkRwxqQ_edfU","carfaxBadge":"Great Value","features":["ALLOY WHEELS","SIRIUSXM SATELLITE","AIR CONDITIONING","QUAD SEATING (4 BUCKETS)","KEYLESS-GO","BLUETOOTH WIRELESS","DUAL AIR BAGS","AIR CONDITIONING, REAR","HILL START ASSIST","FOG LIGHTS","ELECTRONIC STABILITY CONTROL","POWER SLIDING DOORS","TRACTION CONTROL","HEATED SEATS","TILT & TELESCOPING WHEEL","SIDE AIR BAGS","CRUISE CONTROL","BACKUP CAMERA","POWER DOOR LOCKS","POWER LIFTGATE","KNEE AIR BAGS","BLIND-SPOT ALERT","REAR PARK ASSIST","DAYTIME RUNNING LIGHTS","POWER SEAT","AM/FM STEREO","KEYLESS ENTRY","POWER WINDOWS","ABS (4-WHEEL)","LEATHER"]},{"vin":"1FTFW1ET7BFC33259","stock":"A1035","year":2011,"make":"FORD","model":"F150 SUPERCREW CAB","type":"truck","price":10995,"sale":null,"miles":166862,"drive":"4WD","fuel":"Gasoline","img":"202604-98d761fdfd6343498219fde07c02beb0","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-98d761fdfd6343498219fde07c02beb0.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-98d761fdfd6343498219fde07c02beb0.jpg","https://imagescf.dealercenter.net/1024/768/202604-ef53a5bc84334546b2789b99648507f3.jpg","https://imagescf.dealercenter.net/1024/768/202604-f3e163b9475044d1b4ce7bba73dc699e.jpg","https://imagescf.dealercenter.net/1024/768/202604-45fe25b4f3b54f9ab3ed148329d2b032.jpg","https://imagescf.dealercenter.net/1024/768/202604-8de3fbbb994f4bdaa51c36851c3fbe13.jpg","https://imagescf.dealercenter.net/1024/768/202604-6375505dffc44b10be189f264a822723.jpg","https://imagescf.dealercenter.net/1024/768/202604-8a4c699b4f774117b4803bd6d59048e2.jpg","https://imagescf.dealercenter.net/1024/768/202604-08e3085641f14ec98d2b247dfb63189d.jpg","https://imagescf.dealercenter.net/1024/768/202604-3c07d2f49632434d90ca9818fca56d59.jpg","https://imagescf.dealercenter.net/1024/768/202604-f7deaccecab64c8b85949a76ae48b6ba.jpg","https://imagescf.dealercenter.net/1024/768/202604-341def00440147f0b90a19a1283568bc.jpg","https://imagescf.dealercenter.net/1024/768/202604-7444441f291241dd8e036be44d111294.jpg","https://imagescf.dealercenter.net/1024/768/202604-2da06878949c498284f045e82654fa53.jpg","https://imagescf.dealercenter.net/1024/768/202604-7f07edd2dba6493e9d8de71fbec9d945.jpg","https://imagescf.dealercenter.net/1024/768/202604-50a4c9ea4d744a54b2222df39bf804d1.jpg","https://imagescf.dealercenter.net/1024/768/202604-9e8a00796a8a425d8a2d6cee050dca6d.jpg","https://imagescf.dealercenter.net/1024/768/202604-8a0e00f236074d5d9e228a1d3e1ca48a.jpg","https://imagescf.dealercenter.net/1024/768/202604-a96ffb42ab934ea19f1cf061aea13651.jpg"],"url":"https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/","carfax":"https://www.carfax.com/vehiclehistory/ar20/rLD9tgijXMWAj-torZYfArajwo3AnPou0aD9YwdD3L29bx5H9DONugQpBIFNYA40plrU7gEOVMqsf71PdN3C7I2qQjkuARGd_OA","carfaxBadge":"1own_good","features":["HEAD CURTAIN AIR BAGS","TOWING PKG","POWER SLIDING REAR WINDOW","CRUISE CONTROL","LEATHER","KEYLESS ENTRY","TILT WHEEL","FOG LIGHTS","POWER WINDOWS","SYNC","SIRIUS SATELLITE","DUAL POWER SEATS","HEATED SEATS","ALLOY WHEELS","ABS (4-WHEEL)","POWER DOOR LOCKS","SIDE AIR BAGS","ANTI-THEFT SYSTEM","POWER STEERING","AM/FM STEREO","CD/MP3 (SINGLE DISC)","ADVANCETRAC","AIR CONDITIONING","TRACTION CONTROL","DUAL AIR BAGS"]},{"vin":"5N1DL0MM3KC505596","stock":"A1042","year":2019,"make":"INFINITI","model":"QX60","type":"suv","price":11995,"sale":null,"miles":137835,"drive":"AWD","fuel":"Gasoline","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/","carfax":"https://www.carfax.com/vehiclehistory/ar20/iRSo47f47GQS2EPoX3r0C_Fz1UAvhleX7VdrnoPEnNF6UlvDWueLpyIsZ-7Ja38VEKywi9k2zUnQWIUp6C-iU3r6n9E4tJY5KyY","carfaxBadge":"1own","features":["BLIND-SPOT WARNING","HILL START ASSIST","AIR CONDITIONING, REAR","DUAL AIR BAGS","MOON ROOF","FOG LIGHTS","TRACTION CONTROL","AM/FM STEREO","VEHICLE DYNAMIC CONTROL","SIDE AIR BAGS","POWER DOOR LOCKS","BLUETOOTH WIRELESS","ABS (4-WHEEL)","ALLOY WHEELS","POWER LIFTGATE RELEASE","DAYTIME RUNNING LIGHTS","REAR SPOILER","CRUISE CONTROL","DUAL POWER SEATS","F&R HEAD CURTAIN AIR BAGS","POWER WINDOWS","BACKUP CAMERA","ALARM SYSTEM","SIRIUSXM SATELLITE","HEATED SEATS","PUSH BUTTON START","BI-HID HEADLAMPS","TILT & TELESCOPING WHEEL","KEYLESS ENTRY","CD/MP3 (SINGLE DISC)"]},{"vin":"1C4RJFBG3EC471289","stock":"A1043","year":2014,"make":"JEEP","model":"GRAND CHEROKEE","type":"suv","price":11995,"sale":null,"miles":90100,"drive":"4WD","fuel":"Flex","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/","carfax":"https://www.carfax.com/vehiclehistory/ar20/tvbMrPl6Zr-vMPVpp45kGaBr4D4Ai4wMNkWmD6cX3pd2G9kOGc6zQSZOalFb3vQctnn_TczUg_fO3Fd4-kEx7NQnGrl10xUZaHs","carfaxBadge":"1own","features":["POWER LIFTGATE RELEASE","HEATED SEATS","SIDE AIR BAGS","REAR PARK ASSIST","ABS (4-WHEEL)","TRACTION CONTROL","ALLOY WHEELS","DAYTIME RUNNING LIGHTS","REAR SPOILER","LEATHER","DUAL AIR BAGS","NAVIGATION SYSTEM","POWER STEERING","KEYLESS START","CD/MP3 (SINGLE DISC)","POWER WINDOWS","DUAL POWER SEATS","BLUETOOTH WIRELESS","MOON ROOF","TILT WHEEL","AIR CONDITIONING","HILL DESCENT CONTROL","BACKUP CAMERA","POWER DOOR LOCKS","AM/FM STEREO","ANTI-THEFT SYSTEM","UCONNECT","CRUISE CONTROL","KNEE AIR BAGS","F&R HEAD CURTAIN AIR BAGS"]},{"vin":"WA1ANAFY6J2019757","stock":"A1041","year":2018,"make":"AUDI","model":"Q5","type":"suv","price":11995,"sale":null,"miles":131931,"drive":"AWD","fuel":"Gasoline","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/audi/q5/a1041/","carfax":"https://www.carfax.com/vehiclehistory/ar20/VRhWzHrcyd3Vr_gGYPFZRI9KqdT2JMsHPTXBu03M_JSv7pWeos24n-kQOC_Ut-bAXnzuix2Reu4gbu07vZxCK08OGJwamKarMck","carfaxBadge":null,"features":["DUAL POWER SEATS","TRACTION CONTROL","PANORAMIC SUN ROOF","PUSH BUTTON START","POWER TAILGATE RELEASE","AIR CONDITIONING, REAR","SIDE AIR BAGS","ALARM SYSTEM","DAYTIME RUNNING LIGHTS","POWER WINDOWS","AM/FM/HD STEREO","ABS (4-WHEEL)","LEATHER","FOG LIGHTS","HILL DESCENT CONTROL","KEYLESS ENTRY","TILT & TELESCOPING WHEEL","BACKUP CAMERA","ELECTRONIC STABILITY CONTROL","DUAL AIR BAGS","POWER DOOR LOCKS","ALLOY WHEELS","ELECTROMECHANICAL POWER STEERING","CRUISE CONTROL","XENON HEADLAMPS","F&R HEAD CURTAIN AIR BAGS","BLUETOOTH WIRELESS","CD/MP3 (SINGLE DISC)","ROLLOVER MITIGATION"]},{"vin":"3VV2B7AX0JM171726","stock":"A1047","year":2018,"make":"VOLKSWAGEN","model":"TIGUAN","type":"suv","price":12995,"sale":null,"miles":85801,"drive":"AWD","fuel":"Gasoline","img":"202604-fe173159e1b6434382ee32c638d4578e","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-fe173159e1b6434382ee32c638d4578e.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-fe173159e1b6434382ee32c638d4578e.jpg","https://imagescf.dealercenter.net/1024/768/202604-2dee5e23094641f099b7523beeccda58.jpg","https://imagescf.dealercenter.net/1024/768/202604-3cb20fe0d41841b9b18062e106001028.jpg","https://imagescf.dealercenter.net/1024/768/202604-b106757a14484b12aee3522cdee51f0d.jpg","https://imagescf.dealercenter.net/1024/768/202604-46e6e83772004ec58121378747546669.jpg","https://imagescf.dealercenter.net/1024/768/202604-3055554c5dd445eaaba03362ff058d76.jpg","https://imagescf.dealercenter.net/1024/768/202604-1d2ecc4bb6514519ba8bb21b1d7c7442.jpg","https://imagescf.dealercenter.net/1024/768/202604-42b01b109fa248b1b94eb3ea44f8e2b0.jpg","https://imagescf.dealercenter.net/1024/768/202604-108e876f6ed34dd2ae32d253f8acb59d.jpg","https://imagescf.dealercenter.net/1024/768/202604-f5f0c061e5a84eb4a0c8d3f1b14673af.jpg","https://imagescf.dealercenter.net/1024/768/202604-616574db471242198d021d2d97acf655.jpg","https://imagescf.dealercenter.net/1024/768/202604-78083db7e9c844769fcb6bd8bc07c9da.jpg","https://imagescf.dealercenter.net/1024/768/202604-39a54d22c87d4a5abec4927f2f5d39fb.jpg","https://imagescf.dealercenter.net/1024/768/202604-50f7e6890dc04c33bd966453560d6a71.jpg","https://imagescf.dealercenter.net/1024/768/202604-985700394286404baa44da945b32c308.jpg","https://imagescf.dealercenter.net/1024/768/202604-c07b6b1d99fb4247b4d74c4bf9a16329.jpg","https://imagescf.dealercenter.net/1024/768/202604-b00baae8e6b84081a5a109f626cc40c6.jpg","https://imagescf.dealercenter.net/1024/768/202604-0b2c6ef9c6a349b28e92a9d36caa3992.jpg","https://imagescf.dealercenter.net/1024/768/202604-a4e4dec286de46689f14e47545855f6f.jpg","https://imagescf.dealercenter.net/1024/768/202604-5abf5299a43146a39ff80a1413b4c9f6.jpg","https://imagescf.dealercenter.net/1024/768/202604-b1e02a70a2b646dba20582dfb4657226.jpg","https://imagescf.dealercenter.net/1024/768/202604-4972d3257a894006a8547a16cb5306a3.jpg","https://imagescf.dealercenter.net/1024/768/202604-27fa7e1855d24fde868c95408ca2a517.jpg"],"url":"https://www.nashmimotors.com/inventory/volkswagen/tiguan/a1047/","carfax":"https://www.carfax.com/vehiclehistory/ar20/9vlAmoVKkvJSrFBGaBpvZjMYEQiNt1oWpl4CNJQgQxQZ0J74IDwudGt45feN3Y8V9jdE_8HLF4W-IUgMLeL_MMhocMFT0i1ELbk","carfaxBadge":"Great Value","features":["ELECTROMECHANICAL STEERING","ALLOY WHEELS","HILL START ASSIST","ABS (4-WHEEL)","CRUISE CONTROL","BLUETOOTH WIRELESS","CD/MP3 (SINGLE DISC)","STABILITY CONTROL","HEATED SEATS","ALARM SYSTEM","DUAL AIR BAGS","DAYTIME RUNNING LIGHTS","AIR CONDITIONING","BACKUP CAMERA","TILT & TELESCOPING WHEEL","BLIND-SPOT MONITOR","POWER SEAT","VW CAR-NET","KEYLESS ENTRY","POWER DOOR LOCKS","POWER PANORAMA SUN ROOF W/FIXED REAR","KEYLESS START","F&R HEAD CURTAIN AIR BAGS","SIRIUSXM SATELLITE","AM/FM STEREO","SIDE AIR BAGS","TRACTION CONTROL","HILL DESCENT CONTROL","POWER WINDOWS"]},{"vin":"5XXGT4L33LG422253","stock":"A1014","year":2020,"make":"KIA","model":"OPTIMA","type":"sedan","price":15995,"sale":13995,"miles":52350,"drive":"FWD","fuel":"Gasoline","img":"202604-4b79213e173641bcb114456c4c6ea9f9","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg","https://imagescf.dealercenter.net/1024/768/202604-7c1e92afbad04cde99baea360eb2464e.jpg","https://imagescf.dealercenter.net/1024/768/202604-f5bdee1748d04b6c9b1fbe6e5e94611c.jpg","https://imagescf.dealercenter.net/1024/768/202604-3cc03d5be9bb45bcb17fc3f81b1f6fde.jpg","https://imagescf.dealercenter.net/1024/768/202604-994e1400193941419eb91ad14fd00a55.jpg","https://imagescf.dealercenter.net/1024/768/202604-92ffe6e2e4754cc49521da526823c4d8.jpg","https://imagescf.dealercenter.net/1024/768/202604-24b50b9f48b646cc8ab9993bb87565a1.jpg","https://imagescf.dealercenter.net/1024/768/202604-2090b1d513d249f4b0ef2b81fbd4dbfb.jpg","https://imagescf.dealercenter.net/1024/768/202604-bb25014544c74caf8353fa957a771c33.jpg","https://imagescf.dealercenter.net/1024/768/202604-3b817c854cfe4542a3a6116b86e5866a.jpg","https://imagescf.dealercenter.net/1024/768/202604-74f92f5e38374a8891fbd69b32312fc5.jpg","https://imagescf.dealercenter.net/1024/768/202604-1185c27fdd904aecb4466688346c273d.jpg","https://imagescf.dealercenter.net/1024/768/202604-33a10df583e042a5a1a6bd3367b7bf62.jpg","https://imagescf.dealercenter.net/1024/768/202604-b97f0e0d227d48fb8529610de37f0a89.jpg","https://imagescf.dealercenter.net/1024/768/202604-af35e86271014c0d9397617d38d5d452.jpg","https://imagescf.dealercenter.net/1024/768/202604-b26fdf2a7ed84bb587832fa925a6b498.jpg","https://imagescf.dealercenter.net/1024/768/202604-33be674955d8443abcbe6d50b93af607.jpg","https://imagescf.dealercenter.net/1024/768/202604-015bee0c3a9b44c38d8bd586adba10cd.jpg","https://imagescf.dealercenter.net/1024/768/202604-86b97c01b4ec4cb793d4cf87cc54b6c0.jpg"],"url":"https://www.nashmimotors.com/inventory/kia/optima/a1014/","carfax":"https://www.carfax.com/vehiclehistory/ar20/SXxrBIrcTeqQjmK825bWZxh0Yy8l6eyTDYdwEh__8IEtTeIaZ-QEor9bX2UhQeMzJHNrFypmgnD69DviztD-1sfWCwKyVD36sc0","carfaxBadge":"1own_good","features":["BLUETOOTH WIRELESS","BLIND-SPOT COLLISION WARNING","POWER DOOR LOCKS","CRUISE CONTROL","POWER WINDOWS","HILL START ASSIST CONTROL","F&R HEAD CURTAIN AIR BAGS","LANE DEPARTURE WARNING SYSTEM","DUAL AIR BAGS","AIR CONDITIONING","BACKUP CAMERA","ELECTRONIC STABILITY CONTROL","ABS (4-WHEEL)","CD/MP3 (SINGLE DISC)","SIDE AIR BAGS","TRACTION CONTROL","PARK ASSIST","KEYLESS ENTRY","DAYTIME RUNNING LIGHTS","KNEE AIR BAGS","ALLOY WHEELS","TILT & TELESCOPING WHEEL","AM/FM STEREO"]},{"vin":"KNDJ23AU3P7884308","stock":"R1001","year":2023,"make":"KIA","model":"SOUL","type":"suv","price":13995,"sale":null,"miles":42418,"drive":"FWD","fuel":"Gasoline","img":null,"imgUrl":null,"photos":[],"url":"https://www.nashmimotors.com/inventory/kia/soul/r1001/","carfax":"https://www.carfax.com/vehiclehistory/ar20/w8IlPGVs6cZioEkYGpcIMgiWVMG7MKOsZeMY_OYNp3h5XjBNpFftd_wT-Ii0HnFdNZfh-boyIPGf607G_QE4xjWcAApG0Fv8qoo","carfaxBadge":null,"features":["ELECTRONIC STABILITY CONTROL","COLLISION WARNING","AM/FM/HD RADIO","TILT & TELESCOPING WHEEL","HILL START ASSIST CONTROL","F&R HEAD CURTAIN AIR BAGS","POWER DOOR LOCKS","AIR CONDITIONING","KEYLESS ENTRY","BACKUP CAMERA","BLUETOOTH WIRELESS","SIDE AIR BAGS","CRUISE CONTROL","LANE KEEP ASSIST","DUAL AIR BAGS","POWER STEERING","STEEL WHEELS","CD/MP3 (SINGLE DISC)","POWER WINDOWS","ABS (4-WHEEL)","POWER LIFTGATE RELEASE"]},{"vin":"1GTV2MEC9GZ177324","stock":"A1036","year":2016,"make":"GMC","model":"SIERRA 1500 DOUBLE CAB","type":"truck","price":15995,"sale":null,"miles":169485,"drive":"4WD","fuel":"Gasoline","img":"202604-71cd86c07dfa42e0b68d30cf691990dd","imgUrl":"https://imagescf.dealercenter.net/1024/768/202604-71cd86c07dfa42e0b68d30cf691990dd.jpg","photos":["https://imagescf.dealercenter.net/1024/768/202604-71cd86c07dfa42e0b68d30cf691990dd.jpg","https://imagescf.dealercenter.net/1024/768/202604-636b470f3dd94dd3b35831647244fc59.jpg","https://imagescf.dealercenter.net/1024/768/202604-c13065aebd074a66818cc1386c420e39.jpg","https://imagescf.dealercenter.net/1024/768/202604-db50c2bf877e43448e30ff6f25358260.jpg","https://imagescf.dealercenter.net/1024/768/202604-ebb98bbfa800409a92fc6cc5fa0df588.jpg","https://imagescf.dealercenter.net/1024/768/202604-ad31ba6e5a3f42c6b3edfe48797bc0c4.jpg","https://imagescf.dealercenter.net/1024/768/202604-102b1598d3df49b98a9cfd1d6952ea57.jpg","https://imagescf.dealercenter.net/1024/768/202604-463407d6b1684dbdacbb9a92f4a8ae43.jpg","https://imagescf.dealercenter.net/1024/768/202604-edc40333fed243919968a74363efbbf3.jpg","https://imagescf.dealercenter.net/1024/768/202604-e4256ae053714df981ea9c28fd976f4f.jpg","https://imagescf.dealercenter.net/1024/768/202604-83745b85067f420ab49853183cb267fe.jpg","https://imagescf.dealercenter.net/1024/768/202604-3ae718af38b949019cf1b637b02020d4.jpg","https://imagescf.dealercenter.net/1024/768/202604-14c3bada76a041358852d96d75abbf53.jpg","https://imagescf.dealercenter.net/1024/768/202604-c083a2662932466ba8bb5cd20e84e06f.jpg","https://imagescf.dealercenter.net/1024/768/202604-d4257265728e4845bb62e88b6a6178f8.jpg","https://imagescf.dealercenter.net/1024/768/202604-e0c70c9195a942ab9dcf0528da99e8a1.jpg","https://imagescf.dealercenter.net/1024/768/202604-2d467f4bf7524a14b81d37074c0e0914.jpg","https://imagescf.dealercenter.net/1024/768/202604-bd8fb735dddf4270a2da22f58651cf1c.jpg","https://imagescf.dealercenter.net/1024/768/202604-a8f15e3492cd4e3d8082dc19e13c6630.jpg"],"url":"https://www.nashmimotors.com/inventory/gmc/sierra-1500-double-cab/a1036/","carfax":"https://www.carfax.com/vehiclehistory/ar20/DdHsm6WFWgiRgYMJO-nO60lklmxFaX109FIFWRS9BgsoFLtrDqMDqTYFcdqRZ_krQ9LzBVlx88RmuK8HWtmTze4fNzrpmI2J-Wg","carfaxBadge":"Good Value","features":["STABILITRAK","POWER WINDOWS","SIRIUSXM SATELLITE","DUAL AIR BAGS","BLUETOOTH WIRELESS","POWER STEERING","TOWING PKG","AIR CONDITIONING","ALLOY WHEELS","BACKUP CAMERA","FOG LIGHTS","TRACTION CONTROL","AM/FM STEREO","ABS (4-WHEEL)","ONSTAR","KEYLESS ENTRY","DUAL POWER SEATS","HID HEADLAMPS","CRUISE CONTROL","POWER DOOR LOCKS","INTELLILINK","HILL START ASSIST CONTROL","ANTI-THEFT SYSTEM","KEYLESS START","CD/MP3 (SINGLE DISC)","NAVIGATION SYSTEM","DAYTIME RUNNING LIGHTS","HEAD CURTAIN AIR BAGS","TILT WHEEL","F&R SIDE AIR BAGS"]}]};
+/* ── Config ──────────────────────────────────────────────────────── */
+const PW = 'nashmi2025';   // change this password when ready
+const DEALER = {
+  name:    'Nashmi Motors',
+  addr:    '8001 Paxton St',
+  city:    'Harrisburg',
+  state:   'PA',
+  zip:     '17111',
+  phone:   '(717) 743-5175',
+  email:   'sales@nashmimotors.com',
+  license: '',              // add PA dealer license # here
+};
+const PA_TAX = 0.06;
+
+/* ── State ───────────────────────────────────────────────────────── */
+let vehicles     = [];
+let selectedVin  = null;
+let activeTab    = 'bill';
+let recallData   = null;
+let recallBusy   = false;
+
+/* ── Auth ────────────────────────────────────────────────────────── */
+document.getElementById('pw').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPw();
+});
+
+function checkPw() {
+  if (document.getElementById('pw').value === PW) {
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    loadInventory();
+  } else {
+    document.getElementById('pw-err').textContent = 'Incorrect password.';
+    document.getElementById('pw').value = '';
+  }
+}
+
+/* ── Inventory ───────────────────────────────────────────────────── */
+async function loadInventory() {
+  // Show static data instantly so the tool is usable right away
+  vehicles = STATIC_INV.vehicles || [];
+  renderList(vehicles);
+  document.getElementById('inv-status').textContent = vehicles.length + ' vehicles (cached)';
+
+  // Try to upgrade to live API data in the background
+  try {
+    const r = await fetch('/api/inventory');
+    if (r.ok) {
+      const d = await r.json();
+      if ((d.vehicles || []).length) {
+        vehicles = d.vehicles;
+        renderList(vehicles);
+        document.getElementById('inv-status').textContent = vehicles.length + ' vehicles (live)';
+      }
+    }
+  } catch { /* live API not available — static data is fine */ }
+}
+
+function renderList(vlist) {
+  const el = document.getElementById('car-list');
+  document.getElementById('car-count').textContent =
+    vlist.length + ' vehicle' + (vlist.length !== 1 ? 's' : '');
+
+  if (!vlist.length) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:#aaa;font-size:14px">No vehicles found</div>';
+    return;
+  }
+  el.innerHTML = vlist.map(v => `
+    <div class="car-item ${v.vin === selectedVin ? 'active' : ''}" onclick="selectCar('${v.vin}')">
+      ${v.imgUrl
+        ? `<img class="car-thumb" src="${v.imgUrl}" alt="${v.year} ${v.make}" loading="lazy" onerror="this.outerHTML='<div class=car-thumb-ph>🚗</div>'">`
+        : '<div class="car-thumb-ph">🚗</div>'}
+      <div class="car-info-sm">
+        <strong>${v.year} ${v.make} ${v.model}</strong>
+        <span>${v.miles ? v.miles.toLocaleString() + ' mi' : 'N/A'} · $${(v.price||0).toLocaleString()}</span>
+        <div class="car-vin-sm">${v.vin}</div>
+      </div>
+    </div>`).join('');
+}
+
+function filterCars() {
+  const q = document.getElementById('car-search').value.toLowerCase();
+  renderList(q ? vehicles.filter(v =>
+    `${v.year} ${v.make} ${v.model} ${v.vin} ${v.trim||''}`.toLowerCase().includes(q)
+  ) : vehicles);
+}
+
+/* ── Car selection ───────────────────────────────────────────────── */
+function selectCar(vin) {
+  selectedVin = vin;
+  recallData  = null;
+  const v = vehicles.find(x => x.vin === vin);
+  if (!v) return;
+
+  filterCars(); // refresh active state
+
+  document.getElementById('empty-state').style.display  = 'none';
+  const panel = document.getElementById('car-panel');
+  panel.style.display         = 'flex';
+  panel.style.flexDirection   = 'column';
+
+  // Summary card
+  document.getElementById('car-summary').innerHTML = `
+    ${v.imgUrl
+      ? `<img class="car-sum-img" src="${v.imgUrl}" alt="${v.year} ${v.make} ${v.model}">`
+      : '<div class="car-sum-img" style="display:flex;align-items:center;justify-content:center;font-size:36px">🚗</div>'}
+    <div class="car-sum-info">
+      <h2>${v.year} ${v.make} ${v.model}${v.trim ? ' ' + v.trim : ''}</h2>
+      <div class="car-sum-price">$${(v.sale || v.price || 0).toLocaleString()}</div>
+      <div class="car-sum-meta">
+        <span>VIN: <strong>${v.vin}</strong></span>
+        ${v.stock ? `<span>Stock: <strong>${v.stock}</strong></span>` : ''}
+        <span><strong>${v.miles ? v.miles.toLocaleString() + ' mi' : 'N/A'}</strong></span>
+        <span>${v.fuel || ''}</span>
+        <span>${v.drive || ''}</span>
+      </div>
+    </div>`;
+
+  // Pre-fill overrides
+  document.getElementById('v-color').value  = v.color  || '';
+  document.getElementById('v-trim').value   = v.trim   || '';
+  document.getElementById('v-engine').value = v.engine || '';
+  document.getElementById('v-stock').value  = v.stock  || '';
+  document.getElementById('t-price').value  = v.sale   || v.price || '';
+  document.getElementById('t-date').value   = new Date().toISOString().split('T')[0];
+
+  if (activeTab === 'recall') fetchRecalls(v);
+  updateDoc();
+}
+
+/* ── Recalls (NHTSA API) ─────────────────────────────────────────── */
+async function fetchRecalls(v) {
+  if (!v || recallBusy) return;
+  recallBusy = true; recallData = null; updateDoc();
+  try {
+    const url = `https://api.nhtsa.gov/recalls/recallsByVehicle?make=${encodeURIComponent(v.make)}&model=${encodeURIComponent(v.model)}&modelYear=${encodeURIComponent(v.year)}`;
+    const r   = await fetch(url);
+    const d   = await r.json();
+    recallData = d.results || [];
+  } catch {
+    recallData = 'error';
+  }
+  recallBusy = false;
+  updateDoc();
+}
+
+function refreshRecall() {
+  const v = getV(); if (v) { recallData = null; fetchRecalls(v); }
+}
+
+/* ── Tab switching ───────────────────────────────────────────────── */
+function switchTab(name, el) {
+  document.querySelectorAll('.doc-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activeTab = name;
+  document.getElementById('recall-btn').style.display = name === 'recall' ? '' : 'none';
+  if (name === 'recall' && !recallData && !recallBusy) {
+    const v = getV(); if (v) fetchRecalls(v);
+  }
+  updateDoc();
+}
+
+function toggleForm(hdr) {
+  hdr.querySelector('.arrow').classList.toggle('open');
+  hdr.nextElementSibling.classList.toggle('open');
+}
+
+/* ── Helpers ─────────────────────────────────────────────────────── */
+function getV() { return vehicles.find(x => x.vin === selectedVin) || null; }
+
+function getVv() {
+  const v = getV(); if (!v) return null;
+  return {
+    ...v,
+    color:  document.getElementById('v-color').value  || v.color  || '',
+    trim:   document.getElementById('v-trim').value   || v.trim   || '',
+    engine: document.getElementById('v-engine').value || v.engine || '',
+    stock:  document.getElementById('v-stock').value  || v.stock  || '',
+  };
+}
+
+function getB() {
+  return {
+    name:   document.getElementById('b-name').value.trim()  || '___________________________',
+    addr:   document.getElementById('b-addr').value.trim()  || '___________________________',
+    city:   document.getElementById('b-city').value.trim()  || '_______________',
+    state:  document.getElementById('b-state').value.trim() || 'PA',
+    zip:    document.getElementById('b-zip').value.trim()   || '_______',
+    phone:  document.getElementById('b-phone').value.trim() || '_______________',
+    dl:     document.getElementById('b-dl').value.trim()    || '_______________',
+    price:  parseFloat(document.getElementById('t-price').value)  || 0,
+    down:   parseFloat(document.getElementById('t-down').value)   || 0,
+    trade:  parseFloat(document.getElementById('t-trade').value)  || 0,
+    payoff: parseFloat(document.getElementById('t-payoff').value) || 0,
+    doc:    parseFloat(document.getElementById('t-doc').value)    || 199,
+    reg:    parseFloat(document.getElementById('t-reg').value)    || 85,
+    date:   document.getElementById('t-date').value || '',
+  };
+}
+
+function $$(n) {
+  if (n === null || n === undefined) return '$___';
+  return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtDate(s) {
+  if (!s) return new Date().toLocaleDateString('en-US');
+  const [y,m,d] = s.split('-');
+  return `${m}/${d}/${y}`;
+}
+
+function dRow(label, val, w) {
+  return `<div class="doc-field"${w ? ` style="max-width:${w}"` : ''}>
+    <label>${label}</label><div class="val">${val}</div></div>`;
+}
+
+/* ── Render dispatcher ───────────────────────────────────────────── */
+function updateDoc() {
+  const vv = getVv(); if (!vv) return;
+  const b  = getB();
+  const map = { bill: docBill, recall: docRecall, odo: docOdo, order: docOrder, guide: docGuide, sticker: docSticker, weowe: docWeOwe, tradein: docTradeIn, testdrive: docTestDrive, poa: docPOA, privacy: docPrivacy };
+  document.getElementById('doc-render').innerHTML = (map[activeTab] || docBill)(vv, b);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   DOCUMENT TEMPLATES
+════════════════════════════════════════════════════════════════════ */
+
+// 1 ── PA BILL OF SALE ───────────────────────────────────────────────
+function docBill(v, b) {
+  const tax    = b.price * PA_TAX;
+  const net    = b.price - b.trade + b.payoff + tax + b.doc + b.reg - b.down;
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone} &nbsp;·&nbsp; ${DEALER.email}${DEALER.license ? ' &nbsp;·&nbsp; Dealer License: ' + DEALER.license : ''}</div>
+    <div class="doc-title">Pennsylvania Bill of Sale</div>
+    <div style="font-size:11px">Commonwealth of Pennsylvania — Motor Vehicle Sale Agreement</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Date of Sale</div>
+    <div class="doc-row">${dRow('Date', fmtDate(b.date), '180px')}</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Seller</div>
+    <div class="doc-row">
+      ${dRow('Dealer Name', DEALER.name)}
+      ${dRow('Address', DEALER.addr + ', ' + DEALER.city + ', ' + DEALER.state + ' ' + DEALER.zip)}
+    </div>
+    <div class="doc-row">
+      ${dRow('Phone', DEALER.phone, '180px')}
+      ${dRow('PA Dealer License #', DEALER.license || '___________________', '240px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Buyer</div>
+    <div class="doc-row">${dRow('Full Name', b.name)}</div>
+    <div class="doc-row">${dRow('Street Address', b.addr)}</div>
+    <div class="doc-row">
+      ${dRow('City', b.city)}
+      ${dRow('State', b.state, '60px')}
+      ${dRow('ZIP', b.zip, '90px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Phone', b.phone)}
+      ${dRow("Driver's License #", b.dl)}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Description</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '80px')}
+      ${dRow('Make', v.make)}
+      ${dRow('Model', v.model)}
+      ${dRow('Trim', v.trim)}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace;letter-spacing:1px">${v.vin}</span>`)}
+      ${dRow('Stock #', v.stock, '130px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Exterior Color', v.color)}
+      ${dRow('Odometer (miles)', v.miles ? v.miles.toLocaleString() : '')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Purchase Price</div>
+    <table class="price-tbl">
+      <tr><td>Selling Price</td><td>${$$(b.price)}</td></tr>
+      <tr><td>Trade-In Allowance</td><td>(${$$(b.trade)})</td></tr>
+      <tr><td>Trade-In Payoff (Owed)</td><td>+ ${$$(b.payoff)}</td></tr>
+      <tr><td>PA Sales Tax (6%)</td><td>${$$(tax)}</td></tr>
+      <tr><td>Documentation Fee</td><td>${$$(b.doc)}</td></tr>
+      <tr><td>Title / Registration</td><td>${$$(b.reg)}</td></tr>
+      <tr><td>Down Payment Received</td><td>(${$$(b.down)})</td></tr>
+      <tr class="tot"><td>BALANCE DUE</td><td>${$$(net < 0 ? 0 : net)}</td></tr>
+    </table>
+  </div>
+
+  <div class="doc-notice">
+    This vehicle is sold <strong>AS IS</strong> with no warranty expressed or implied except as stated in writing above.
+    Buyer acknowledges the vehicle has been inspected and accepted in its present condition. Title will be transferred
+    upon receipt of full payment. Pennsylvania sales tax, title and registration fees have been collected as indicated above.
+  </div>
+
+  <div class="doc-sigs">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Seller Signature — ${DEALER.name}</div></div>
+    <div class="doc-sig" style="max-width:130px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+  <div class="doc-sigs" style="margin-top:22px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Buyer Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:130px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+
+  <div style="text-align:center;font-size:10px;color:#aaa;margin-top:20px;border-top:1px solid #eee;padding-top:10px">
+    ${DEALER.name} · ${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} · ${DEALER.phone} · nashmimotors.com
+  </div>
+</div>`;
+}
+
+// 2 ── RECALL STATUS ─────────────────────────────────────────────────
+function docRecall(v, b) {
+  const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  let body;
+  if (recallBusy || (!recallData && !recallBusy)) {
+    body = `<div style="text-align:center;padding:30px;color:#888"><div style="font-size:28px">⏳</div><div style="margin-top:8px">Checking NHTSA recall database…</div></div>`;
+  } else if (recallData === 'error') {
+    body = `<div style="text-align:center;padding:30px;color:#dc2626"><div style="font-size:28px">⚠️</div><div style="margin-top:8px">Could not reach NHTSA. Check internet and try again.</div></div>`;
+  } else if (!recallData.length) {
+    body = `<div class="recall-ok"><div style="font-size:30px">✅</div><h3>No Open Safety Recalls Found</h3><p style="font-size:12px;color:#065f46;margin-top:5px">NHTSA has no active recalls on record for this vehicle as of ${today}</p></div>`;
+  } else {
+    body = `<div class="recall-warn"><div style="font-size:30px">⚠️</div><h3>${recallData.length} Open Recall${recallData.length>1?'s':''} Found</h3><p style="font-size:12px;margin-top:4px">Remedy status may vary — verify at safercar.gov</p></div>
+    ${recallData.map(r=>`<div class="recall-item">
+      <h4>${r.Component||'Component Not Specified'}</h4>
+      <p><strong>Campaign:</strong> ${r.NHTSACampaignNumber||'N/A'} &nbsp;|&nbsp; <strong>Mfr:</strong> ${r.Manufacturer||'N/A'}</p>
+      ${r.Summary?`<p style="margin-top:4px"><strong>Defect:</strong> ${r.Summary}</p>`:''}
+      ${r.Consequence?`<p style="color:#92400e"><strong>Consequence:</strong> ${r.Consequence}</p>`:''}
+      ${r.Remedy?`<p style="color:#065f46"><strong>Remedy:</strong> ${r.Remedy}</p>`:''}
+    </div>`).join('')}`;
+  }
+
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip}</div>
+    <div class="doc-title">Vehicle Recall Status Report</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '80px')}
+      ${dRow('Make', v.make)}
+      ${dRow('Model', v.model)}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace;letter-spacing:1px">${v.vin}</span>`)}
+      ${dRow('Date Checked', today, '200px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">NHTSA Recall Database Results</div>
+    ${body}
+  </div>
+
+  <div class="doc-notice" style="font-size:11px">
+    Source: National Highway Traffic Safety Administration (NHTSA) — api.nhtsa.gov<br>
+    Results shown are by make/model/year. For VIN-specific lookup visit: <strong>safercar.gov</strong> or call 1-888-327-4236.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:28px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Dealer Representative</div></div>
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Buyer Acknowledgment — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:130px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+</div>`;
+}
+
+// 3 ── ODOMETER DISCLOSURE ───────────────────────────────────────────
+function docOdo(v, b) {
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-title">Federal Odometer Disclosure Statement</div>
+    <div style="font-size:11px;margin-top:5px">Required by Federal Law (49 U.S.C. § 32705) and Pennsylvania Law<br>Failure to complete or falsify this form may result in fines and/or imprisonment</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Description</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '80px')}
+      ${dRow('Make', v.make)}
+      ${dRow('Model', v.model)}
+      ${dRow('Trim', v.trim)}
+    </div>
+    <div class="doc-row">
+      ${dRow('Vehicle Identification Number (VIN)', `<span style="font-family:monospace;font-size:14px;letter-spacing:1.5px">${v.vin}</span>`)}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Odometer Certification</div>
+    <div style="padding:14px;background:#f9f9f9;border:1px solid #ddd;margin-bottom:12px">
+      <p>I, <strong>${DEALER.name}</strong>, state that the odometer of the above described vehicle now reads:</p>
+      <div style="text-align:center;margin:16px 0">
+        <span style="font-size:26px;font-weight:bold;border-bottom:2.5px solid #000;padding:4px 48px;letter-spacing:4px">${v.miles ? v.miles.toLocaleString() : '___________'}</span>
+        <div style="font-size:12px;margin-top:8px;color:#555">MILES (No tenths)</div>
+      </div>
+      <p>and to the best of my knowledge this reflects the actual mileage of the vehicle <strong>UNLESS</strong> one of the following is checked:</p>
+    </div>
+
+    <div class="chk-row"><div class="chk-box"></div><div><strong>EXCEEDS MECHANICAL LIMITS</strong> — The mileage stated exceeds the odometer's mechanical limit of 99,999 miles and should not be relied upon.</div></div>
+    <div class="chk-row" style="margin-top:6px"><div class="chk-box"></div><div><strong>NOT ACTUAL MILEAGE — WARNING: ODOMETER DISCREPANCY</strong> — The odometer reading is not the actual mileage. Seller is not aware of the actual mileage.</div></div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Seller (Transferor)</div>
+    <div class="doc-row">${dRow('Name', DEALER.name)}</div>
+    <div class="doc-row">${dRow('Address', DEALER.addr + ', ' + DEALER.city + ', ' + DEALER.state + ' ' + DEALER.zip)}</div>
+    <div class="doc-sigs" style="margin-top:14px">
+      <div class="doc-sig"><div class="line"></div><div class="lbl">Seller Signature</div></div>
+      <div class="doc-sig" style="max-width:160px"><div class="line"></div><div class="lbl">Date: ${fmtDate(b.date)}</div></div>
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Buyer (Transferee)</div>
+    <div class="doc-row">${dRow('Name', b.name)}</div>
+    <div class="doc-row">${dRow('Address', b.addr + ', ' + b.city + ', ' + b.state + ' ' + b.zip)}</div>
+    <div style="font-size:11px;font-style:italic;color:#555;margin:10px 0">
+      I hereby certify that to the best of my knowledge the odometer reading reflects the actual mileage of the vehicle, unless otherwise noted above.
+    </div>
+    <div class="doc-sigs">
+      <div class="doc-sig"><div class="line"></div><div class="lbl">Buyer Signature</div></div>
+      <div class="doc-sig" style="max-width:160px"><div class="line"></div><div class="lbl">Date</div></div>
+    </div>
+  </div>
+</div>`;
+}
+
+// 4 ── BUYER'S ORDER ─────────────────────────────────────────────────
+function docOrder(v, b) {
+  const tax      = b.price * PA_TAX;
+  const subtotal = b.price - b.trade + b.payoff + tax + b.doc + b.reg;
+  const financed = subtotal - b.down;
+
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone}${DEALER.license ? ' &nbsp;·&nbsp; License: ' + DEALER.license : ''}</div>
+    <div class="doc-title">Buyer's Order</div>
+    <div style="font-size:12px">Date: ${fmtDate(b.date)}</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Customer</div>
+    <div class="doc-row">
+      ${dRow('Full Name', b.name)}
+      ${dRow('Phone', b.phone, '180px')}
+    </div>
+    <div class="doc-row">${dRow('Address', b.addr + ', ' + b.city + ', ' + b.state + ' ' + b.zip)}</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Purchased</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '70px')}
+      ${dRow('Make', v.make)}
+      ${dRow('Model', v.model)}
+      ${dRow('Trim', v.trim)}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace">${v.vin}</span>`)}
+      ${dRow('Stock #', v.stock, '110px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Color', v.color)}
+      ${dRow('Miles', v.miles ? v.miles.toLocaleString() : '')}
+      ${dRow('Engine', v.engine)}
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="doc-sec">
+      <div class="doc-sec-title">Price Breakdown</div>
+      <table class="price-tbl">
+        <tr><td>Selling Price</td><td>${$$(b.price)}</td></tr>
+        <tr><td>Trade-In Allowance</td><td>(${$$(b.trade)})</td></tr>
+        <tr><td>Trade-In Payoff</td><td>+ ${$$(b.payoff)}</td></tr>
+        <tr><td>PA Sales Tax (6%)</td><td>${$$(tax)}</td></tr>
+        <tr><td>Documentation Fee</td><td>${$$(b.doc)}</td></tr>
+        <tr><td>Title / Registration</td><td>${$$(b.reg)}</td></tr>
+        <tr><td style="border-top:2px solid #999">Subtotal</td><td style="border-top:2px solid #999">${$$(subtotal)}</td></tr>
+        <tr><td>Down Payment</td><td>(${$$(b.down)})</td></tr>
+        <tr class="tot"><td>AMOUNT FINANCED / DUE</td><td>${$$(financed < 0 ? 0 : financed)}</td></tr>
+      </table>
+    </div>
+    <div class="doc-sec">
+      <div class="doc-sec-title">Trade-In Vehicle</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        ${dRow('Year / Make / Model', '&nbsp;')}
+        ${dRow('VIN', '&nbsp;')}
+        ${dRow('Mileage', '&nbsp;')}
+        ${dRow('Trade-In Value', $$(b.trade))}
+        ${dRow('Payoff Amount', $$(b.payoff))}
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-notice">
+    This order is not binding until signed by an authorized dealer representative. Vehicle is sold AS IS unless
+    a separate written warranty is provided. PA Sales Tax, Title, and Registration are estimates and subject to
+    change. Buyer agrees to all terms stated herein.
+  </div>
+
+  <div class="doc-sigs">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Dealer Representative</div></div>
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Customer Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:120px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+</div>`;
+}
+
+// 5 ── BUYER'S GUIDE (FTC) ───────────────────────────────────────────
+function docGuide(v, b) {
+  return `<div class="doc-page">
+<div class="bg-wrap">
+  <div class="bg-head">BUYER'S GUIDE</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px;margin-bottom:14px">
+    <div>
+      <strong>YEAR:</strong> ${v.year}<br>
+      <strong>MAKE:</strong> ${v.make}<br>
+      <strong>MODEL:</strong> ${v.model}
+    </div>
+    <div>
+      <strong>VIN:</strong> <span style="font-family:monospace">${v.vin}</span><br>
+      <strong>STOCK #:</strong> ${v.stock || '___'}<br>
+      <strong>MILEAGE:</strong> ${v.miles ? v.miles.toLocaleString() : '___'} miles
+    </div>
+  </div>
+
+  <div style="border:2.5px solid #000;padding:12px;margin-bottom:12px">
+    <div class="chk-row">
+      <div class="chk-box on"></div>
+      <div>
+        <div class="bg-asis">AS IS — NO DEALER WARRANTY</div>
+        <div style="font-size:11px;margin-top:3px;font-weight:bold">THE DEALER DOES NOT PROVIDE A WARRANTY FOR ANY REPAIRS AFTER SALE.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="border:1px solid #000;padding:10px;margin-bottom:12px">
+    <div class="chk-row">
+      <div class="chk-box"></div>
+      <div style="width:100%">
+        <strong style="font-size:13px">WARRANTY</strong>
+        <div style="margin-left:18px;margin-top:8px;font-size:12px">
+          <div class="chk-row"><div class="chk-box"></div> FULL WARRANTY</div>
+          <div class="chk-row" style="margin-top:5px"><div class="chk-box"></div>
+            LIMITED WARRANTY: ___% of parts &amp; ___% of labor for ___ days or ___ miles, whichever comes first
+          </div>
+        </div>
+        <div style="font-size:11px;margin-top:10px;line-height:1.8">
+          <strong>SYSTEMS COVERED:</strong> _________________________________________<br>
+          __________________________________________________________________________<br>
+          <strong>DEDUCTIBLE:</strong> $______ per visit &nbsp;&nbsp; <strong>WHAT WILL DEALER PAY?</strong> ___________________________
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;line-height:1.7;margin-bottom:10px">
+    <strong>IMPORTANT:</strong> Have this form inspected before you sign. If a problem occurs after sale, you may
+    have legal rights depending on your state's consumer protection laws. Ask your dealer for details on
+    implied warranties that may apply.
+  </div>
+
+  <div style="font-size:11px;line-height:1.7;margin-bottom:10px">
+    <strong>PRE-PURCHASE INSPECTION:</strong> Ask the dealer if you may have this vehicle inspected by your own mechanic.
+    If the dealer refuses, walk away from the sale.<br>
+    <strong>SERVICE CONTRACTS:</strong> A service contract is available at extra charge. Ask for details.
+  </div>
+
+  <div style="border-top:1.5px solid #000;padding-top:8px;font-size:11px">
+    <strong>NON-ENGLISH SPEAKERS:</strong> If you do not speak English well, ask to receive this information in your
+    native language before signing any documents.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:20px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Buyer Signature</div></div>
+    <div class="doc-sig" style="max-width:160px"><div class="line"></div><div class="lbl">Date: ${fmtDate(b.date)}</div></div>
+  </div>
+
+  <div style="text-align:center;font-size:10px;color:#777;margin-top:14px">
+    ${DEALER.name} · ${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} · ${DEALER.phone}
+  </div>
+</div>
+</div>`;
+}
+
+// 6 ── WINDOW STICKER — Premium Branded ─────────────────────────────
+function docSticker(v, b) {
+  const showPrice = v.sale || v.price;
+  const wasPrice  = v.sale ? v.price : null;
+  const feats     = v.features || [];
+
+  const metaItems = [
+    { label: 'Mileage',     val: v.miles ? v.miles.toLocaleString() + ' mi' : 'N/A' },
+    { label: 'Ext. Color',  val: v.color  || 'N/A' },
+    { label: 'Engine',      val: v.engine || 'N/A' },
+    { label: 'Drivetrain',  val: v.drive  || 'N/A' },
+    { label: 'Fuel',        val: v.fuel   || 'N/A' },
+    { label: 'Stock #',     val: v.stock  || 'N/A' },
+  ];
+
+  return `<div class="doc-page" style="padding:0;border:none;box-shadow:none">
+<div class="ws-wrap">
+
+  <!-- Green branded banner -->
+  <div class="ws-banner">
+    <img src="logo.png" alt="Nashmi Motors" onerror="this.style.display='none'">
+    <div class="ws-banner-text">
+      <div class="ws-banner-name">NASHMI MOTORS</div>
+      <div class="ws-banner-tag">Quality Pre-Owned Vehicles · Harrisburg, PA</div>
+    </div>
+    <div class="ws-banner-right">
+      ${DEALER.phone}<br>
+      ${DEALER.email}<br>
+      nashmimotors.com
+    </div>
+  </div>
+
+  <div class="ws-body">
+    <!-- Vehicle title -->
+    <div class="ws-vtitle">${v.year} ${v.make} ${v.model}${v.trim ? ' &nbsp;·&nbsp; ' + v.trim : ''}</div>
+
+    <!-- VIN bar -->
+    <div class="ws-vin-bar">
+      <div>
+        <div class="label">Vehicle Identification Number (VIN)</div>
+        <div class="val">${v.vin}</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="label">Stock #</div>
+        <div class="val" style="font-size:13px">${v.stock || '—'}</div>
+      </div>
+    </div>
+
+    <!-- Spec grid -->
+    <div class="ws-meta">
+      ${metaItems.map(m=>`<div class="ws-meta-item"><div class="mlabel">${m.label}</div><div class="mval">${m.val}</div></div>`).join('')}
+    </div>
+
+    <!-- Features -->
+    ${feats.length ? `<div class="ws-features">
+      <h4>Standard Equipment &amp; Options</h4>
+      <ul class="ws-feat-grid">${feats.map(f=>`<li>${f}</li>`).join('')}</ul>
+    </div>` : ''}
+
+    <!-- Price -->
+    <div class="ws-price-section">
+      <div class="ws-price-box">
+        ${wasPrice ? `<div class="ws-price-was">Was ${$$(wasPrice)}</div>` : ''}
+        <div class="ws-price-label">${wasPrice ? 'SPECIAL PRICE' : 'ASKING PRICE'}</div>
+        <div class="ws-price-amt">${$$(showPrice)}</div>
+        <div class="ws-price-note">+ PA tax · title · registration · $199 doc fee</div>
+      </div>
+    </div>
+
+    <div class="ws-disclaimer">
+      All prices subject to change without notice. Vehicle subject to prior sale.
+      Price excludes applicable taxes, title, registration, and documentation fee.
+      Visit <strong>nashmimotors.com</strong> for complete inventory.
+    </div>
+  </div>
+
+</div>
+</div>`;
+}
+
+// 7 ── WE OWE / DUE BILL ─────────────────────────────────────────────
+function docWeOwe(v, b) {
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone}</div>
+    <div class="doc-title">We Owe / Due Bill</div>
+    <div style="font-size:11px">This document records all items the dealer agrees to provide after the date of sale.</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle &amp; Customer</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '70px')}
+      ${dRow('Make', v.make)}
+      ${dRow('Model', v.model)}
+      ${dRow('Stock #', v.stock, '110px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace">${v.vin}</span>`)}
+    </div>
+    <div class="doc-row">
+      ${dRow('Customer Name', b.name)}
+      ${dRow('Date of Sale', fmtDate(b.date), '160px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Items Owed by Dealer</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <tr style="background:#000;color:#fff">
+        <td style="padding:6px 10px;width:50%"><strong>Item / Description</strong></td>
+        <td style="padding:6px 10px;width:25%"><strong>Due Date / Notes</strong></td>
+        <td style="padding:6px 10px;width:25%"><strong>Est. Value</strong></td>
+      </tr>
+      ${[1,2,3,4,5].map(i=>`
+      <tr style="border-bottom:1px solid #ddd">
+        <td style="padding:10px;border:1px solid #ccc">&nbsp;</td>
+        <td style="padding:10px;border:1px solid #ccc">&nbsp;</td>
+        <td style="padding:10px;border:1px solid #ccc">&nbsp;</td>
+      </tr>`).join('')}
+    </table>
+  </div>
+
+  <div class="doc-notice">
+    <strong>IMPORTANT:</strong> Dealer agrees to complete all items listed above. If any item cannot be completed,
+    the dealer agrees to provide a cash equivalent or credit equal to the estimated value listed. All items must
+    be completed within 30 days of sale date unless otherwise noted. This form is part of the sale agreement.
+    Buyer should retain a copy.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:24px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Dealer Representative — ${DEALER.name}</div></div>
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Customer Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:130px"><div class="line"></div><div class="lbl">Date: ${fmtDate(b.date)}</div></div>
+  </div>
+</div>`;
+}
+
+// 8 ── TRADE-IN AGREEMENT ─────────────────────────────────────────────
+function docTradeIn(v, b) {
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone}</div>
+    <div class="doc-title">Trade-In Vehicle Agreement</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Being Purchased</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '70px')} ${dRow('Make', v.make)} ${dRow('Model', v.model)} ${dRow('Stock #', v.stock, '110px')}
+    </div>
+    <div class="doc-row">${dRow('VIN', `<span style="font-family:monospace">${v.vin}</span>`)}</div>
+    <div class="doc-row">${dRow('Customer', b.name)} ${dRow('Date', fmtDate(b.date), '160px')}</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Trade-In Vehicle Description</div>
+    <div class="doc-row">
+      ${dRow('Year', '', '70px')} ${dRow('Make', '')} ${dRow('Model', '')} ${dRow('Trim', '')}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', '')} ${dRow('Odometer (miles)', '', '180px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Exterior Color', '')} ${dRow('Engine', '')} ${dRow('Drive', '', '90px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Title #', '')} ${dRow('Title State', '', '120px')} ${dRow('Lien Holder (if any)', '')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Trade-In Appraisal</div>
+    <table class="price-tbl">
+      <tr><td>Agreed Trade-In Value</td><td>${$$(b.trade)}</td></tr>
+      <tr><td>Outstanding Payoff Amount</td><td>${$$(b.payoff)}</td></tr>
+      <tr class="tot"><td>Net Trade-In Credit</td><td>${$$(b.trade - b.payoff < 0 ? 0 : b.trade - b.payoff)}</td></tr>
+    </table>
+  </div>
+
+  <div class="doc-notice">
+    Seller/Trader warrants that the above described vehicle is free of all encumbrances except as noted above;
+    that seller has the legal right to sell said vehicle; and that the vehicle has not been in a flood, has no
+    frame damage (unless disclosed in writing), and the odometer reading above reflects the actual mileage.
+    Any payoff quote is valid as of the date above and may be subject to change. Dealer is authorized to
+    contact the lienholder directly to obtain payoff and title.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:22px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Dealer Representative</div></div>
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Seller/Trader Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:130px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+</div>`;
+}
+
+// 9 ── TEST DRIVE WAIVER ──────────────────────────────────────────────
+function docTestDrive(v, b) {
+  const today = fmtDate(b.date || new Date().toISOString().split('T')[0]);
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone}</div>
+    <div class="doc-title">Test Drive Agreement &amp; Liability Waiver</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Driver Information</div>
+    <div class="doc-row">${dRow('Full Name', b.name)} ${dRow('Date', today, '140px')}</div>
+    <div class="doc-row">
+      ${dRow('Street Address', b.addr)}
+    </div>
+    <div class="doc-row">
+      ${dRow('City', b.city)} ${dRow('State', b.state, '60px')} ${dRow('ZIP', b.zip, '90px')}
+    </div>
+    <div class="doc-row">
+      ${dRow("Driver's License #", b.dl)} ${dRow('DL State', b.state, '90px')} ${dRow('Phone', b.phone)}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Being Test Driven</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '70px')} ${dRow('Make', v.make)} ${dRow('Model', v.model)} ${dRow('Stock #', v.stock, '110px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace">${v.vin}</span>`)}
+      ${dRow('Odometer at Start', v.miles ? v.miles.toLocaleString() + ' mi' : '', '200px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Insurance Verification</div>
+    <div class="doc-row">
+      ${dRow('Insurance Company', '')} ${dRow('Policy Number', '')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Policy Expiration Date', '')} ${dRow('Coverage Type', '', '180px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Agreement &amp; Release</div>
+    <div style="font-size:12px;line-height:1.8;margin-bottom:12px">
+      The undersigned driver ("Driver") agrees to the following terms and conditions for the test drive of the above vehicle:
+      <ol style="margin:10px 0 0 20px;font-size:12px;line-height:2">
+        <li>Driver possesses a valid, current driver's license and is legally authorized to operate a motor vehicle.</li>
+        <li>Driver's personal automobile insurance is in effect and will be primary coverage during the test drive.</li>
+        <li>Driver will operate the vehicle in a safe and lawful manner, obeying all traffic laws and regulations.</li>
+        <li>Driver accepts financial responsibility for any damage, traffic violations, or accidents caused during the test drive.</li>
+        <li>Driver will not permit any other person to operate the vehicle during the test drive.</li>
+        <li>Driver releases ${DEALER.name} from any liability for personal injury or property damage sustained during the test drive, except where caused by dealer's gross negligence.</li>
+        <li>The test drive route has been approved by a ${DEALER.name} representative.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="doc-notice">
+    By signing below, Driver acknowledges reading and understanding this entire agreement and agrees to be bound by its terms.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:20px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Driver Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:140px"><div class="line"></div><div class="lbl">Date &amp; Time</div></div>
+  </div>
+  <div class="doc-sigs" style="margin-top:18px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Dealer Representative — ${DEALER.name}</div></div>
+    <div class="doc-sig" style="max-width:140px"><div class="line"></div><div class="lbl">Date</div></div>
+  </div>
+</div>`;
+}
+
+// 10 ── POWER OF ATTORNEY ─────────────────────────────────────────────
+function docPOA(v, b) {
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone}</div>
+    <div class="doc-title">Limited Power of Attorney</div>
+    <div style="font-size:11px">For Vehicle Title Transfer Purposes Only</div>
+  </div>
+
+  <div class="doc-sec">
+    <div style="font-size:13px;line-height:1.9">
+      KNOW ALL PERSONS BY THESE PRESENTS, that I/We:
+    </div>
+    <div class="doc-row" style="margin-top:10px">
+      ${dRow('Name (Principal)', b.name)}
+    </div>
+    <div class="doc-row">
+      ${dRow('Address', b.addr + ', ' + b.city + ', ' + b.state + ' ' + b.zip)}
+    </div>
+    <div style="font-size:13px;line-height:1.9;margin:14px 0">
+      do hereby constitute and appoint <strong>${DEALER.name}</strong>, located at
+      <strong>${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip}</strong>,
+      as my/our true and lawful Attorney-in-Fact, for the limited purpose of executing
+      all documents necessary to transfer ownership of the following vehicle:
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Vehicle Description</div>
+    <div class="doc-row">
+      ${dRow('Year', v.year, '70px')} ${dRow('Make', v.make)} ${dRow('Model', v.model)}
+    </div>
+    <div class="doc-row">
+      ${dRow('VIN', `<span style="font-family:monospace;letter-spacing:1px">${v.vin}</span>`)}
+      ${dRow('Current Odometer', v.miles ? v.miles.toLocaleString() + ' mi' : '', '200px')}
+    </div>
+    <div class="doc-row">
+      ${dRow('Title Number', '')} ${dRow('Title State', b.state, '120px')}
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div style="font-size:13px;line-height:1.9">
+      This Power of Attorney authorizes my Attorney-in-Fact to sign my name to any and all
+      documents required by PennDOT or any other state agency for the purpose of transferring
+      title to the above vehicle. This authority is <strong>limited solely</strong> to the transfer
+      of title for the vehicle described herein and shall not be construed as a general power
+      of attorney for any other purpose. This Power of Attorney shall expire upon completion
+      of the title transfer or <strong>90 days</strong> from the date signed, whichever comes first.
+    </div>
+  </div>
+
+  <div class="doc-notice">
+    This is a Limited Power of Attorney for vehicle title transfer only. The principal retains all
+    other rights. If you have questions, consult an attorney before signing.
+  </div>
+
+  <div class="doc-sigs" style="margin-top:24px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Principal Signature — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:160px"><div class="line"></div><div class="lbl">Date: ${fmtDate(b.date)}</div></div>
+  </div>
+
+  <div style="margin-top:28px;border:1px solid #ccc;padding:14px;font-size:12px">
+    <div style="font-weight:bold;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;font-size:11px">Notary Acknowledgment (if required by state)</div>
+    State of ________________ County of ________________<br><br>
+    On this _____ day of ________________, 20___, before me personally appeared
+    ________________________________, known to me to be the person whose name is subscribed
+    to the within instrument and acknowledged to me that he/she executed the same.<br><br>
+    <div class="doc-sigs" style="margin-top:14px">
+      <div class="doc-sig"><div class="line"></div><div class="lbl">Notary Public Signature</div></div>
+      <div class="doc-sig" style="max-width:180px"><div class="line"></div><div class="lbl">Commission Expires</div></div>
+    </div>
+  </div>
+</div>`;
+}
+
+// 11 ── PRIVACY NOTICE (GLBA) ─────────────────────────────────────────
+function docPrivacy(v, b) {
+  return `<div class="doc-page">
+  <div class="doc-hdr">
+    <div class="doc-dealer">${DEALER.name}</div>
+    <div class="doc-sub">${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip} &nbsp;·&nbsp; ${DEALER.phone} &nbsp;·&nbsp; ${DEALER.email}</div>
+    <div class="doc-title">Privacy Notice</div>
+    <div style="font-size:11px">As Required by the Gramm-Leach-Bliley Act (15 U.S.C. § 6801 et seq.)</div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">What Does ${DEALER.name} Do With Your Personal Information?</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin:10px 0">
+      <tr style="background:#000;color:#fff">
+        <td style="padding:8px 10px" colspan="2"><strong>FACTS</strong></td>
+      </tr>
+      <tr style="border:1px solid #ccc">
+        <td style="padding:8px 10px;background:#f5f5f5;font-weight:bold;width:35%;border:1px solid #ccc">Why?</td>
+        <td style="padding:8px 10px;border:1px solid #ccc">Financial companies choose how they share your personal information. Federal law gives consumers the right to limit some but not all sharing. Federal law also requires us to tell you how we collect, share, and protect your personal information. Please read this notice carefully.</td>
+      </tr>
+      <tr style="border:1px solid #ccc">
+        <td style="padding:8px 10px;background:#f5f5f5;font-weight:bold;border:1px solid #ccc">What?</td>
+        <td style="padding:8px 10px;border:1px solid #ccc">The types of personal information we collect and share depend on the product or service you have with us. This information can include: <strong>Social Security number, income, employment information, credit history, transaction history, account balances,</strong> and <strong>payment history.</strong></td>
+      </tr>
+      <tr style="border:1px solid #ccc">
+        <td style="padding:8px 10px;background:#f5f5f5;font-weight:bold;border:1px solid #ccc">How?</td>
+        <td style="padding:8px 10px;border:1px solid #ccc">All financial companies need to share customers' personal information to run their everyday business. In the section below, we list the reasons financial companies can share their customers' personal information; the reasons ${DEALER.name} chooses to share; and whether you can limit this sharing.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">Reasons We Can Share Your Personal Information</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <tr style="background:#000;color:#fff">
+        <td style="padding:7px 10px;width:55%"><strong>Reason</strong></td>
+        <td style="padding:7px 10px;width:22%;text-align:center"><strong>Do We Share?</strong></td>
+        <td style="padding:7px 10px;width:23%;text-align:center"><strong>Can You Limit?</strong></td>
+      </tr>
+      ${[
+        ['For our everyday business purposes — such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus', 'Yes', 'No'],
+        ['For our marketing purposes — to offer our products and services to you', 'Yes', 'No'],
+        ['For joint marketing with other financial companies', 'No', 'We Don't Share'],
+        ['For our affiliates' everyday business purposes — information about your transactions and experiences', 'No', 'We Don't Share'],
+        ['For our affiliates' everyday business purposes — information about your creditworthiness', 'No', 'We Don't Share'],
+        ['For non-affiliates to market to you', 'No', 'We Don't Share'],
+      ].map(([reason, share, limit]) => `
+      <tr style="border:1px solid #ccc">
+        <td style="padding:7px 10px;border:1px solid #ccc;font-size:11px">${reason}</td>
+        <td style="padding:7px 10px;border:1px solid #ccc;text-align:center;font-weight:bold">${share}</td>
+        <td style="padding:7px 10px;border:1px solid #ccc;text-align:center">${limit}</td>
+      </tr>`).join('')}
+    </table>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">How Does ${DEALER.name} Protect Your Personal Information?</div>
+    <div style="font-size:12px;line-height:1.8">
+      To protect your personal information from unauthorized access and use, we use security measures that comply
+      with federal law. These measures include computer safeguards and secured files and buildings. We restrict
+      access to nonpublic personal information about you to those employees who need to know that information
+      to provide products or services to you.
+    </div>
+  </div>
+
+  <div class="doc-sec">
+    <div class="doc-sec-title">How Does ${DEALER.name} Collect Your Personal Information?</div>
+    <div style="font-size:12px;line-height:1.8">
+      We collect your personal information, for example, when you: apply for financing · give us your contact
+      information · provide account information · show your driver's license · make a payment to us. We also
+      collect your personal information from others, such as credit bureaus, affiliates, or other companies.
+    </div>
+  </div>
+
+  <div class="doc-notice" style="font-size:11px">
+    Questions? Contact us at ${DEALER.phone} or ${DEALER.email}<br>
+    ${DEALER.name} · ${DEALER.addr}, ${DEALER.city}, ${DEALER.state} ${DEALER.zip}
+  </div>
+
+  <div class="doc-sigs" style="margin-top:20px">
+    <div class="doc-sig"><div class="line"></div><div class="lbl">Customer Acknowledgment — ${b.name}</div></div>
+    <div class="doc-sig" style="max-width:160px"><div class="line"></div><div class="lbl">Date: ${fmtDate(b.date)}</div></div>
+  </div>
+</div>`;
+}
+</script>
+</body>
+</html>
