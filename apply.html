@@ -41,7 +41,7 @@
 .radio-row label { display:flex; align-items:center; gap:7px; font-weight:500; font-size:14px; cursor:pointer; }
 .radio-row input[type=radio] { accent-color:var(--green); width:16px; height:16px; }
 .cobuy-header { background:linear-gradient(135deg,#1a3c2e,#2d5a3d); color:#fff; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
-.cobuy-header h4 { margin:0 0 4px; font-size:15px; }
+.cobuy-header h3 { margin:0 0 4px; font-size:15px; }
 .cobuy-header p { margin:0; font-size:13px; opacity:0.8; }
 </style>
 </head>
@@ -64,7 +64,7 @@
 <header class="header" id="header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo">
+      <img src="logo.png" alt="Nashmi Motors Logo" width="286" height="300">
     </a>
     <nav class="nav" id="nav">
       <a href="/" class="nav-link">Home</a>
@@ -110,6 +110,7 @@
   </div>
 </header>
 
+<main>
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
@@ -126,21 +127,21 @@
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3 style="color:var(--dark)">Fast Process</h3>
+        <h2 style="color:var(--dark)">Fast Process</h2>
         <p style="color:var(--gray)">Submit your info and we'll be in touch the same business day.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-1" style="background:var(--bg);border:1px solid var(--border)">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
-        <h3 style="color:var(--dark)">Your Info is Safe</h3>
+        <h2 style="color:var(--dark)">Your Info is Safe</h2>
         <p style="color:var(--gray)">SSL-encrypted and handled with care. Only used to find you financing.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-2" style="background:var(--bg);border:1px solid var(--border)">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3 style="color:var(--dark)">All Credit Welcome</h3>
+        <h2 style="color:var(--dark)">All Credit Welcome</h2>
         <p style="color:var(--gray)">Rebuilding credit? First-time buyer? We work with multiple lenders.</p>
       </div>
     </div>
@@ -159,7 +160,7 @@
         <!--  SECTION 1 — PERSONAL INFO                     -->
         <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">1</span> Personal Information</h3>
+          <h2 class="apply-section-title"><span class="apply-step">1</span> Personal Information</h2>
           <div class="form-row">
             <div class="form-group">
               <label>First Name *</label>
@@ -192,8 +193,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Preferred Contact Method *</label>
-              <select name="Contact Method" required>
+              <label for="sel-contact-method">Preferred Contact Method *</label>
+              <select name="Contact Method" id="sel-contact-method" required>
                 <option value="">Select...</option>
                 <option>Cell Phone</option>
                 <option>Home Phone</option>
@@ -217,7 +218,7 @@
         <!--  SECTION 2 — CURRENT ADDRESS                   -->
         <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">2</span> Current Address</h3>
+          <h2 class="apply-section-title"><span class="apply-step">2</span> Current Address</h2>
           <div class="form-group">
             <label>Street Address *</label>
             <input type="text" name="Street Address" placeholder="123 Main Street" required autocomplete="street-address">
@@ -228,8 +229,8 @@
               <input type="text" name="City" placeholder="Harrisburg" required autocomplete="address-level2">
             </div>
             <div class="form-group">
-              <label>State *</label>
-              <select name="State" required autocomplete="address-level1">
+              <label for="sel-state">State *</label>
+              <select name="State" id="sel-state" required autocomplete="address-level1">
                 <option value="">Select</option>
                 <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
                 <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
@@ -251,8 +252,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Housing Type *</label>
-              <select name="Housing Type" required>
+              <label for="sel-housing-type">Housing Type *</label>
+              <select name="Housing Type" id="sel-housing-type" required>
                 <option value="">Select...</option>
                 <option>Rent</option>
                 <option>Own</option>
@@ -266,8 +267,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Years at Address *</label>
-              <select name="Years at Address" required>
+              <label for="sel-years-at-address">Years at Address *</label>
+              <select name="Years at Address" id="sel-years-at-address" required>
                 <option value="">Select</option>
                 <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
                 <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
@@ -277,8 +278,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Months at Address</label>
-              <select name="Months at Address">
+              <label for="sel-months-at-address">Months at Address</label>
+              <select name="Months at Address" id="sel-months-at-address">
                 <option value="">Select</option>
                 <option>0</option><option>1</option><option>2</option><option>3</option>
                 <option>4</option><option>5</option><option>6</option><option>7</option>
@@ -307,8 +308,8 @@
                 <input type="text" name="Prev City" placeholder="City">
               </div>
               <div class="form-group">
-                <label>State</label>
-                <select name="Prev State">
+                <label for="sel-prev-state">State</label>
+                <select name="Prev State" id="sel-prev-state">
                   <option value="">Select</option>
                   <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
                   <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
@@ -330,8 +331,8 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Housing Type</label>
-                <select name="Prev Housing Type">
+                <label for="sel-prev-housing-type">Housing Type</label>
+                <select name="Prev Housing Type" id="sel-prev-housing-type">
                   <option value="">Select...</option>
                   <option>Rent</option><option>Own</option><option>Other</option>
                 </select>
@@ -343,16 +344,16 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Years at Address</label>
-                <select name="Prev Years at Address">
+                <label for="sel-prev-years-at-address">Years at Address</label>
+                <select name="Prev Years at Address" id="sel-prev-years-at-address">
                   <option value="">Select</option>
                   <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
                   <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Months at Address</label>
-                <select name="Prev Months at Address">
+                <label for="sel-prev-months-at-address">Months at Address</label>
+                <select name="Prev Months at Address" id="sel-prev-months-at-address">
                   <option value="">Select</option>
                   <option>0</option><option>1</option><option>2</option><option>3</option>
                   <option>4</option><option>5</option><option>6</option><option>7</option>
@@ -367,7 +368,7 @@
         <!--  SECTION 3 — EMPLOYMENT                        -->
         <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">3</span> Employment Information</h3>
+          <h2 class="apply-section-title"><span class="apply-step">3</span> Employment Information</h2>
           <div class="form-row">
             <div class="form-group">
               <label>Employer Name *</label>
@@ -384,8 +385,8 @@
               <input type="tel" name="Employer Phone" placeholder="(717) 000-0000" required>
             </div>
             <div class="form-group">
-              <label>Employment Status</label>
-              <select name="Employment Status">
+              <label for="sel-employment-status">Employment Status</label>
+              <select name="Employment Status" id="sel-employment-status">
                 <option value="">Select...</option>
                 <option>Full Time</option>
                 <option>Part Time</option>
@@ -408,8 +409,8 @@
               <input type="text" name="Employer City" placeholder="City" required>
             </div>
             <div class="form-group">
-              <label>Employer State *</label>
-              <select name="Employer State" required>
+              <label for="sel-employer-state">Employer State *</label>
+              <select name="Employer State" id="sel-employer-state" required>
                 <option value="">Select</option>
                 <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
                 <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
@@ -435,8 +436,8 @@
               <input type="text" name="Monthly Income" placeholder="e.g. $3,200" required>
             </div>
             <div class="form-group">
-              <label>Income Type *</label>
-              <select name="Income Type" required>
+              <label for="sel-income-type">Income Type *</label>
+              <select name="Income Type" id="sel-income-type" required>
                 <option value="">Select...</option>
                 <option>Comp Paystub w/ YTD</option>
                 <option>Printed Paystub - No YTD</option>
@@ -460,8 +461,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Years at Job *</label>
-              <select name="Years at Job" required>
+              <label for="sel-years-at-job">Years at Job *</label>
+              <select name="Years at Job" id="sel-years-at-job" required>
                 <option value="">Select</option>
                 <option>Less than 1</option><option>1</option><option>2</option><option>3</option><option>4</option>
                 <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
@@ -470,8 +471,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Months at Job</label>
-              <select name="Months at Job">
+              <label for="sel-months-at-job">Months at Job</label>
+              <select name="Months at Job" id="sel-months-at-job">
                 <option value="">Select</option>
                 <option>0</option><option>1</option><option>2</option><option>3</option>
                 <option>4</option><option>5</option><option>6</option><option>7</option>
@@ -495,10 +496,10 @@
         <!--  SECTION 4 — VEHICLE INTEREST                  -->
         <!-- ═══════════════════════════════════════════════ -->
         <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">4</span> Vehicle Interest</h3>
+          <h2 class="apply-section-title"><span class="apply-step">4</span> Vehicle Interest</h2>
           <div class="form-group">
-            <label>Vehicle I'm Interested In</label>
-            <select name="Vehicle Interest">
+            <label for="sel-vehicle-interest">Vehicle I'm Interested In</label>
+            <select name="Vehicle Interest" id="sel-vehicle-interest">
               <option>Not sure yet — show me what I qualify for</option>
             </select>
           </div>
@@ -589,13 +590,13 @@
           </label>
           <div class="toggle-body" id="cobuy-body">
             <div class="cobuy-header">
-              <h4>Co-Buyer Information</h4>
+              <h3>Co-Buyer Information</h3>
               <p>Adding a co-buyer can help improve approval odds and loan terms.</p>
             </div>
 
             <div class="form-group">
-              <label>Relationship to Buyer *</label>
-              <select name="CoBuyer Relationship">
+              <label for="sel-cobuyer-relationship">Relationship to Buyer *</label>
+              <select name="CoBuyer Relationship" id="sel-cobuyer-relationship">
                 <option value="">Select...</option>
                 <option>Spouse</option>
                 <option>Parent</option>
@@ -639,8 +640,8 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Preferred Contact Method</label>
-                <select name="CoBuyer Contact Method">
+                <label for="sel-cobuyer-contact-method">Preferred Contact Method</label>
+                <select name="CoBuyer Contact Method" id="sel-cobuyer-contact-method">
                   <option value="">Select...</option>
                   <option>Cell Phone</option><option>Home Phone</option><option>Email</option>
                 </select>
@@ -668,8 +669,8 @@
                 <input type="text" name="CoBuyer City" placeholder="City">
               </div>
               <div class="form-group">
-                <label>State</label>
-                <select name="CoBuyer State">
+                <label for="sel-cobuyer-state">State</label>
+                <select name="CoBuyer State" id="sel-cobuyer-state">
                   <option value="">Select</option>
                   <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
                   <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
@@ -691,8 +692,8 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Housing Type</label>
-                <select name="CoBuyer Housing Type">
+                <label for="sel-cobuyer-housing-type">Housing Type</label>
+                <select name="CoBuyer Housing Type" id="sel-cobuyer-housing-type">
                   <option value="">Select...</option>
                   <option>Rent</option><option>Own</option><option>Other</option>
                 </select>
@@ -704,16 +705,16 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Years at Address</label>
-                <select name="CoBuyer Years at Address">
+                <label for="sel-cobuyer-years-at-address">Years at Address</label>
+                <select name="CoBuyer Years at Address" id="sel-cobuyer-years-at-address">
                   <option value="">Select</option>
                   <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
                   <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Months at Address</label>
-                <select name="CoBuyer Months at Address">
+                <label for="sel-cobuyer-months-at-address">Months at Address</label>
+                <select name="CoBuyer Months at Address" id="sel-cobuyer-months-at-address">
                   <option value="">Select</option>
                   <option>0</option><option>1</option><option>2</option><option>3</option>
                   <option>4</option><option>5</option><option>6</option><option>7</option>
@@ -753,8 +754,8 @@
                 <input type="text" name="CoBuyer Employer City" placeholder="City">
               </div>
               <div class="form-group">
-                <label>State</label>
-                <select name="CoBuyer Employer State">
+                <label for="sel-cobuyer-employer-state">State</label>
+                <select name="CoBuyer Employer State" id="sel-cobuyer-employer-state">
                   <option value="">Select</option>
                   <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
                   <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
@@ -776,16 +777,16 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Years at Job</label>
-                <select name="CoBuyer Years at Job">
+                <label for="sel-cobuyer-years-at-job">Years at Job</label>
+                <select name="CoBuyer Years at Job" id="sel-cobuyer-years-at-job">
                   <option value="">Select</option>
                   <option>Less than 1</option><option>1</option><option>2</option><option>3</option><option>4</option>
                   <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Months at Job</label>
-                <select name="CoBuyer Months at Job">
+                <label for="sel-cobuyer-months-at-job">Months at Job</label>
+                <select name="CoBuyer Months at Job" id="sel-cobuyer-months-at-job">
                   <option value="">Select</option>
                   <option>0</option><option>1</option><option>2</option><option>3</option>
                   <option>4</option><option>5</option><option>6</option><option>7</option>
@@ -794,8 +795,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Income Type</label>
-              <select name="CoBuyer Income Type">
+              <label for="sel-cobuyer-income-type">Income Type</label>
+              <select name="CoBuyer Income Type" id="sel-cobuyer-income-type">
                 <option value="">Select...</option>
                 <option>Comp Paystub w/ YTD</option><option>Printed Paystub - No YTD</option>
                 <option>Handwritten Paystub</option><option>Self Emp - Bus Bank Stmt</option>
@@ -822,7 +823,7 @@
 
         <!-- NOTES -->
         <div class="apply-section">
-          <h3 class="apply-section-title"><span class="apply-step">5</span> Additional Notes</h3>
+          <h2 class="apply-section-title"><span class="apply-step">5</span> Additional Notes</h2>
           <div class="form-group">
             <label>Anything else you'd like us to know?</label>
             <textarea name="Additional Notes" rows="3" placeholder="Credit situation, specific requests, questions, etc."></textarea>
@@ -862,7 +863,7 @@
     <!-- SIDEBAR -->
     <aside class="apply-sidebar animate-on-scroll delay-2">
       <div class="apply-sidebar-card">
-        <h4>What to Expect</h4>
+        <h3>What to Expect</h3>
         <ul>
           <li>Submit this form</li>
           <li>We review your info same day</li>
@@ -872,14 +873,14 @@
         </ul>
       </div>
       <div class="apply-sidebar-card">
-        <h4>Prefer to Apply by Phone?</h4>
+        <h3>Prefer to Apply by Phone?</h3>
         <p>Call us and we'll walk you through everything in minutes.</p>
         <a href="tel:7177435175" class="btn btn-primary" style="width:100%;margin-top:12px;text-align:center;display:block">
           (717) 743-5175
         </a>
       </div>
       <div class="apply-sidebar-card">
-        <h4>What to Bring When You Come In</h4>
+        <h3>What to Bring When You Come In</h3>
         <ul>
           <li>Valid driver's license</li>
           <li>Recent pay stub or proof of income</li>
@@ -888,7 +889,7 @@
         </ul>
       </div>
       <div class="apply-sidebar-card" style="background:var(--green);border-color:var(--green)">
-        <h4 style="color:#fff">Current Deals</h4>
+        <h3 style="color:#fff">Current Deals</h3>
         <ul id="sidebar-deals">
           <li style="color:rgba(255,255,255,0.9)">Loading deals...</li>
         </ul>
@@ -898,6 +899,7 @@
 
   </div>
 </section>
+</main>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -1021,19 +1023,33 @@ function fmtSSN(e) {
   else if (d.length >= 4) e.target.value = d.slice(0,3) + '-' + d.slice(3);
   else                    e.target.value = d;
 }
-document.querySelectorAll('input[type="tel"]').forEach(function(el){ el.addEventListener('input', fmtPhone); });
-var ssnEl = document.querySelector('input[name="SSN"]');
-if (ssnEl) ssnEl.addEventListener('input', fmtSSN);
+// Defer non-critical listeners to keep main thread free during load
+requestIdleCallback ? requestIdleCallback(function(){
+  document.querySelectorAll('input[type="tel"]').forEach(function(el){ el.addEventListener('input', fmtPhone); });
+  var ssnEl = document.querySelector('input[name="SSN"]');
+  if (ssnEl) ssnEl.addEventListener('input', fmtSSN);
+}) : setTimeout(function(){
+  document.querySelectorAll('input[type="tel"]').forEach(function(el){ el.addEventListener('input', fmtPhone); });
+  var ssnEl = document.querySelector('input[name="SSN"]');
+  if (ssnEl) ssnEl.addEventListener('input', fmtSSN);
+}, 50);
 
 function handleApply(e) {
   e.preventDefault();
   submitLead(e.target, 'Finance Application', 'Your application was received. We\'ll be in touch within 1 business day.');
 }
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+requestIdleCallback ? requestIdleCallback(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el){ obs.observe(el); });
+}) : setTimeout(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-on-scroll').forEach(function(el){ obs.observe(el); });
+}, 50);
 </script>
 <script>
 // ══════════════════════════════════════════════════════════════════
