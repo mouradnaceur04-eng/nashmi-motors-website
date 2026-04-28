@@ -1,40 +1,7 @@
 {
-  "updated": "2026-04-27T21:38:08Z",
+  "updated": "2026-04-28T00:13:17Z",
   "count": 22,
   "vehicles": [
-    {
-      "vin": "1FAFP55284A197003",
-      "stock": "TW3",
-      "year": 2004,
-      "make": "FORD",
-      "model": "TAURUS",
-      "type": "sedan",
-      "price": 3995,
-      "sale": null,
-      "miles": 68431,
-      "drive": "FWD",
-      "fuel": "Flex",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
-      "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/eSYXcXqQitQQ9rfwCe44l2-VfZr3Yd6Uzr5uxHt6TT_EM4WFI0ABYnSAzwjL7ngRjCYVLuQcBveYGINL3Xe71C8x0brtFInth78",
-      "carfaxBadge": "1own",
-      "features": [
-        "CD/MP3 (SINGLE DISC)",
-        "ABS (4-WHEEL)",
-        "TILT WHEEL",
-        "CRUISE CONTROL",
-        "POWER STEERING",
-        "POWER WINDOWS",
-        "POWER SEAT",
-        "AIR CONDITIONING",
-        "POWER DOOR LOCKS",
-        "DUAL AIR BAGS",
-        "ALLOY WHEELS",
-        "AM/FM STEREO"
-      ]
-    },
     {
       "vin": "1FMYU03152KD52361",
       "stock": "A1033",
@@ -66,6 +33,39 @@
         "CD/MP3 (MULTI DISC)",
         "DUAL POWER SEATS",
         "POWER STEERING"
+      ]
+    },
+    {
+      "vin": "1FAFP55284A197003",
+      "stock": "TW3",
+      "year": 2004,
+      "make": "FORD",
+      "model": "TAURUS",
+      "type": "sedan",
+      "price": 3995,
+      "sale": null,
+      "miles": 68431,
+      "drive": "FWD",
+      "fuel": "Flex",
+      "img": null,
+      "imgUrl": null,
+      "photos": [],
+      "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/eSYXcXqQitQQ9rfwCe44l2-VfZr3Yd6Uzr5uxHt6TT_EM4WFI0ABYnSAzwjL7ngRjCYVLuQcBveYGINL3Xe71C8x0brtFInth78",
+      "carfaxBadge": "1own",
+      "features": [
+        "CD/MP3 (SINGLE DISC)",
+        "ABS (4-WHEEL)",
+        "TILT WHEEL",
+        "CRUISE CONTROL",
+        "POWER STEERING",
+        "POWER WINDOWS",
+        "POWER SEAT",
+        "AIR CONDITIONING",
+        "POWER DOOR LOCKS",
+        "DUAL AIR BAGS",
+        "ALLOY WHEELS",
+        "AM/FM STEREO"
       ]
     },
     {
