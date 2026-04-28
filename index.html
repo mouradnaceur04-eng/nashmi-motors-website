@@ -20,7 +20,9 @@
 <link rel="canonical" href="https://nashmimotors.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
 <link rel="stylesheet" href="style.css?v=2">
 <script type="application/ld+json">
 {
@@ -72,7 +74,7 @@
 <header class="header" id="header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo">
+      <img src="logo.png" alt="Nashmi Motors Logo" width="286" height="300">
     </a>
     <nav class="nav" id="nav">
       <a href="/" class="nav-link active">Home</a>
@@ -118,6 +120,7 @@
   </div>
 </header>
 
+<main>
 <!-- HERO — FULL WIDTH BACKGROUND -->
 <section class="hero-full">
   <!-- Background car image — swapped dynamically to Camry by heroImageInit() -->
@@ -125,7 +128,7 @@
     <img id="hero-bg-img"
          src="https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
          alt="Nashmi Motors inventory" aria-hidden="true" loading="eager"
-         fetchpriority="high">
+         fetchpriority="high" width="1024" height="768">
   </div>
   <!-- Dark overlay -->
   <div class="hero-overlay"></div>
@@ -147,16 +150,16 @@
 
     <!-- INLINE SEARCH -->
     <div class="hero-search hero-search-dark">
-      <select id="s-make" onchange="updateModels()" class="hero-select hero-select-dark">
+      <select id="s-make" onchange="updateModels()" class="hero-select hero-select-dark" aria-label="Select make">
         <option value="">Any Make</option>
         <option>AUDI</option><option>CHRYSLER</option><option>FORD</option>
         <option>GMC</option><option>INFINITI</option><option>JEEP</option>
         <option>KIA</option><option>NISSAN</option><option>TOYOTA</option>
       </select>
-      <select id="s-model" class="hero-select hero-select-dark">
+      <select id="s-model" class="hero-select hero-select-dark" aria-label="Select model">
         <option value="">Any Model</option>
       </select>
-      <select id="s-price" class="hero-select hero-select-dark">
+      <select id="s-price" class="hero-select hero-select-dark" aria-label="Select max price">
         <option value="">Any Price</option>
         <option value="6000">Under $6,000</option>
         <option value="9000">Under $9,000</option>
@@ -474,7 +477,7 @@
     </div>
     <div class="about-strip-img animate-on-scroll delay-2">
       <div class="about-img-card">
-        <img src="https://imagescf.dealercenter.net/640/480/202603-1840d1c50d5044be86b7ee316b636217.jpg" alt="2020 Kia Forte at Nashmi Motors" loading="lazy">
+        <img src="https://imagescf.dealercenter.net/640/480/202603-1840d1c50d5044be86b7ee316b636217.jpg" alt="2020 Kia Forte at Nashmi Motors" loading="lazy" width="640" height="480">
         <div class="about-img-badge">
           <span class="badge-num">$4,995</span>
           <span class="badge-text">Starting<br>Price</span>
@@ -498,6 +501,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container footer-inner">
@@ -517,7 +522,7 @@
       </div>
     </div>
     <div class="footer-links">
-      <h4>Inventory</h4>
+      <h3>Inventory</h3>
       <a href="/inventory">All Vehicles</a>
       <a href="inventory.html?type=sedan">Sedans</a>
       <a href="inventory.html?type=suv">SUVs</a>
@@ -525,7 +530,7 @@
       <a href="inventory.html?type=van">Vans</a>
     </div>
     <div class="footer-links">
-      <h4>Services</h4>
+      <h3>Services</h3>
       <a href="/apply">Apply for Financing</a>
       <a href="/car-finder">Car Finder</a>
       <a href="/sell">Sell Us Your Car</a>
@@ -533,7 +538,7 @@
       <a href="/contact">Contact Us</a>
     </div>
     <div class="footer-contact">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <p><a href="tel:7177435175">(717) 743-5175</a></p>
       <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
       <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
@@ -548,7 +553,7 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 // Wire featured grid to async inventory loader
 onInventoryLoaded = function() {

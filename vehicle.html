@@ -22,7 +22,9 @@
 <meta name="twitter:image:alt" content="Nashmi Motors Logo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
 <link rel="stylesheet" href="style.css?v=2">
 <style>
 /* ── Vehicle Detail Page ── */
@@ -1159,7 +1161,7 @@ body::after {
       </div>
     </div>
     <div class="footer-links">
-      <h4>Inventory</h4>
+      <h3>Inventory</h3>
       <a href="/inventory">All Vehicles</a>
       <a href="inventory.html?type=sedan">Sedans</a>
       <a href="inventory.html?type=suv">SUVs</a>
@@ -1167,7 +1169,7 @@ body::after {
       <a href="inventory.html?type=van">Vans</a>
     </div>
     <div class="footer-links">
-      <h4>Services</h4>
+      <h3>Services</h3>
       <a href="/apply">Apply for Financing</a>
       <a href="/car-finder">Car Finder</a>
       <a href="/sell">Sell Us Your Car</a>
@@ -1175,7 +1177,7 @@ body::after {
       <a href="/contact">Contact Us</a>
     </div>
     <div class="footer-contact">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <p><a href="tel:7177435175">(717) 743-5175</a></p>
       <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
       <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
@@ -1190,7 +1192,7 @@ body::after {
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 <script>
 // ── Gallery state ──────────────────────────────────────────────────
 let galleryPhotos = [];

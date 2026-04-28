@@ -2,7 +2,6 @@
    NASHMI MOTORS — CUSTOM WEBSITE
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap');
 
 :root {
   --green:        #4a7c59;
@@ -13,7 +12,7 @@
   --dark-2:       #1a2535;
   --dark-3:       #243040;
   --gray:         #6b7280;
-  --gray-light:   #9ca3af;
+  --gray-light:   #767980;
   --bg:           #f5f7fa;
   --white:        #ffffff;
   --border:       #e5e7eb;
@@ -1116,7 +1115,7 @@ img { max-width: 100%; height: auto; display: block; }
   color: #fff;
   transform: translateY(-2px);
 }
-.footer-links h4, .footer-contact h4 {
+.footer-links h3, .footer-contact h3 {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1.2px;
