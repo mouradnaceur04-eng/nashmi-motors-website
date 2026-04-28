@@ -46,7 +46,7 @@ function carCard(c) {
   const displayPrice = c.sale || c.price;
   const detailUrl    = `/vehicle?vin=${encodeURIComponent(c.vin || '')}`;
   const imgHtml = c.imgUrl
-    ? `<img src="${c.imgUrl}" alt="${c.year} ${c.make} ${c.model}" loading="lazy">`
+    ? `<img src="${c.imgUrl}" alt="${c.year} ${c.make} ${c.model}" loading="lazy" width="640" height="480">`
     : `<div class="car-no-photo"><span>📷</span><p>Photos Coming Soon</p></div>`;
   const saleBadge = c.sale ? `<div class="car-badge">Sale</div>` : '';
   // Show original/was price + savings on EVERY car (sale price if marked, else 12% above asking)
@@ -99,17 +99,19 @@ function carCard(c) {
     if (overlaySvg) {
       const altText = c.carfaxBadge;
       const imgTag  = `<img src="${CFX_CDN}${overlaySvg}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
-      cfxBadgeHtml  = `<div class="cfx-badge-wrap" onclick="event.preventDefault();event.stopPropagation();window.open('${cfxUrl}','_blank')" role="link" tabindex="0" title="${altText}">${imgTag}</div>`;
+      cfxBadgeHtml  = `<a href="${cfxUrl}" target="_blank" rel="noopener" class="cfx-badge-wrap" onclick="event.stopPropagation()" aria-label="${altText} - CarFax report">${imgTag}</a>`;
     }
   }
 
   return `
 <div class="car-card" data-type="${c.type}" data-make="${c.make}" data-drive="${c.drive}" data-price="${displayPrice || 0}">
-  <a href="${detailUrl}" class="car-img-wrap">
-    ${imgHtml}
-    ${saleBadge}
+  <div class="car-img-container">
+    <a href="${detailUrl}" class="car-img-wrap">
+      ${imgHtml}
+      ${saleBadge}
+    </a>
     ${cfxBadgeHtml}
-  </a>
+  </div>
   <div class="car-info">
     <h3 class="car-title"><a href="${detailUrl}">${c.year} ${c.make} ${c.model}</a></h3>
     <div class="car-price-row">

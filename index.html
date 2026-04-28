@@ -113,7 +113,7 @@
     </div>
     <!-- Google Translate hidden widget — powers setLanguage() -->
     <!-- GT widget must stay renderable — CSS parks it off-screen -->
-    <div id="google_translate_element" aria-hidden="true"></div>
+    <div id="google_translate_element"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -389,25 +389,25 @@
         </div>
       </div>
       <div class="testdrive-form-wrap animate-on-scroll delay-1">
-        <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off">
           <h3>Request a Test Drive</h3>
           <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" name="Name" placeholder="Full name" required>
+            <label for="td-name">Your Name *</label>
+            <input type="text" id="td-name" name="Name" placeholder="Full name" required>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Phone *</label>
-              <input type="tel" name="Phone" placeholder="(717) 000-0000" required>
+              <label for="td-phone">Phone *</label>
+              <input type="tel" id="td-phone" name="Phone" placeholder="(717) 000-0000" required>
             </div>
             <div class="form-group">
-              <label>Email</label>
-              <input type="email" name="Email" placeholder="Optional">
+              <label for="td-email">Email</label>
+              <input type="email" id="td-email" name="Email" placeholder="Optional">
             </div>
           </div>
           <div class="form-group">
-            <label>Vehicle You'd Like to Drive *</label>
-            <select name="Vehicle" required>
+            <label for="td-vehicle">Vehicle You'd Like to Drive *</label>
+            <select name="Vehicle" id="td-vehicle" required>
               <option value="">Select a vehicle...</option>
               <option>2002 FORD ESCAPE — $4,995</option>
               <option>2013 KIA OPTIMA — $5,995</option>
@@ -431,12 +431,12 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Preferred Day *</label>
-              <input type="date" name="Preferred Date" required>
+              <label for="td-date">Preferred Day *</label>
+              <input type="date" id="td-date" name="Preferred Date" required>
             </div>
             <div class="form-group">
-              <label>Preferred Time</label>
-              <select name="Preferred Time">
+              <label for="td-time">Preferred Time</label>
+              <select name="Preferred Time" id="td-time">
                 <option>Morning (10am–12pm)</option>
                 <option>Afternoon (12pm–3pm)</option>
                 <option>Late afternoon (3pm–6pm)</option>
@@ -547,8 +547,8 @@
   </div>
   <div class="footer-bottom">
     <div class="container">
-      <span>© 2026 Nashmi Motors. All rights reserved. &nbsp;&bull;&nbsp; <a href="https://voxdigit.mouradnaceur04.workers.dev" target="_blank" rel="noopener" style="color:var(--gray-light);opacity:0.5;text-decoration:none;font-size:12px" aria-label="Website by VoxDigital">Site by VoxDigital</a></span>
-      <span><a href="/privacy-policy" style="color:var(--gray-light);text-decoration:none">Privacy Policy</a> &nbsp;&bull;&nbsp; 8001 Paxton St, Harrisburg, PA 17111</span>
+      <span>© 2026 Nashmi Motors. All rights reserved. &nbsp;&bull;&nbsp; <a href="https://voxdigit.mouradnaceur04.workers.dev" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.55);font-size:12px;text-decoration:underline">Site by VoxDigital</a></span>
+      <span><a href="/privacy-policy" style="color:rgba(255,255,255,0.55);text-decoration:underline">Privacy Policy</a> &nbsp;&bull;&nbsp; 8001 Paxton St, Harrisburg, PA 17111</span>
     </div>
   </div>
 </footer>
