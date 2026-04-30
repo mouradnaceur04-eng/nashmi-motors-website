@@ -27,6 +27,10 @@
           "value": "nosniff"
         },
         {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
         },
@@ -40,7 +44,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://www.gstatic.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com https://translate.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://imagescf.dealercenter.net https://partnerstatic.carfax.com https://www.carfax.com https://lh3.googleusercontent.com https://www.gstatic.com https://maps.gstatic.com; connect-src 'self' https://api.nhtsa.gov https://feeds.dealercenter.net; frame-src https://translate.google.com https://translate.googleapis.com; object-src 'none';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://www.gstatic.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com https://translate.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://imagescf.dealercenter.net https://partnerstatic.carfax.com https://www.carfax.com https://lh3.googleusercontent.com https://www.gstatic.com https://maps.gstatic.com; connect-src 'self' https://api.nhtsa.gov; frame-src https://translate.google.com https://translate.googleapis.com; object-src 'none';"
         }
       ]
     },

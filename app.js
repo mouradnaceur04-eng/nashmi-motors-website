@@ -2,6 +2,21 @@
 // Inventory is fetched live from /api/inventory (Vercel serverless, 30-second CDN cache)
 // which proxies the DealerCenter XML feed in real time.
 
+function h(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function safeUrl(url) {
+  if (!url) return null;
+  const s = String(url).trim();
+  return /^https?:\/\//i.test(s) ? s : null;
+}
+
 let inventory = [];
 
 async function loadInventory() {
@@ -45,8 +60,9 @@ function fmtMiles(n) {
 function carCard(c) {
   const displayPrice = c.sale || c.price;
   const detailUrl    = `/vehicle?vin=${encodeURIComponent(c.vin || '')}`;
-  const imgHtml = c.imgUrl
-    ? `<img src="${c.imgUrl}" alt="${c.year} ${c.make} ${c.model}" loading="lazy" width="640" height="480">`
+  const safeImg      = safeUrl(c.imgUrl);
+  const imgHtml = safeImg
+    ? `<img src="${h(safeImg)}" alt="${h(c.year)} ${h(c.make)} ${h(c.model)}" loading="lazy" width="640" height="480">`
     : `<div class="car-no-photo"><span>📷</span><p>Photos Coming Soon</p></div>`;
   const saleBadge = c.sale ? `<div class="car-badge">Sale</div>` : '';
   // Show original/was price + savings on EVERY car (sale price if marked, else 12% above asking)
@@ -66,7 +82,7 @@ function carCard(c) {
 
   // Effective CarFax URL: use dealer-specific URL if available,
   // otherwise generate a free VIN-based SMTC link (works for any VIN)
-  const cfxUrl = c.carfax || (c.vin ? `https://www.carfax.com/showmethefax/${c.vin}` : null);
+  const cfxUrl = safeUrl(c.carfax) || (c.vin ? `https://www.carfax.com/showmethefax/${encodeURIComponent(c.vin)}` : null);
 
   // Pick the most informative SVG for the "Show Me The CARFAX" button
   const smtcSvg = hasOwner && badge.includes('great') ? '1own_great.svg'
@@ -80,8 +96,8 @@ function carCard(c) {
 
   // Show SMTC badge on every vehicle that has a VIN (even without a dealer URL)
   const cfBtn = cfxUrl
-    ? `<a href="${cfxUrl}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
-        <img src="${CFX_CDN}${smtcSvg}" alt="Show Me The CARFAX" loading="lazy">
+    ? `<a href="${h(cfxUrl)}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
+        <img src="${h(CFX_CDN + smtcSvg)}" alt="Show Me The CARFAX" loading="lazy">
       </a>`
     : '';
 
@@ -97,14 +113,14 @@ function carCard(c) {
                      : badge.includes('fair')              ? 'fair.svg'
                      : null;
     if (overlaySvg) {
-      const altText = c.carfaxBadge;
-      const imgTag  = `<img src="${CFX_CDN}${overlaySvg}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
-      cfxBadgeHtml  = `<a href="${cfxUrl}" target="_blank" rel="noopener" class="cfx-badge-wrap" onclick="event.stopPropagation()" aria-label="${altText} - CarFax report">${imgTag}</a>`;
+      const altText = h(c.carfaxBadge);
+      const imgTag  = `<img src="${h(CFX_CDN + overlaySvg)}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
+      cfxBadgeHtml  = `<a href="${h(cfxUrl)}" target="_blank" rel="noopener" class="cfx-badge-wrap" onclick="event.stopPropagation()" aria-label="${altText} - CarFax report">${imgTag}</a>`;
     }
   }
 
   return `
-<div class="car-card" data-type="${c.type}" data-make="${c.make}" data-drive="${c.drive}" data-price="${displayPrice || 0}">
+<div class="car-card" data-type="${h(c.type)}" data-make="${h(c.make)}" data-drive="${h(c.drive)}" data-price="${displayPrice || 0}">
   <div class="car-img-container">
     <a href="${detailUrl}" class="car-img-wrap">
       ${imgHtml}
@@ -113,7 +129,7 @@ function carCard(c) {
     ${cfxBadgeHtml}
   </div>
   <div class="car-info">
-    <h3 class="car-title"><a href="${detailUrl}">${c.year} ${c.make} ${c.model}</a></h3>
+    <h3 class="car-title"><a href="${detailUrl}">${h(c.year)} ${h(c.make)} ${h(c.model)}</a></h3>
     <div class="car-price-row">
       <span class="car-price">${fmtPrice(displayPrice)}</span>
       ${oldPrice}
@@ -121,8 +137,8 @@ function carCard(c) {
     </div>
     <div class="car-meta">
       <span>${fmtMiles(c.miles)}</span>
-      <span>${c.drive || 'N/A'}</span>
-      <span>${c.fuel || 'Gas'}</span>
+      <span>${h(c.drive || 'N/A')}</span>
+      <span>${h(c.fuel || 'Gas')}</span>
     </div>
     <div class="car-actions">
       <a href="${detailUrl}" class="btn btn-primary car-btn">View Details</a>
