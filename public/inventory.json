@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-30T17:07:12Z",
+  "updated": "2026-04-30T20:45:22Z",
   "count": 20,
   "vehicles": [
     {
@@ -47,39 +47,6 @@
       ]
     },
     {
-      "vin": "1FAFP55284A197003",
-      "stock": "TW3",
-      "year": 2004,
-      "make": "FORD",
-      "model": "TAURUS",
-      "type": "sedan",
-      "price": 3995,
-      "sale": null,
-      "miles": 68431,
-      "drive": "FWD",
-      "fuel": "Flex",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
-      "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/19-kAyGgfSjKD0hHctROmRCElDRGOMo7Kw5bT9HhZwGrDkHL-1_iGW2ZIf1euBLH4uez8zwugOm9e9RaSIPaEr-QCMWaua5qgDA",
-      "carfaxBadge": "1own",
-      "features": [
-        "CD/MP3 (SINGLE DISC)",
-        "ABS (4-WHEEL)",
-        "TILT WHEEL",
-        "CRUISE CONTROL",
-        "POWER STEERING",
-        "POWER WINDOWS",
-        "POWER SEAT",
-        "AIR CONDITIONING",
-        "POWER DOOR LOCKS",
-        "DUAL AIR BAGS",
-        "ALLOY WHEELS",
-        "AM/FM STEREO"
-      ]
-    },
-    {
       "vin": "1FMYU03152KD52361",
       "stock": "A1033",
       "year": 2002,
@@ -110,6 +77,39 @@
         "CD/MP3 (MULTI DISC)",
         "DUAL POWER SEATS",
         "POWER STEERING"
+      ]
+    },
+    {
+      "vin": "1FAFP55284A197003",
+      "stock": "TW3",
+      "year": 2004,
+      "make": "FORD",
+      "model": "TAURUS",
+      "type": "sedan",
+      "price": 3995,
+      "sale": null,
+      "miles": 68431,
+      "drive": "FWD",
+      "fuel": "Flex",
+      "img": null,
+      "imgUrl": null,
+      "photos": [],
+      "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/19-kAyGgfSjKD0hHctROmRCElDRGOMo7Kw5bT9HhZwGrDkHL-1_iGW2ZIf1euBLH4uez8zwugOm9e9RaSIPaEr-QCMWaua5qgDA",
+      "carfaxBadge": "1own",
+      "features": [
+        "CD/MP3 (SINGLE DISC)",
+        "ABS (4-WHEEL)",
+        "TILT WHEEL",
+        "CRUISE CONTROL",
+        "POWER STEERING",
+        "POWER WINDOWS",
+        "POWER SEAT",
+        "AIR CONDITIONING",
+        "POWER DOOR LOCKS",
+        "DUAL AIR BAGS",
+        "ALLOY WHEELS",
+        "AM/FM STEREO"
       ]
     },
     {
