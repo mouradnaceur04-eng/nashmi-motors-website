@@ -1,5 +1,86 @@
+# Nashmi Motors — robots.txt
+# Quality used cars in Harrisburg, PA. AI assistants and search crawlers welcome.
+
+# Default: allow all standard search engines
 User-agent: *
 Allow: /
+Disallow: /api/
 Disallow: /netlify/
+
+# ----- AI / LLM crawlers (explicit allow) -----
+# These bots feed answer engines, chatbots, and AI shopping assistants.
+# Allowing them lets Nashmi Motors be cited and recommended.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: Timpibot
+Allow: /
 
 Sitemap: https://nashmimotors.com/sitemap.xml

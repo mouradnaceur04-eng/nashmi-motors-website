@@ -221,6 +221,190 @@ async function submitLead(form, type, successMsg) {
   }
 }
 
+// ─── JSON-LD schema injection ────────────────────────────────────────────────
+// Helps AI assistants (ChatGPT, Claude, Perplexity, Google AI Overviews) cite
+// inventory and vehicle pages with accurate make/model/year/price/VIN data.
+
+const SITE_ORIGIN = 'https://nashmimotors.com';
+const ORG_REF = { '@id': SITE_ORIGIN + '/#organization' };
+
+function fuelTypeForSchema(f) {
+  const lo = String(f || '').toLowerCase();
+  if (!lo) return undefined;
+  if (lo.includes('diesel')) return 'Diesel';
+  if (lo.includes('electric')) return 'Electric';
+  if (lo.includes('hybrid')) return 'Hybrid';
+  if (lo.includes('flex')) return 'Flex Fuel';
+  return 'Gasoline';
+}
+
+function driveTypeForSchema(d) {
+  const lo = String(d || '').toUpperCase();
+  if (lo === 'AWD') return 'AllWheelDriveConfiguration';
+  if (lo === '4WD' || lo === '4X4') return 'FourWheelDriveConfiguration';
+  if (lo === 'FWD' || lo === '2WD') return 'FrontWheelDriveConfiguration';
+  if (lo === 'RWD') return 'RearWheelDriveConfiguration';
+  return undefined;
+}
+
+function bodyTypeForSchema(t) {
+  const map = {
+    sedan: 'Sedan',
+    suv: 'SUV',
+    truck: 'Pickup Truck',
+    van: 'Van',
+    coupe: 'Coupe',
+    hatchback: 'Hatchback',
+    wagon: 'Station Wagon',
+    convertible: 'Convertible',
+  };
+  return map[String(t || '').toLowerCase()] || undefined;
+}
+
+function vehicleSchemaFor(c) {
+  const label = `${c.year} ${c.make} ${c.model}`.trim();
+  const price = c.sale || c.price;
+  const url   = `${SITE_ORIGIN}/vehicle?vin=${encodeURIComponent(c.vin || '')}`;
+  const image = (Array.isArray(c.photos) && c.photos.length ? c.photos : [c.imgUrl]).filter(Boolean);
+
+  const node = {
+    '@type': 'Car',
+    '@id': url + '#vehicle',
+    name: label,
+    description: `${label} for sale at Nashmi Motors in Harrisburg, PA. Used vehicle with ${c.miles ? Number(c.miles).toLocaleString() + ' miles' : 'low miles'}. Free CarFax. Financing available for all credit types.`,
+    url,
+    brand: { '@type': 'Brand', name: c.make },
+    manufacturer: { '@type': 'Organization', name: c.make },
+    model: c.model,
+    vehicleModelDate: String(c.year),
+    itemCondition: 'https://schema.org/UsedCondition',
+  };
+  if (c.vin)   node.vehicleIdentificationNumber = c.vin;
+  if (image.length) node.image = image;
+  if (c.miles) {
+    node.mileageFromOdometer = {
+      '@type': 'QuantitativeValue',
+      value: Number(c.miles),
+      unitCode: 'SMI',
+    };
+  }
+  const fuel = fuelTypeForSchema(c.fuel);
+  if (fuel) node.fuelType = fuel;
+  const drive = driveTypeForSchema(c.drive);
+  if (drive) node.driveWheelConfiguration = `https://schema.org/${drive}`;
+  const body = bodyTypeForSchema(c.type);
+  if (body) node.bodyType = body;
+
+  if (price) {
+    node.offers = {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'USD',
+      price: Number(price),
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/UsedCondition',
+      seller: ORG_REF,
+    };
+  }
+  return node;
+}
+
+function injectJsonLd(id, data) {
+  const existing = document.getElementById(id);
+  if (existing) existing.remove();
+  const tag = document.createElement('script');
+  tag.type = 'application/ld+json';
+  tag.id = id;
+  tag.textContent = JSON.stringify(data);
+  document.head.appendChild(tag);
+}
+
+function setOrUpdateMeta(selector, attr, value) {
+  let el = document.querySelector(selector);
+  if (!el) {
+    el = document.createElement(selector.startsWith('link') ? 'link' : 'meta');
+    if (selector.includes('property=')) {
+      el.setAttribute('property', selector.match(/property="([^"]+)"/)[1]);
+    } else if (selector.includes('name=')) {
+      el.setAttribute('name', selector.match(/name="([^"]+)"/)[1]);
+    } else if (selector.includes('rel=')) {
+      el.setAttribute('rel', selector.match(/rel="([^"]+)"/)[1]);
+    }
+    document.head.appendChild(el);
+  }
+  el.setAttribute(attr, value);
+}
+
+function injectVehicleSchema(c) {
+  const label = `${c.year} ${c.make} ${c.model}`.trim();
+  const price = c.sale || c.price;
+  const priceText = price ? `$${Number(price).toLocaleString()}` : 'Call for price';
+  const miles = c.miles ? `${Number(c.miles).toLocaleString()} mi` : '';
+  const url = `${SITE_ORIGIN}/vehicle?vin=${encodeURIComponent(c.vin || '')}`;
+  const desc = `${label} — ${priceText}${miles ? ' · ' + miles : ''}. Used ${bodyTypeForSchema(c.type) || 'vehicle'} for sale at Nashmi Motors in Harrisburg, PA. Free CarFax. Financing for all credit types.`;
+  const heroImg = (Array.isArray(c.photos) && c.photos[0]) || c.imgUrl || `${SITE_ORIGIN}/logo.png`;
+
+  setOrUpdateMeta('meta[name="description"]', 'content', desc);
+  setOrUpdateMeta('meta[property="og:title"]', 'content', `${label} — Nashmi Motors`);
+  setOrUpdateMeta('meta[property="og:description"]', 'content', desc);
+  setOrUpdateMeta('meta[property="og:url"]', 'content', url);
+  setOrUpdateMeta('meta[property="og:image"]', 'content', heroImg);
+  setOrUpdateMeta('meta[name="twitter:title"]', 'content', `${label} — Nashmi Motors`);
+  setOrUpdateMeta('meta[name="twitter:description"]', 'content', desc);
+  setOrUpdateMeta('meta[name="twitter:image"]', 'content', heroImg);
+  setOrUpdateMeta('link[rel="canonical"]', 'href', url);
+
+  injectJsonLd('vehicle-jsonld', {
+    '@context': 'https://schema.org',
+    '@graph': [
+      vehicleSchemaFor(c),
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',      item: SITE_ORIGIN + '/' },
+          { '@type': 'ListItem', position: 2, name: 'Inventory', item: SITE_ORIGIN + '/inventory' },
+          { '@type': 'ListItem', position: 3, name: label,       item: url },
+        ],
+      },
+    ],
+  });
+}
+
+function injectInventoryListSchema(items) {
+  if (!Array.isArray(items) || items.length === 0) return;
+  const list = items.slice(0, 50).map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: vehicleSchemaFor(c),
+  }));
+  injectJsonLd('inventory-jsonld', {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': SITE_ORIGIN + '/inventory#page',
+        url: SITE_ORIGIN + '/inventory',
+        name: 'Used Car Inventory — Nashmi Motors',
+        description: 'Live inventory of quality used cars, SUVs, trucks, and vans at Nashmi Motors in Harrisburg, PA. Updated daily. Free CarFax on every vehicle. Financing for all credit types.',
+        isPartOf: { '@id': SITE_ORIGIN + '/#website' },
+        about: ORG_REF,
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: items.length,
+          itemListElement: list,
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',      item: SITE_ORIGIN + '/' },
+          { '@type': 'ListItem', position: 2, name: 'Inventory', item: SITE_ORIGIN + '/inventory' },
+        ],
+      },
+    ],
+  });
+}
+
 // ─── Fallback inventory (shown if JSON fetch fails) ───────────────────────────
 // This is the last-known inventory — keeps the site working even if the scraper is down.
 

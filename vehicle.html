@@ -9,17 +9,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title id="page-title">Vehicle Details — Nashmi Motors</title>
 <meta name="description" content="View details, pricing, and CarFax for this vehicle at Nashmi Motors in Harrisburg, PA.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:site_name" content="Nashmi Motors">
+<meta property="og:locale" content="en_US">
 <meta property="og:title" content="Vehicle Details — Nashmi Motors">
 <meta property="og:description" content="View details, pricing, and CarFax history for this vehicle at Nashmi Motors in Harrisburg, PA.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="logo.png">
-<meta property="og:image:width" content="286">
-<meta property="og:image:height" content="100">
+<meta property="og:type" content="product">
+<meta property="og:image" content="https://nashmimotors.com/logo.png">
 <meta property="og:image:alt" content="Nashmi Motors Logo">
 <meta property="og:url" content="https://nashmimotors.com/vehicle">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="logo.png">
+<meta name="twitter:title" content="Vehicle Details — Nashmi Motors">
+<meta name="twitter:description" content="View details, pricing, and CarFax history for this vehicle at Nashmi Motors in Harrisburg, PA.">
+<meta name="twitter:image" content="https://nashmimotors.com/logo.png">
 <meta name="twitter:image:alt" content="Nashmi Motors Logo">
+<link rel="canonical" href="https://nashmimotors.com/vehicle">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
@@ -1431,6 +1436,9 @@ function renderVehicle(c) {
   // ── Test drive form pre-fill ──────────────────────────────────
   document.getElementById('td-vehicle-field').value    = label + (displayPrice ? ' — ' + fmtPrice(displayPrice) : '');
   document.getElementById('td-form-title').textContent = 'Test Drive the ' + label;
+
+  // ── Inject Vehicle / Offer JSON-LD + dynamic SEO meta ─────────
+  if (typeof injectVehicleSchema === 'function') injectVehicleSchema(c);
 
   // Show content
   document.getElementById('vd-loading').style.display = 'none';
