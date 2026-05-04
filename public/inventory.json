@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-04T08:07:56Z",
+  "updated": "2026-05-04T13:16:03Z",
   "count": 19,
   "vehicles": [
     {
@@ -47,39 +47,6 @@
       ]
     },
     {
-      "vin": "1FMYU03152KD52361",
-      "stock": "A1033",
-      "year": 2002,
-      "make": "FORD",
-      "model": "ESCAPE",
-      "type": "suv",
-      "price": 3995,
-      "sale": null,
-      "miles": 150695,
-      "drive": "2WD",
-      "fuel": "Gasoline",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
-      "url": "https://www.nashmimotors.com/inventory/ford/escape/a1033/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/YNShtb3zGaiCGZ3dSleIuRm3zRMO3mmyUd9P6h6igNOZfvZ3qzNn56Q_CKeh0Akh086PRwNRtbDsbRMbe7dwXLyKaDWyeH_G57w",
-      "carfaxBadge": "1own",
-      "features": [
-        "ALLOY WHEELS",
-        "DUAL AIR BAGS",
-        "TILT WHEEL",
-        "CRUISE CONTROL",
-        "POWER DOOR LOCKS",
-        "POWER WINDOWS",
-        "ABS (4-WHEEL)",
-        "AM/FM STEREO",
-        "AIR CONDITIONING",
-        "CD/MP3 (MULTI DISC)",
-        "DUAL POWER SEATS",
-        "POWER STEERING"
-      ]
-    },
-    {
       "vin": "1FAFP55284A197003",
       "stock": "TW3",
       "year": 2004,
@@ -95,7 +62,7 @@
       "imgUrl": null,
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/h0oGubYWQx6gl2VxRZMH3OzYP-tIPxXKOw9EU1cg3FVfFwog0mI1rUPoPxNLeJLK56mUFbVWvKSgXVINqOd1ym3zCIvAm-asEOw",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/59iLkNsEohjDMKwruqFyF54ieBXzS4693Tdc79i4PEDCJANFlZYJTYeyxJJmKHuw0e8F9rSEtMPJn2W_ibvDRzEScqFuebsN3BE",
       "carfaxBadge": "1own",
       "features": [
         "CD/MP3 (SINGLE DISC)",
@@ -110,6 +77,39 @@
         "DUAL AIR BAGS",
         "ALLOY WHEELS",
         "AM/FM STEREO"
+      ]
+    },
+    {
+      "vin": "1FMYU03152KD52361",
+      "stock": "A1033",
+      "year": 2002,
+      "make": "FORD",
+      "model": "ESCAPE",
+      "type": "suv",
+      "price": 3995,
+      "sale": null,
+      "miles": 150695,
+      "drive": "2WD",
+      "fuel": "Gasoline",
+      "img": null,
+      "imgUrl": null,
+      "photos": [],
+      "url": "https://www.nashmimotors.com/inventory/ford/escape/a1033/",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/AHmmYoyP3-UWliqBuRs1pKZYVgOnCrSkYh3E3A-fxD4dwDuXjzBCxjCPvuLVuFtSjbnLTLHAW91QxeCTMN5C_HJsDp_TFiuVYgA",
+      "carfaxBadge": "1own",
+      "features": [
+        "ALLOY WHEELS",
+        "DUAL AIR BAGS",
+        "TILT WHEEL",
+        "CRUISE CONTROL",
+        "POWER DOOR LOCKS",
+        "POWER WINDOWS",
+        "ABS (4-WHEEL)",
+        "AM/FM STEREO",
+        "AIR CONDITIONING",
+        "CD/MP3 (MULTI DISC)",
+        "DUAL POWER SEATS",
+        "POWER STEERING"
       ]
     },
     {
@@ -146,7 +146,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-0e5720e8af4248bbba5da47f9f7e6a58.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/chevrolet/impala/a1046/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/UCuVc9S5XbMa9MVG73VrekzdiHe-Bak7Bz12RgR6vEmGVVJ6KkZSXMZsMF9a5moM7_XUzcrGait1lbMbniTmqI_QN4drRY-kJ1Q",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/L82Ykn8O7VRFKYaxIf_cfAFUTVpMtR50u1ShvBuQxfdPn-PgSbYIivmXxexPrg0684tMvexqb6pipTl61GDUdkDFrIBHjq8R9Y0",
       "carfaxBadge": "Great Value",
       "features": [
         "STABILITRAK",
@@ -188,7 +188,7 @@
       "imgUrl": null,
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/nissan/rogue/a1038/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/PTGhA2kMpsosjRyEuzZdoVv-CBozHfhUCYvBF98twCbDsuEIJdB1QuCoS7xsumFgyMrkCjWS8CbjSfszqhIqKF5E8srVd08WFwc",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/Fw1hKCox_sRpEXMBIG0bn_kG8UcFcUc6HWftumuLKzwtmqoLu5Mh5LeLwzINpqUmOOPu0iI47L0X6N0QPyI9bAWhZov6n58Mx5U",
       "carfaxBadge": null,
       "features": [
         "SIDE AIR BAGS",
@@ -248,7 +248,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-002f117daba94775b57debacf3eb81b0.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/kia/optima/a1034/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/M7THalyqw07PcukNZ0tEYGEEK5Gy_zyYLOGPcO1n6IQkIvA7BDRcK_pNDAObaItmq90DAOKKcl0vohXKyZ7qa4FntgN2FrJw2Gg",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/ZitMj5KVLa3b-VLOGuSW5SAPPcKFkcRlyfbuwnUV6UWLX0BBb75YZUqP8WghDBDoczf9xPuCfsbYnG5kMFsyvSBg6DysmIm8AUE",
       "carfaxBadge": "Good Value",
       "features": [
         "STABILITY CONTROL",
@@ -376,7 +376,7 @@
         "https://imagescf.dealercenter.net/1024/768/202603-e22ad310542a4fb6959e16cfe676cd4c.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/escape/a1024/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/LV1Cj4cjLXHUrpyiv8I5DNWJVMsRy9wXlRcP-bAAF7bf-bXuB3Y7Nlo5v9ObRdFAkSiWOiF6CQmGpRlBs6D53XPP7hnQiwaOpis",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/AIE2jUZRq7gnQhUboAElpk3eaaMBnqPZzalA6ccDwJ9f62SytV8i8BGy7eoENcoHfa1Kz8uevv_nJaDr_dYMNVv_1lpmKhFP1y8",
       "carfaxBadge": "Good Value",
       "features": [
         "AM/FM STEREO",
@@ -445,7 +445,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-7abb21ce671f4492bdca9b5454382ab8.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/hyundai/santa-fe-sport/a1048/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/g-0J5_pxEj3yJmyd4mHt72lwa428zLdnigmA9gbhyYzmBP5IjGnEScYEjMtzLPZrk3j6pKKvlvV5aamttHkr0-VCnjZR55YXcyI",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/agqHDyYq1PqNasquvNERsqHJlzfp7BJuscVHKU-L-r2ylQXtRycKA50I4391Ct9tC7ZYjlorC063uH_Qk_JUXm_rmea_MZAGK6E",
       "carfaxBadge": "Great Value",
       "features": [
         "DOWNHILL ASSIST CONTROL",
@@ -473,6 +473,50 @@
         "POWER WINDOWS",
         "ALARM SYSTEM",
         "AM/FM STEREO"
+      ]
+    },
+    {
+      "vin": "KNDPMCAC0J7307268",
+      "stock": "A1049",
+      "year": 2018,
+      "make": "KIA",
+      "model": "SPORTAGE",
+      "type": "suv",
+      "price": 8995,
+      "sale": null,
+      "miles": 124080,
+      "drive": "AWD",
+      "fuel": "Gasoline",
+      "img": null,
+      "imgUrl": null,
+      "photos": [],
+      "url": "https://www.nashmimotors.com/inventory/kia/sportage/a1049/",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/9jax7WZgj8gwg2aP-7VpeGNR9m_CwW97HKFVDABwrGnDx9gwWW3K8iPiSa5N5fUtLGJpc4snUQzI-NEiFUFAoFyd9FO5mCIt0lg",
+      "carfaxBadge": null,
+      "features": [
+        "TILT & TELESCOPING WHEEL",
+        "AIR CONDITIONING",
+        "HILL START ASSIST CONTROL",
+        "POWER WINDOWS",
+        "CRUISE CONTROL",
+        "POWER DOOR LOCKS",
+        "F&R HEAD CURTAIN AIR BAGS",
+        "ELECTRONIC STABILITY CONTROL",
+        "BACKUP CAMERA",
+        "REAR SPOILER",
+        "AM/FM STEREO",
+        "KEYLESS ENTRY",
+        "SIDE AIR BAGS",
+        "DUAL AIR BAGS",
+        "SIRIUSXM SATELLITE",
+        "BLUETOOTH WIRELESS",
+        "POWER STEERING",
+        "TRACTION CONTROL",
+        "DAYTIME RUNNING LIGHTS",
+        "CD/MP3 (SINGLE DISC)",
+        "ALARM SYSTEM",
+        "ALLOY WHEELS",
+        "ABS (4-WHEEL)"
       ]
     },
     {
@@ -513,8 +557,8 @@
         "https://imagescf.dealercenter.net/1024/768/202605-9819fff98a5f4265b324a7c85a74b3eb.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1039/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/skCw-MhHqfXXSfnJ_aI1KDSHVVlp9dfbkATynyW3GEGYzpyzvf7laR8quk1EceTfO3c-pvLIZebRVVDdKDsinu5saZ8NI2J_fVg",
-      "carfaxBadge": null,
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/_xCTTsb3YJe1L53n2gsMWAxhb1O-JgTeT_u11nwFsIBLSZqq5wyB0W0lKgDaq0gzKe6QLIgX3dFCHiRKB5rpGKB_VOYs33-J-Ko",
+      "carfaxBadge": "Fair Value",
       "features": [
         "LEATHER",
         "TOWING PKG",
@@ -546,50 +590,6 @@
         "KEYLESS ENTRY",
         "HEATED SEATS",
         "DUAL AIR BAGS"
-      ]
-    },
-    {
-      "vin": "KNDPMCAC0J7307268",
-      "stock": "A1049",
-      "year": 2018,
-      "make": "KIA",
-      "model": "SPORTAGE",
-      "type": "suv",
-      "price": 8995,
-      "sale": null,
-      "miles": 124080,
-      "drive": "AWD",
-      "fuel": "Gasoline",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
-      "url": "https://www.nashmimotors.com/inventory/kia/sportage/a1049/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/rdh4rwuOIW9KlGBEFTgva7EcWXXAM02n3ay9zAkIS4qvsKm8HrkuUNHAKpZc8AoexTXgBpd2M5GpVJ5XLML8qnInbcxx2PFzYEo",
-      "carfaxBadge": null,
-      "features": [
-        "TILT & TELESCOPING WHEEL",
-        "AIR CONDITIONING",
-        "HILL START ASSIST CONTROL",
-        "POWER WINDOWS",
-        "CRUISE CONTROL",
-        "POWER DOOR LOCKS",
-        "F&R HEAD CURTAIN AIR BAGS",
-        "ELECTRONIC STABILITY CONTROL",
-        "BACKUP CAMERA",
-        "REAR SPOILER",
-        "AM/FM STEREO",
-        "KEYLESS ENTRY",
-        "SIDE AIR BAGS",
-        "DUAL AIR BAGS",
-        "SIRIUSXM SATELLITE",
-        "BLUETOOTH WIRELESS",
-        "POWER STEERING",
-        "TRACTION CONTROL",
-        "DAYTIME RUNNING LIGHTS",
-        "CD/MP3 (SINGLE DISC)",
-        "ALARM SYSTEM",
-        "ALLOY WHEELS",
-        "ABS (4-WHEEL)"
       ]
     },
     {
@@ -630,7 +630,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-27ec59bc31284b11b9a1ba01afa674e9.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/taurus/a1044/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/1yZxedFpY4ECpBNBGOjPkKiyuCiRhVIA9JvQN96Y371iQPF9j06xn4zbq6KfJnqP-2evA1VNOQyifdTxpJ0nIkX5FScbHGoPLe0",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/zpvLWYcoPQYthhkSF8UNTB-ujNu27_VwK_kEBmMPIfPXHxyr2PTe_jdPcPklMyMQOWdrJQmMmQPZLh72Iif4jCea64FL3UmVCmY",
       "carfaxBadge": "1own_great",
       "features": [
         "SIRIUSXM SATELLITE",
@@ -696,7 +696,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-57a108bc707849e4bdc035c2ec734e75.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/chrysler/pacifica/a1032/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/Rb8BSvEi0Dm9QxAn0J4fUpjMR_jZxrJcLxBXSe4u2pzAkjV2SCyDMPxhgre4zJLrPYTo48WGeLXvkohgMLKsur0faBODX2NsSQY",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/PJb4Le3GTWU1pBW8cvbEvRrGrxe-tGLXKQDVoxWOg1WRo4rVBh5FZPO1gy52-05mPmvBpzFtqk6o_sZMmYfUpN55ptzs92XvzjA",
       "carfaxBadge": "Great Value",
       "features": [
         "ALLOY WHEELS",
@@ -766,7 +766,7 @@
         "https://imagescf.dealercenter.net/1024/768/202604-a96ffb42ab934ea19f1cf061aea13651.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/k7I476ArwhEPAimAsCIv6gjwqpYjpKaKgQuFjeE5lbtxIeC2fC_8uZRygsxB9gA1ecAFulzOSJRc78QvMFM49dNeIVVAGyVk45M",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/1vehVCDOljiPia8OBlDdhbWcp6-6uZ_Hug6X2obzj0FEC3e3vhITH-2q3GrAWHdwxVRJYxM3-bS9SQHotG9KAgbsB6E8Wh9ng7k",
       "carfaxBadge": "1own_good",
       "features": [
         "HEAD CURTAIN AIR BAGS",
@@ -812,7 +812,7 @@
       "imgUrl": null,
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/8OSe2bZbriY3XDJMCUvH5I8tvluCNG7Y_fHOtlvwO1j1I3E9zPRCiuQ__lD7XuRSkUeK1W6vQyllx-lsia4gXQFHc9fpogeowAc",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/oZ0bmaM-P3inIH08uLJ9fvLA7NuEsJuVykVaRyTAvPMarg7b3gtS9Rzz5_CVrmXirMmYLkyoylIcC5hjfVNTXqTFv_O6M1J_724",
       "carfaxBadge": "1own",
       "features": [
         "BLIND-SPOT WARNING",
@@ -885,8 +885,8 @@
         "https://imagescf.dealercenter.net/1024/768/202605-3ba19af8148d4a93963e45a9951f071b.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/sJgGpy5y-_5wLVF_q2hE4XpWbaddRBqgepyg5m3_iMMLfY7VuOW4PIbwRAm8KQhY8oBn_ZqPdQX4CWsK1ttT6HcPJ9cOak46l4U",
-      "carfaxBadge": "1own",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/3egQ0PBewGOmOj3EKgXpKNbn5fT_S8OEcKRuh9zA1a14BkzVj2P9qi4fgVrJbz2tjsvUFhMgAHfx4yBSAlvWBNjZBQBk-eu-1wc",
+      "carfaxBadge": "1own_good",
       "features": [
         "POWER STEERING",
         "DAYTIME RUNNING LIGHTS",
@@ -936,7 +936,7 @@
       "imgUrl": null,
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/audi/q5/a1041/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/MxHt6ejqz7DfNEFv-0SeOTCx7yCncRXnbqgKAkW_SlCdNKgywzo1dIm3MPjK8CsGmBA5bog11WLKkDsD9oG8gWgMdQxxOcPpICY",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/QpJdrnkSIgvxLMoWzcKwLW6PqJ7wYEp552OZCqZ1mnGgh9A0V9w12gr-OBG_qiIhqLbYYg1P_3cYz6ZXoKaHQ1R0yH_oEefSZ4c",
       "carfaxBadge": null,
       "features": [
         "DUAL POWER SEATS",
@@ -986,7 +986,7 @@
       "imgUrl": null,
       "photos": [],
       "url": "https://www.nashmimotors.com/inventory/kia/soul/r1001/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/vTxnx7UZ9SK4X89sEiXcRADcb5HG20fT68q_29mHcLXWII1nqmjJnPzj-iuJSlIJ961jYOMqqZzc7bZgmTAcoZmy7St1JPm3EZ8",
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/ajYvNuVItUF9qaDHz1mPfoPmS9YJyQCEJbi0hIwsfJOYnenx9ZAfEetZplp8SEba8QP-IMRAiAuTg2ThhHGWBmFFrUxfFfCbvRg",
       "carfaxBadge": null,
       "features": [
         "ELECTRONIC STABILITY CONTROL",
