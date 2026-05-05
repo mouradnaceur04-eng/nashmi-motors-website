@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-05T06:35:28Z",
+  "updated": "2026-05-05T08:37:44Z",
   "count": 17,
   "vehicles": [
     {
@@ -199,17 +199,56 @@
       "price": 5995,
       "sale": null,
       "miles": 125490,
-      "drive": "N/A",
+      "drive": "FWD",
       "fuel": "Gasoline",
       "img": "202604-b67a2027fd0541a2b950f2e5e20d9b72",
       "imgUrl": "https://imagescf.dealercenter.net/1024/768/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg",
       "photos": [
-        "https://imagescf.dealercenter.net/1024/768/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg"
+        "https://imagescf.dealercenter.net/1024/768/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-dc131c84b44b43238248a6cda460c793.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-04d15ae6dfff4715924f7246677ff370.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-963bef7c6b07470abc57e27ee196ed19.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-d9ea5b730a424e27befbd8b2a3646341.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-bd142eee753146a39948c662e374679a.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-883503f7af314020ab8bc099c6888f00.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-0a6c5adfd3bc45c1b1bee27b5c0ea8b6.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-fed5c9d21cd940ca8118ec2ded6b47e0.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-c148ebb6225243258f2f39e4aeaae3ca.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-6bc5de475ce24159905788d82d11cf53.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-2043d0eb1cf74b399ad2d93695e6d69d.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-8ff3b55b9549413c872cbad093528fb9.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-eb5d1f7869934fe8bc259ab5e2f462c6.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-8076c5927ccc4220ad6aeacf988f2c6a.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-814b4ec0c05446a696e5c34e88c0da34.jpg",
+        "https://imagescf.dealercenter.net/1024/768/202604-002f117daba94775b57debacf3eb81b0.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/kia/optima/a1034/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/ZitMj5KVLa3b-VLOGuSW5SAPPcKFkcRlyfbuwnUV6UWLX0BBb75YZUqP8WghDBDoczf9xPuCfsbYnG5kMFsyvSBg6DysmIm8AUE",
       "carfaxBadge": "Good Value",
-      "features": []
+      "features": [
+        "STABILITY CONTROL",
+        "AM/FM STEREO",
+        "POWER WINDOWS",
+        "TRACTION CONTROL",
+        "FOG LIGHTS",
+        "ANTI-THEFT SYSTEM",
+        "SIRIUSXM SATELLITE",
+        "ALLOY WHEELS",
+        "DUAL AIR BAGS",
+        "BLUETOOTH WIRELESS",
+        "AIR CONDITIONING",
+        "POWER SEAT",
+        "KEYLESS ENTRY",
+        "TILT & TELESCOPING WHEEL",
+        "CRUISE CONTROL",
+        "ABS (4-WHEEL)",
+        "CD/MP3 (SINGLE DISC)",
+        "POWER STEERING",
+        "F&R HEAD CURTAIN AIR BAGS",
+        "SIDE AIR BAGS",
+        "HILL START ASSIST CONTROL",
+        "POWER DOOR LOCKS"
+      ]
     },
     {
       "vin": "3FADP4BJ2KM108166",
