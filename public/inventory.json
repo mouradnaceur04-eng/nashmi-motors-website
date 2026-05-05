@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-05T10:22:39Z",
+  "updated": "2026-05-05T11:45:17Z",
   "count": 17,
   "vehicles": [
     {
@@ -70,8 +70,8 @@
         "https://imagescf.dealercenter.net/1024/768/202605-1b896116283640b0ab4fb5ceb8578a97.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/ford/taurus/tw3/",
-      "carfax": null,
-      "carfaxBadge": null,
+      "carfax": "https://www.carfax.com/vehiclehistory/ar20/59iLkNsEohjDMKwruqFyF54ieBXzS4693Tdc79i4PEDCJANFlZYJTYeyxJJmKHuw0e8F9rSEtMPJn2W_ibvDRzEScqFuebsN3BE",
+      "carfaxBadge": "1own",
       "features": [
         "CRUISE CONTROL",
         "AIR CONDITIONING",
