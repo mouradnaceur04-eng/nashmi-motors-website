@@ -1,7 +1,41 @@
 {
-  "updated": "2026-05-07T21:17:48Z",
-  "count": 18,
+  "updated": "2026-05-07T22:18:34Z",
+  "count": 17,
   "vehicles": [
+    {
+      "vin": "1GCDT136868167781",
+      "stock": "TW6",
+      "year": 2006,
+      "make": "CHEVROLET",
+      "model": "COLORADO CREW CAB",
+      "type": "truck",
+      "price": null,
+      "sale": null,
+      "miles": 168200,
+      "drive": "4WD",
+      "fuel": "Gasoline",
+      "img": null,
+      "imgUrl": null,
+      "photos": [],
+      "url": "https://www.nashmimotors.com/inventory/chevrolet/colorado-crew-cab/tw6/",
+      "carfax": null,
+      "carfaxBadge": null,
+      "features": [
+        "BED LINER",
+        "Z71 SUSPENSION",
+        "POWER STEERING",
+        "POWER DOOR LOCKS",
+        "AIR CONDITIONING",
+        "DUAL AIR BAGS",
+        "ALLOY WHEELS",
+        "AM/FM STEREO",
+        "CD/MP3 (SINGLE DISC)",
+        "POWER WINDOWS",
+        "ABS (4-WHEEL)",
+        "CRUISE CONTROL",
+        "TILT WHEEL"
+      ]
+    },
     {
       "vin": "1FMYU03152KD52361",
       "stock": "A1033",
@@ -34,28 +68,6 @@
         "AM/FM STEREO",
         "CD/MP3 (MULTI DISC)"
       ]
-    },
-    {
-      "vin": "2G1WF5E37C1298427",
-      "stock": "A1046",
-      "year": 2012,
-      "make": "CHEVROLET",
-      "model": "IMPALA",
-      "type": "sedan",
-      "price": 5495,
-      "sale": null,
-      "miles": 114973,
-      "drive": "2WD",
-      "fuel": "Gasoline",
-      "img": "202604-65b0d2b9d1ec4013b40992f49f26c8f8",
-      "imgUrl": "https://imagescf.dealercenter.net/1024/768/202604-65b0d2b9d1ec4013b40992f49f26c8f8.jpg",
-      "photos": [
-        "https://imagescf.dealercenter.net/1024/768/202604-65b0d2b9d1ec4013b40992f49f26c8f8.jpg"
-      ],
-      "url": "https://www.nashmimotors.com/inventory/chevrolet/impala/a1046/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/e4dXiSaMzoaRdpl3vp7ge1WyaqLELhOS2JVHoaa9Ixj2DV2XVY2sGpsKeWmj1BGucCtXtY4E15nW5GY4Y-JW3kJuBhPB6SqL6IQ",
-      "carfaxBadge": "Great Value",
-      "features": []
     },
     {
       "vin": "3FADP4BJ2KM108166",
@@ -663,28 +675,6 @@
         "BLUETOOTH WIRELESS",
         "DUAL AIR BAGS"
       ]
-    },
-    {
-      "vin": "1FTFW1ET7BFC33259",
-      "stock": "A1035",
-      "year": 2011,
-      "make": "FORD",
-      "model": "F150 SUPERCREW CAB",
-      "type": "truck",
-      "price": 10995,
-      "sale": null,
-      "miles": 166862,
-      "drive": "2WD",
-      "fuel": "Gasoline",
-      "img": "202604-98d761fdfd6343498219fde07c02beb0",
-      "imgUrl": "https://imagescf.dealercenter.net/1024/768/202604-98d761fdfd6343498219fde07c02beb0.jpg",
-      "photos": [
-        "https://imagescf.dealercenter.net/1024/768/202604-98d761fdfd6343498219fde07c02beb0.jpg"
-      ],
-      "url": "https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/mN7gr8ve5gRr_lO7RBPcfqrSRDz9g2zR44BC6jC48Rz-UUcVejga3g6gfDBDNMErNZCc4RlQVohNyePMNKeu3Nrtsnhq6anAmVc",
-      "carfaxBadge": "1own_great",
-      "features": []
     },
     {
       "vin": "5N1DL0MM3KC505596",
