@@ -63,7 +63,7 @@ function carCard(c) {
   const safeImg      = safeUrl(c.imgUrl);
   const imgHtml = safeImg
     ? `<img src="${h(safeImg)}" alt="${h(c.year)} ${h(c.make)} ${h(c.model)}" loading="lazy" width="640" height="480">`
-    : `<div class="car-no-photo"><span>📷</span><p>Photos Coming Soon</p></div>`;
+    : `<div class="car-no-photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 140" aria-hidden="true" class="car-no-photo-svg"><rect x="18" y="72" width="204" height="40" rx="8" fill="#c9d3dc"/><path d="M52 72 L72 44 L168 44 L188 72Z" fill="#bbc6d0"/><rect x="76" y="47" width="88" height="24" rx="3" fill="#d8e2ea"/><circle cx="68" cy="112" r="20" fill="#e2e8ee"/><circle cx="172" cy="112" r="20" fill="#e2e8ee"/><circle cx="68" cy="112" r="17" fill="#929fad"/><circle cx="68" cy="112" r="8" fill="#dce4ea"/><circle cx="172" cy="112" r="17" fill="#929fad"/><circle cx="172" cy="112" r="8" fill="#dce4ea"/><rect x="196" y="80" width="22" height="12" rx="4" fill="#e4ecf5"/><rect x="22" y="80" width="22" height="12" rx="4" fill="#f2d0d0"/></svg></div>`;
   const saleBadge = c.sale ? `<div class="car-badge">Sale</div>` : '';
   // Show original/was price + savings on EVERY car (sale price if marked, else 12% above asking)
   const wasPrice = c.sale ? null : (c.price ? Math.round(c.price * 1.12) : null);

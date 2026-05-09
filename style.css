@@ -1743,16 +1743,11 @@ img { max-width: 100%; height: auto; display: block; }
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #e9edf2, #d1d5db);
-  color: #9ca3af;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 500;
 }
-.car-no-photo span { font-size: 36px; }
+.car-no-photo-svg { width: 65%; max-width: 200px; height: auto; }
 .car-info { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; }
 .car-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
 .car-old-price { font-size: 13px; color: var(--gray-light); text-decoration: line-through; }
@@ -1786,6 +1781,9 @@ img { max-width: 100%; height: auto; display: block; }
 .filter-group input[type="checkbox"] { accent-color: var(--green); cursor: pointer; }
 .filter-clear { font-size: 11.5px; color: var(--green); font-weight: 600; cursor: pointer; background: none; border: none; transition: color 0.2s; }
 .filter-clear:hover { color: var(--green-dark); }
+
+.filter-toggle-btn { display: none; }
+.toolbar-actions { display: flex; align-items: center; gap: 10px; }
 .price-inputs { display: flex; gap: 8px; align-items: center; }
 .price-inputs input { flex: 1; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: inherit; transition: border-color 0.2s; background: #fafbfc; }
 .price-inputs input:focus { outline: none; border-color: var(--green); }
@@ -2037,7 +2035,28 @@ img { max-width: 100%; height: auto; display: block; }
   .about-strip { grid-template-columns: 1fr; }
   .about-strip-img { display: none; }
   .inventory-layout { grid-template-columns: 1fr; }
-  .filter-sidebar { position: static; }
+  .filter-sidebar { position: static; display: none; }
+  .filter-sidebar.open { display: block; }
+  .filter-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .filter-toggle-btn.active {
+    border-color: var(--green);
+    background: #f0fdf4;
+    color: var(--green);
+  }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
   .cta-banner-inner { flex-direction: column; text-align: center; }
   .about-grid { grid-template-columns: 1fr; }

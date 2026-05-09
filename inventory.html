@@ -110,7 +110,7 @@
 <div class="container inventory-layout">
 
   <!-- SIDEBAR FILTERS -->
-  <aside class="filter-sidebar">
+  <aside class="filter-sidebar" id="filter-sidebar">
     <div class="filter-header">
       <h3>Filter</h3>
       <button class="filter-clear" onclick="clearFilters()">Clear All</button>
@@ -169,15 +169,21 @@
   <div class="inventory-main">
     <div class="inventory-toolbar">
       <span class="results-count" id="results-count">Loading...</span>
-      <div class="sort-wrap">
-        <label>Sort by:</label>
-        <select id="sort-select" onchange="applyFilters()">
-          <option value="default">Featured</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="year-desc">Year: Newest First</option>
-          <option value="miles-asc">Miles: Lowest First</option>
-        </select>
+      <div class="toolbar-actions">
+        <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterSidebar()" aria-expanded="false" aria-controls="filter-sidebar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+          Filters
+        </button>
+        <div class="sort-wrap">
+          <label>Sort by:</label>
+          <select id="sort-select" onchange="applyFilters()">
+            <option value="default">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="year-desc">Year: Newest First</option>
+            <option value="miles-asc">Miles: Lowest First</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="cars-grid" id="inv-grid"></div>
@@ -318,6 +324,14 @@ function clearFilters() {
   document.getElementById('f-max-price').value = '';
   document.getElementById('sort-select').value = 'default';
   applyFilters();
+}
+
+function toggleFilterSidebar() {
+  const sidebar = document.getElementById('filter-sidebar');
+  const btn = document.getElementById('filter-toggle-btn');
+  const isOpen = sidebar.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  btn.setAttribute('aria-expanded', String(isOpen));
 }
 
 // Load inventory asynchronously, then run the first filter pass
