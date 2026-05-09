@@ -2057,6 +2057,35 @@ img { max-width: 100%; height: auto; display: block; }
     background: #f0fdf4;
     color: var(--green);
   }
+
+  /* Accordion filter groups on mobile */
+  .filter-group-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    padding: 4px 0;
+    user-select: none;
+  }
+  .filter-group-toggle::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #9ca3af;
+    border-bottom: 2px solid #9ca3af;
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .filter-group.open .filter-group-toggle::after { transform: rotate(-135deg); }
+  .filter-group-body { display: none; padding-top: 4px; }
+  .filter-group.open .filter-group-body { display: block; }
+
+  /* Hide "Sort by:" text label on mobile — just show the dropdown */
+  .sort-wrap label { display: none; }
+
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
   .cta-banner-inner { flex-direction: column; text-align: center; }
   .about-grid { grid-template-columns: 1fr; }

@@ -117,47 +117,57 @@
     </div>
 
     <div class="filter-group">
-      <h4>Body Type</h4>
-      <label><input type="checkbox" name="type" value="sedan"> Sedan</label>
-      <label><input type="checkbox" name="type" value="suv"> SUV / Crossover</label>
-      <label><input type="checkbox" name="type" value="truck"> Truck</label>
-      <label><input type="checkbox" name="type" value="van"> Van / Minivan</label>
-    </div>
-
-    <div class="filter-group">
-      <h4>Make</h4>
-      <label><input type="checkbox" name="make" value="AUDI"> Audi</label>
-      <label><input type="checkbox" name="make" value="CHRYSLER"> Chrysler</label>
-      <label><input type="checkbox" name="make" value="FORD"> Ford</label>
-      <label><input type="checkbox" name="make" value="GMC"> GMC</label>
-      <label><input type="checkbox" name="make" value="INFINITI"> Infiniti</label>
-      <label><input type="checkbox" name="make" value="JEEP"> Jeep</label>
-      <label><input type="checkbox" name="make" value="KIA"> Kia</label>
-      <label><input type="checkbox" name="make" value="NISSAN"> Nissan</label>
-      <label><input type="checkbox" name="make" value="TOYOTA"> Toyota</label>
-    </div>
-
-    <div class="filter-group">
-      <h4>Drivetrain</h4>
-      <label><input type="checkbox" name="drive" value="FWD"> FWD</label>
-      <label><input type="checkbox" name="drive" value="AWD"> AWD</label>
-      <label><input type="checkbox" name="drive" value="4WD"> 4WD</label>
-      <label><input type="checkbox" name="drive" value="2WD"> 2WD</label>
-    </div>
-
-    <div class="filter-group">
-      <h4>Price Range</h4>
-      <div class="price-inputs">
-        <input type="number" id="f-min-price" placeholder="Min $" min="0" step="500" oninput="applyFilters()">
-        <span>–</span>
-        <input type="number" id="f-max-price" placeholder="Max $" min="0" step="500" oninput="applyFilters()">
+      <h4 class="filter-group-toggle">Body Type</h4>
+      <div class="filter-group-body">
+        <label><input type="checkbox" name="type" value="sedan"> Sedan</label>
+        <label><input type="checkbox" name="type" value="suv"> SUV / Crossover</label>
+        <label><input type="checkbox" name="type" value="truck"> Truck</label>
+        <label><input type="checkbox" name="type" value="van"> Van / Minivan</label>
       </div>
     </div>
 
     <div class="filter-group">
-      <h4>Condition</h4>
-      <label><input type="checkbox" name="special" value="sale"> On Sale</label>
-      <label><input type="checkbox" name="special" value="photo"> Has Photos</label>
+      <h4 class="filter-group-toggle">Make</h4>
+      <div class="filter-group-body">
+        <label><input type="checkbox" name="make" value="AUDI"> Audi</label>
+        <label><input type="checkbox" name="make" value="CHRYSLER"> Chrysler</label>
+        <label><input type="checkbox" name="make" value="FORD"> Ford</label>
+        <label><input type="checkbox" name="make" value="GMC"> GMC</label>
+        <label><input type="checkbox" name="make" value="INFINITI"> Infiniti</label>
+        <label><input type="checkbox" name="make" value="JEEP"> Jeep</label>
+        <label><input type="checkbox" name="make" value="KIA"> Kia</label>
+        <label><input type="checkbox" name="make" value="NISSAN"> Nissan</label>
+        <label><input type="checkbox" name="make" value="TOYOTA"> Toyota</label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4 class="filter-group-toggle">Drivetrain</h4>
+      <div class="filter-group-body">
+        <label><input type="checkbox" name="drive" value="FWD"> FWD</label>
+        <label><input type="checkbox" name="drive" value="AWD"> AWD</label>
+        <label><input type="checkbox" name="drive" value="4WD"> 4WD</label>
+        <label><input type="checkbox" name="drive" value="2WD"> 2WD</label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4 class="filter-group-toggle">Price Range</h4>
+      <div class="filter-group-body">
+        <div class="price-inputs">
+          <input type="number" id="f-min-price" placeholder="Min $" min="0" step="500" oninput="applyFilters()">
+          <span>–</span>
+          <input type="number" id="f-max-price" placeholder="Max $" min="0" step="500" oninput="applyFilters()">
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4 class="filter-group-toggle">Condition</h4>
+      <div class="filter-group-body">
+        <label><input type="checkbox" name="special" value="sale"> On Sale</label>
+        <label><input type="checkbox" name="special" value="photo"> Has Photos</label>
+      </div>
     </div>
 
     <div style="padding:16px 20px">
@@ -176,7 +186,7 @@
         </button>
         <div class="sort-wrap">
           <label>Sort by:</label>
-          <select id="sort-select" onchange="applyFilters()">
+          <select id="sort-select" class="sort-select" onchange="applyFilters()">
             <option value="default">Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
@@ -333,6 +343,16 @@ function toggleFilterSidebar() {
   btn.classList.toggle('active', isOpen);
   btn.setAttribute('aria-expanded', String(isOpen));
 }
+
+function initFilterAccordion() {
+  if (window.innerWidth > 900) return;
+  document.querySelectorAll('.filter-group').forEach(group => {
+    const toggle = group.querySelector('.filter-group-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => group.classList.toggle('open'));
+  });
+}
+document.addEventListener('DOMContentLoaded', initFilterAccordion);
 
 // Load inventory asynchronously, then run the first filter pass
 onInventoryLoaded = function() {
