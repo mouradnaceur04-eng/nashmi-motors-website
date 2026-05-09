@@ -860,15 +860,11 @@ img { max-width: 100%; height: auto; display: block; }
   align-items: center;
   flex-shrink: 0;
   text-decoration: none;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px;
-  background: var(--white);
-  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: transform 0.15s, opacity 0.15s;
   cursor: pointer;
 }
-.smtc-badge img { height: 36px; width: auto; display: block; max-width: 100%; aspect-ratio: auto; }
-.smtc-badge:hover { transform: translateY(-2px); border-color: #003399; box-shadow: 0 4px 12px rgba(0,51,153,0.12); }
+.smtc-badge img { height: 52px; width: auto; display: block; max-width: 100%; aspect-ratio: auto; }
+.smtc-badge:hover { transform: translateY(-1px); opacity: 0.9; }
 
 /* Value badge overlay on car photo (real SVG) */
 .cfx-badge-wrap {
@@ -2163,11 +2159,10 @@ img { max-width: 100%; height: auto; display: block; }
   .smtc-badge {
     display: inline-flex !important;
     width: auto !important;
-    padding: 5px 8px !important;
   }
   .smtc-badge img {
     width: auto !important;
-    height: 30px !important;
+    height: 44px !important;
     max-width: none !important;
     object-fit: unset !important;
   }
