@@ -1,0 +1,25 @@
+{
+  "name": "nashmi-motors",
+  "version": "1.0.0",
+  "description": "Nashmi Motors website - Quality used cars in Harrisburg, PA",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Development server - use a local server like http-server'",
+    "build": "npm run build:speed-insights",
+    "build:speed-insights": "esbuild speed-insights-entry.js --bundle --format=iife --outfile=speed-insights.js --platform=browser --minify"
+  },
+  "keywords": [
+    "used-cars",
+    "dealership",
+    "harrisburg"
+  ],
+  "author": "Nashmi Motors",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
