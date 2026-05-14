@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-13T23:16:40Z",
+  "updated": "2026-05-14T00:16:12Z",
   "count": 20,
   "vehicles": [
     {
@@ -215,7 +215,7 @@
         "https://imagescf.dealercenter.net/1024/768/202605-8cc931e0baeb4ca8bfb233baf98eb2af.jpg"
       ],
       "url": "https://www.nashmimotors.com/inventory/nissan/rogue/a1038/",
-      "carfax": "https://www.carfax.com/vehiclehistory/ar20/4RRLGEzf9inMkUVIR-pLF6_VrJrXFrNFHfv1R5rmlvwld3GUiCYtZpivset5Yak4s8wpIJFGf9ifrM6pD-_i2wfeZSdVEK7-sRM",
+      "carfax": null,
       "carfaxBadge": null,
       "features": [
         "TRACTION CONTROL",
@@ -614,9 +614,11 @@
       "miles": 124080,
       "drive": "AWD",
       "fuel": "Gasoline",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
+      "img": "202605-bbcb7d83e7e7447ea5aeecb22cad2902",
+      "imgUrl": "https://imagescf.dealercenter.net/1024/768/202605-bbcb7d83e7e7447ea5aeecb22cad2902.jpg",
+      "photos": [
+        "https://imagescf.dealercenter.net/1024/768/202605-bbcb7d83e7e7447ea5aeecb22cad2902.jpg"
+      ],
       "url": "https://www.nashmimotors.com/inventory/kia/sportage/a1049/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/lE0C4wuZfy444ZLY3E4FeBXEDHZzVN-AxJqdm9aI9K5vqq1gfHe5Id4gE7QeIJXsDtUrtBrEdBVMGzjvnAAZW6_AjUF0DmDvzkY",
       "carfaxBadge": null,
@@ -930,9 +932,11 @@
       "miles": 42418,
       "drive": "FWD",
       "fuel": "Gasoline",
-      "img": null,
-      "imgUrl": null,
-      "photos": [],
+      "img": "202605-feefecaf7fb949bfaacf1ae0ccc55de1",
+      "imgUrl": "https://imagescf.dealercenter.net/1024/768/202605-feefecaf7fb949bfaacf1ae0ccc55de1.jpg",
+      "photos": [
+        "https://imagescf.dealercenter.net/1024/768/202605-feefecaf7fb949bfaacf1ae0ccc55de1.jpg"
+      ],
       "url": "https://www.nashmimotors.com/inventory/kia/soul/r1001/",
       "carfax": "https://www.carfax.com/vehiclehistory/ar20/4QZJ-rcr5WfH_Bm-PAA-3Kv7Ts06ulZzb992itjC4OH6n0YQxXPITDWqy5lVkoQtUzr_Vxb5UnaEy7DTvg5Vk4hBrpghW7SRwx0",
       "carfaxBadge": null,
