@@ -31,7 +31,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -271,7 +271,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 // Pre-set filters from URL params (runs immediately — no inventory needed)
 const params = new URLSearchParams(location.search);
@@ -484,42 +484,43 @@ function setLanguage(lang) {
   closeLangMenu();
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
-  _setCookie(lang);
 
   if (lang === 'en') {
-    location.reload();
-    return;
-  }
-
-  // Safari (desktop + iOS) doesn't reliably process programmatic GT combo triggers.
-  // Cookie is already set above — reload so GT reads it on page init.
-  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  if (isSafari) {
-    location.reload();
-    return;
-  }
-
-  // Non-Safari: trigger combo directly inside user-gesture context
-  if (_triggerCombo(lang)) return;
-
-  // GT still loading — poll every 100ms while close to the user gesture
-  var attempts = 0;
-  var poll = setInterval(function() {
-    if (_triggerCombo(lang)) {
-      clearInterval(poll);
-    } else if (++attempts > 20) {
-      clearInterval(poll);
-      location.reload(); // last resort: cookie set, GT applies on reload
+    // If browsing through translate.goog proxy, return to the real site
+    if (window.location.hostname.endsWith('.translate.goog')) {
+      window.location.href = 'https://nashmimotors.com' + window.location.pathname + window.location.search;
+    } else {
+      location.reload();
     }
-  }, 100);
+    return;
+  }
+
+  // Use Google Translate URL proxy — works on all browsers including Safari iOS
+  // No widget, no combo trigger, no cookies needed — just a redirect
+  if (window.location.hostname.endsWith('.translate.goog')) {
+    var u = new URL(window.location.href);
+    u.searchParams.set('_x_tr_tl', lang);
+    window.location.href = u.toString();
+  } else {
+    var tHost = window.location.hostname.replace(/\./g, '-') + '.translate.goog';
+    var qs = window.location.search;
+    window.location.href = 'https://' + tHost + window.location.pathname + qs +
+      (qs ? '&' : '?') + '_x_tr_sl=en&_x_tr_tl=' + lang + '&_x_tr_hl=en-US&_x_tr_pto=wapp';
+  }
 }
 
 // ── Restore language UI on every page load ────────────────────────
 // (Actual translation is handled by GT reading the googtrans cookie.)
 (function restoreUI() {
-  var lang = _readCookieLang() ||
-             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
-             'en';
+  var lang = 'en';
+  if (window.location.hostname.endsWith('.translate.goog')) {
+    var p = new URLSearchParams(window.location.search);
+    lang = p.get('_x_tr_tl') || 'en';
+  } else {
+    lang = _readCookieLang() ||
+           (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
+           'en';
+  }
   if (lang !== 'en') _updateUI(lang);
 })();
 

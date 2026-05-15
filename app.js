@@ -249,9 +249,12 @@ document.getElementById('hamburger')?.addEventListener('click', function () {
     nav.appendChild(section);
 
     // Mark the current active language on the injected buttons
-    var cookieMatch = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-    var activeLang = cookieMatch ? cookieMatch[1] : null;
-    if (!activeLang) { try { activeLang = localStorage.getItem('nashmi_lang'); } catch (e) {} }
+    var activeLang = null;
+    if (window.location.hostname.endsWith('.translate.goog')) {
+      activeLang = new URLSearchParams(window.location.search).get('_x_tr_tl');
+    } else {
+      try { activeLang = localStorage.getItem('nashmi_lang'); } catch (e) {}
+    }
     if (activeLang && activeLang !== 'en') {
       section.querySelectorAll('[data-lang]').forEach(function (el) {
         el.classList.toggle('active', el.getAttribute('data-lang') === activeLang);
