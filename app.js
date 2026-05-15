@@ -17,7 +17,8 @@ const CARGURUS_LISTINGS = {
 };
 
 function getCarGurusUrl(vin) {
-  return CARGURUS_DEALER_URL;
+  if (!vin) return CARGURUS_DEALER_URL;
+  return 'https://www.cargurus.com/Cars/new/nl/filter?zip=17111&vin=' + encodeURIComponent(vin);
 }
 
 function h(s) {

@@ -398,7 +398,25 @@ function setLanguage(lang) {
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
   _setCookie(lang);
-  location.reload();
+
+  if (lang === 'en') {
+    location.reload();
+    return;
+  }
+
+  // Trigger inside user gesture (critical for Safari — don't reload first)
+  if (_triggerCombo(lang)) return;
+
+  // GT still loading — poll every 100ms while close to the user gesture
+  var attempts = 0;
+  var poll = setInterval(function() {
+    if (_triggerCombo(lang)) {
+      clearInterval(poll);
+    } else if (++attempts > 20) {
+      clearInterval(poll);
+      location.reload(); // last resort: cookie set, GT applies on reload
+    }
+  }, 100);
 }
 
 // ── Restore language UI on every page load ────────────────────────
