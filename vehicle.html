@@ -1384,7 +1384,9 @@ function renderVehicle(c) {
   if (c.vin) {
     const cgPrice = c.sale || c.price || '';
     const cgVin = c.vin.replace(/"/g, '');
-    actionsHtml += `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><span data-cg-vin="${cgVin}" data-cg-price="${cgPrice}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`;
+    // TODO: Replace CARGURUS_DEALER_URL with real profile URL from dealers.cargurus.com → "View My Storefront"
+    const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/forsale-l-Harrisburg-PA';
+    actionsHtml += `<a href="${CARGURUS_DEALER_URL}" target="_blank" rel="noopener noreferrer" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><span data-cg-vin="${cgVin}" data-cg-price="${cgPrice}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
   if (window.CarGurus && window.CarGurus.DealRatingBadge && window.CarGurus.DealRatingBadge.run) {

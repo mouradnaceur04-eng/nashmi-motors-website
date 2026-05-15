@@ -2,6 +2,9 @@
 // Inventory is fetched live from /api/inventory (Vercel serverless, 30-second CDN cache)
 // which proxies the DealerCenter XML feed in real time.
 
+// TODO: Replace with real dealer profile URL from dealers.cargurus.com → "View My Storefront"
+const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/forsale-l-Harrisburg-PA';
+
 function h(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
@@ -103,7 +106,7 @@ function carCard(c) {
 
   // CarGurus — always-visible link; dealratingbadge.js upgrades to rated badge if VIN is in CG database
   const cgBtn = c.vin
-    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
+    ? `<a href="${CARGURUS_DEALER_URL}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
     : '';
 
   return `
