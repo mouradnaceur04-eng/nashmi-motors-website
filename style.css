@@ -155,7 +155,8 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ---- TOP BAR ---- */
 .topbar {
-  background: var(--dark);
+  background: #050505;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   padding: 8px 0;
   font-size: 12.5px;
   color: rgba(255,255,255,0.7);
@@ -177,14 +178,13 @@ img { max-width: 100%; height: auto; display: block; }
   align-items: center;
   transition: color 0.2s;
 }
-.topbar-link:hover { color: var(--green-bright); }
+.topbar-link:hover { color: #fff; }
+.topbar-hours { color: rgba(255,255,255,0.5); }
 
 /* ---- HEADER ---- */
 .header {
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  background: #0a0a0a;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   position: sticky;
   top: 0;
   /* z-index must be above gallery, hero, cards (all ≤ 10) but
@@ -203,7 +203,7 @@ img { max-width: 100%; height: auto; display: block; }
   /* visible so nothing clips the dropdown */
   overflow: visible;
 }
-.header.scrolled { box-shadow: var(--shadow); }
+.header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.6); }
 
 .header-inner {
   display: flex;
@@ -223,7 +223,6 @@ img { max-width: 100%; height: auto; display: block; }
   max-height: 50px;
   width: auto;
   display: block;
-  border-radius: 8px;  /* contain black background as rounded badge */
 }
 @media (max-width: 900px) {
   .logo img {
@@ -244,15 +243,15 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 600;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  color: #374151;
+  color: rgba(255,255,255,0.8);
   padding: 10px 14px;
   min-height: 44px;            /* WCAG touch target */
   border-radius: 8px;
   transition: all 0.2s var(--ease);
 }
 .nav-link:hover, .nav-link.active {
-  color: var(--green);
-  background: var(--green-glow);
+  color: #fff;
+  background: rgba(255,255,255,0.08);
 }
 .header-cta { margin-left: 8px; }
 
@@ -277,7 +276,7 @@ img { max-width: 100%; height: auto; display: block; }
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--dark);
+  background: #fff;
   border-radius: 2px;
   transition: all 0.25s;
 }
@@ -430,7 +429,19 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 6px 4px;
   cursor: pointer;
 }
-.hero-select-dark { color: rgba(255,255,255,0.9); }
+.hero-select-dark {
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 8px;
+  padding: 10px 14px;
+  appearance: auto; /* ensure native dropdown arrow shows */
+}
+.hero-select-dark:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12);
+}
 .hero-select-dark option { color: #111; background: #fff; }
 .hero-select:focus { outline: none; }
 
@@ -869,9 +880,41 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .smtc-badge img { height: 52px; width: auto; display: block; max-width: 100%; aspect-ratio: auto; }
 .smtc-badge-lg img {
-  height: 64px; /* up from 52px */
+  height: 90px; /* up from 64px */
 }
-/* ── CarGurus button ─────────────────────────────────── */
+/* ── CarGurus deal badge ─────────────────────────────── */
+.cg-badge {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 5px;
+  overflow: hidden;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.cg-badge:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.cg-label {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 6px 9px;
+  display: flex;
+  align-items: center;
+}
+.cg-value {
+  color: #fff;
+  padding: 6px 9px;
+  display: flex;
+  align-items: center;
+}
+.cg-great .cg-value { background: #005c28; }
+.cg-good  .cg-value { background: #00873C; }
+.cg-fair  .cg-value { background: #c47900; }
+.cg-high  .cg-value { background: #c0392b; }
+
+/* Placeholder spinner while fetching CarGurus rating */
 .cg-btn {
   display: inline-flex;
   align-items: center;
@@ -883,10 +926,11 @@ img { max-width: 100%; height: auto; display: block; }
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-  transition: opacity 0.2s, transform 0.2s;
+  opacity: 0.7; /* dim while loading */
+  transition: opacity 0.2s;
   white-space: nowrap;
 }
-.cg-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.cg-btn:hover { opacity: 1; }
 .smtc-badge:hover { transform: translateY(-1px); opacity: 0.9; }
 
 /* ── Featured Carousel ───────────────────────────────── */
@@ -894,6 +938,7 @@ img { max-width: 100%; height: auto; display: block; }
   position: relative;
   overflow: hidden;
   border-radius: 16px;
+  padding-bottom: 52px; /* room for dots below slides */
 }
 .carousel-track {
   display: flex;
@@ -938,10 +983,13 @@ img { max-width: 100%; height: auto; display: block; }
   transform: translateY(-50%) scale(1.08);
 }
 .carousel-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 20px;
 }
 .carousel-dot {
   width: 8px;
@@ -2195,8 +2243,8 @@ img { max-width: 100%; height: auto; display: block; }
     display: flex;
     gap: 8px;
     padding: 8px 16px;
-    border-top: 1px solid var(--border);
-    background: rgba(255,255,255,0.97);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: #0a0a0a;
     justify-content: center;
   }
   .mobile-cta-email,
@@ -2536,12 +2584,12 @@ html                 { top: 0 !important; margin-top: 0 !important; }
   gap: 6px;
   padding: 8px 13px;
   min-height: 44px;
-  background: var(--white);
-  border: 1.5px solid var(--border);
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.18);
   border-radius: 10px;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--dark);
+  color: rgba(255,255,255,0.85);
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   white-space: nowrap;
@@ -2549,9 +2597,9 @@ html                 { top: 0 !important; margin-top: 0 !important; }
 }
 .lang-btn:hover,
 .lang-btn[aria-expanded="true"] {
-  border-color: var(--green);
-  background: var(--green-glow);
-  color: var(--green-dark);
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
 }
 .lang-chevron {
   transition: transform 0.2s var(--ease);

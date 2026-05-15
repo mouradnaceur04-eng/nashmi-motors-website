@@ -101,12 +101,9 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus button — links to VIN search on CarGurus
+  // CarGurus placeholder — replaced async by loadCarGurusRatings() after inventory loads
   const cgBtn = c.vin
-    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" title="View on CarGurus" onclick="event.stopPropagation()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#00873C"/><path d="M8 12h8M12 8v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
-        CarGurus
-      </a>`
+    ? `<span class="cg-btn" data-vin="${h(c.vin)}">CarGurus</span>`
     : '';
 
   return `
@@ -465,3 +462,44 @@ function initFeaturedCarousel(total) {
 
   resetTimer();
 }
+
+// ─── CarGurus deal rating badges ─────────────────────────────────────────────
+
+const CG_RATING = {
+  GREAT_PRICE: { label: 'Great Deal', cls: 'cg-great' },
+  GOOD_PRICE:  { label: 'Good Deal',  cls: 'cg-good'  },
+  FAIR_PRICE:  { label: 'Fair Deal',  cls: 'cg-fair'  },
+  HIGH_PRICE:  { label: 'High Price', cls: 'cg-high'  },
+  OVERPRICED:  { label: 'Overpriced', cls: 'cg-high'  },
+};
+
+async function loadCarGurusRatings() {
+  const placeholders = document.querySelectorAll('.cg-btn[data-vin]');
+  if (!placeholders.length) return;
+
+  await Promise.all(Array.from(placeholders).map(async (el) => {
+    const vin = el.dataset.vin;
+    if (!vin) return;
+    try {
+      const r = await fetch(`/api/cargurus?vin=${encodeURIComponent(vin)}`);
+      if (!r.ok) { el.remove(); return; }
+      const data = await r.json();
+      const rating = CG_RATING[data.priceEvaluation];
+      if (!rating) { el.remove(); return; }
+      const url = data.listingUrl || `https://www.cargurus.com/Cars/new/nl/search?zip=17111&showNegotiable=true`;
+      const badge = document.createElement('a');
+      badge.href = url;
+      badge.target = '_blank';
+      badge.rel = 'noopener';
+      badge.className = `cg-badge ${rating.cls}`;
+      badge.title = `CarGurus ${rating.label}`;
+      badge.setAttribute('onclick', 'event.stopPropagation()');
+      badge.innerHTML = `<span class="cg-label">CarGurus</span><span class="cg-value">${rating.label}</span>`;
+      el.replaceWith(badge);
+    } catch (e) {
+      el.remove();
+    }
+  }));
+}
+
+window.loadCarGurusRatings = loadCarGurusRatings;

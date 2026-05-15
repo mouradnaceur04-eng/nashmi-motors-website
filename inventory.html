@@ -325,6 +325,7 @@ function applyFilters() {
   } else {
     noRes.style.display = 'none';
     grid.innerHTML = results.map(carCard).join('');
+    window.loadCarGurusRatings && window.loadCarGurusRatings();
   }
 }
 

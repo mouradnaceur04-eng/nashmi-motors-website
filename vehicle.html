@@ -1382,16 +1382,10 @@ function renderVehicle(c) {
       </a>`;
   }
   if (c.vin) {
-    actionsHtml += `
-      <a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}"
-         target="_blank" rel="noopener" class="cg-btn"
-         style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;background:#00873C;color:#fff;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;margin-top:6px;width:100%;box-sizing:border-box"
-         title="View on CarGurus">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#fff" fill-opacity=".2"/><path d="M8 12h8M12 8v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
-        CarGurus Deal Check
-      </a>`;
+    actionsHtml += `<span class="cg-btn" data-vin="${c.vin.replace(/"/g,'')}" style="margin-top:6px;display:block">CarGurus</span>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
+  window.loadCarGurusRatings && window.loadCarGurusRatings();
 
   // Pre-fill the reserve modal with vehicle info
   const modalVehicleField = document.getElementById('reserve-vehicle-field');

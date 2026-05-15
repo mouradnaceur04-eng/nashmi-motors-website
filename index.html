@@ -3,9 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="logo.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nashmi Motors — Quality Used Cars in Harrisburg, PA</title>
 <meta name="description" content="Quality used cars in Harrisburg, PA. Fast, simple financing on every vehicle. Call (717) 743-5175.">
@@ -218,7 +217,7 @@
 <header class="header" id="header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" style="height:50px;width:auto;border-radius:8px">
+      <img src="logo.png" alt="Nashmi Motors Logo" style="height:54px;width:auto">
     </a>
     <nav class="nav" id="nav">
       <a href="/" class="nav-link active">Home</a>
@@ -721,6 +720,7 @@ onInventoryLoaded = function() {
   if (track) {
     track.innerHTML = featured.map(c => `<div class="carousel-slide">${carCard(c)}</div>`).join('');
     initFeaturedCarousel(featured.length);
+    window.loadCarGurusRatings && window.loadCarGurusRatings();
   }
 };
 
@@ -749,12 +749,6 @@ const LANG_LABELS = {
   ar: 'AR', bn: 'BN', pt: 'PT', ru: 'RU', ur: 'UR',
   id: 'ID', de: 'DE', ja: 'JA', pcm: 'PCM', mr: 'MR'
 };
-
-// ── readiness gate ────────────────────────────────────────────────
-// GT calls googleTranslateElementInit() when the engine is ready.
-// We set this flag there so setLanguage() knows it can use the combo.
-window._gtReady   = false;
-window._gtQueued  = null;   // language to apply once GT is ready
 
 // ── cookie helpers ────────────────────────────────────────────────
 function _setCookie(lang) {
@@ -808,17 +802,6 @@ function googleTranslateElementInit() {
     autoDisplay: false
   }, 'google_translate_element');
 
-  // Give the combo ~600 ms to appear in the DOM after init
-  setTimeout(function() {
-    window._gtReady = true;
-
-    // If setLanguage() was called before GT was ready, apply it now
-    if (window._gtQueued && window._gtQueued !== 'en') {
-      _triggerCombo(window._gtQueued);
-      window._gtQueued = null;
-    }
-  }, 600);
-
   // ── "Nuclear" MutationObserver — runs every time the page changes ──
   function stopTheJump() {
     // Reset body top the instant Google shifts it
@@ -852,27 +835,21 @@ function setLanguage(lang) {
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
   _setCookie(lang);
 
-  if (lang === 'en') {
-    // Reload without the cookie — GT shows original English page
-    location.reload();
-    return;
-  }
+  if (lang === 'en') { location.reload(); return; }
 
-  if (window._gtReady) {
-    // GT is ready — trigger immediately
-    if (!_triggerCombo(lang)) {
-      // combo not found (shouldn't happen) — fall back to reload
+  // Retry finding the GT combo every 200ms (up to 3 seconds) before falling back to reload
+  var _cgAttempts = 0;
+  function _tryTrigger() {
+    if (_triggerCombo(lang)) return; // success
+    _cgAttempts++;
+    if (_cgAttempts < 15) {
+      setTimeout(_tryTrigger, 200);
+    } else {
+      // GT combo never appeared — reload with cookie set (reliable fallback)
       location.reload();
     }
-  } else {
-    // GT still loading — queue the language; the init callback will apply it
-    window._gtQueued = lang;
-    // Also reload as safety net: cookie is set, so GT will auto-translate on load
-    // (only if GT takes > 5 s — very unlikely on a fast CDN)
-    setTimeout(function() {
-      if (window._gtQueued === lang) location.reload();
-    }, 5000);
   }
+  _tryTrigger();
 }
 
 // ── Restore language UI on every page load ────────────────────────
