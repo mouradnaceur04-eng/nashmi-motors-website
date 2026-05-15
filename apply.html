@@ -43,6 +43,16 @@
 .cobuy-header { background:linear-gradient(135deg,#1a3c2e,#2d5a3d); color:#fff; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
 .cobuy-header h3 { margin:0 0 4px; font-size:15px; }
 .cobuy-header p { margin:0; font-size:13px; opacity:0.8; }
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  .apply-layout { display: block !important; }
+  .apply-layout > * { width: 100% !important; max-width: 100% !important; }
+  .form-row { flex-wrap: wrap !important; }
+  .form-row .form-group { width: 100% !important; min-width: 0 !important; }
+  .apply-section { padding: 18px 14px; }
+  .toggle-section { padding: 12px 14px; }
+  .radio-row { flex-wrap: wrap; gap: 14px; }
+}
 </style>
 </head>
 <body>
@@ -64,7 +74,7 @@
 <header class="header" id="header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" width="286" height="300">
+      <img src="logo.png" alt="Nashmi Motors Logo" style="height:50px;width:auto;border-radius:8px">
     </a>
     <nav class="nav" id="nav">
       <a href="/" class="nav-link">Home</a>
@@ -122,7 +132,7 @@
 <!-- TRUST BADGES -->
 <section class="section section-white" style="padding-bottom:0">
   <div class="container">
-    <div class="features-grid" style="grid-template-columns:repeat(3,1fr);background:transparent">
+    <div class="features-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));background:transparent">
       <div class="feature-card animate-on-scroll" style="background:var(--bg);border:1px solid var(--border)">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>

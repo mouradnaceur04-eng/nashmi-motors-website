@@ -96,38 +96,25 @@ function carCard(c) {
 
   // Show SMTC badge on every vehicle that has a VIN (even without a dealer URL)
   const cfBtn = cfxUrl
-    ? `<a href="${h(cfxUrl)}" target="_blank" rel="noopener" class="smtc-badge" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
+    ? `<a href="${h(cfxUrl)}" target="_blank" rel="noopener" class="smtc-badge smtc-badge-lg" title="Show Me The CARFAX Report" onclick="event.stopPropagation()">
         <img src="${h(CFX_CDN + smtcSvg)}" alt="Show Me The CARFAX" loading="lazy">
       </a>`
     : '';
 
-  // CarFax value badge overlay pinned to the photo corner (only for rated vehicles)
-  let cfxBadgeHtml = '';
-  if (c.carfaxBadge && cfxUrl) {
-    const overlaySvg = hasOwner && badge.includes('great') ? '1own_great.svg'
-                     : hasOwner && badge.includes('good')  ? '1own_good.svg'
-                     : hasOwner && badge.includes('fair')  ? '1own_fair.svg'
-                     : hasOwner                            ? '1own.svg'
-                     : badge.includes('great')             ? 'great.svg'
-                     : badge.includes('good')              ? 'good.svg'
-                     : badge.includes('fair')              ? 'fair.svg'
-                     : null;
-    if (overlaySvg) {
-      const altText = h(c.carfaxBadge);
-      const imgTag  = `<img src="${h(CFX_CDN + overlaySvg)}" alt="${altText}" loading="lazy" style="height:36px;display:block">`;
-      cfxBadgeHtml  = `<a href="${h(cfxUrl)}" target="_blank" rel="noopener" class="cfx-badge-wrap" onclick="event.stopPropagation()" aria-label="${altText} - CarFax report">${imgTag}</a>`;
-    }
-  }
+  // CarGurus button — links to VIN search on CarGurus
+  const cgBtn = c.vin
+    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" title="View on CarGurus" onclick="event.stopPropagation()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#00873C"/><path d="M8 12h8M12 8v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+        CarGurus
+      </a>`
+    : '';
 
   return `
 <div class="car-card" data-type="${h(c.type)}" data-make="${h(c.make)}" data-drive="${h(c.drive)}" data-price="${displayPrice || 0}">
-  <div class="car-img-container">
-    <a href="${detailUrl}" class="car-img-wrap">
-      ${imgHtml}
-      ${saleBadge}
-    </a>
-    ${cfxBadgeHtml}
-  </div>
+  <a href="${detailUrl}" class="car-img-wrap">
+    ${imgHtml}
+    ${saleBadge}
+  </a>
   <div class="car-info">
     <h3 class="car-title"><a href="${detailUrl}">${h(c.year)} ${h(c.make)} ${h(c.model)}</a></h3>
     <div class="car-price-row">
@@ -143,6 +130,7 @@ function carCard(c) {
     <div class="car-actions">
       <a href="${detailUrl}" class="btn btn-primary car-btn">View Details</a>
       ${cfBtn}
+      ${cgBtn}
     </div>
   </div>
 </div>`;
@@ -428,3 +416,52 @@ const FALLBACK_INVENTORY = [
   { vin:"5XXGT4L33LG422253", year:2020, make:"KIA",      model:"OPTIMA",               type:"sedan", price:15995, sale:14995, miles:52350,  drive:"FWD", fuel:"Gasoline", img:"202604-4b79213e173641bcb114456c4c6ea9f9", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg", url:"https://www.nashmimotors.com/inventory/kia/optima/a1014/", carfax:"https://www.carfax.com/vehiclehistory/ar20/NQ8F464oaGruFzc_CsMJ7wydQC85bu9OrJsSp", carfaxBadge:"Great Value" },
   { vin:"1GTV2MEC9GZ177324", year:2016, make:"GMC",      model:"SIERRA 1500 DOUBLE CAB", type:"truck", price:15995, sale:null, miles:169485, drive:"4WD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/gmc/sierra-1500-double-cab/a1036/",  carfax:"https://www.carfax.com/vehiclehistory/ar20/GcaICloidDStF_Cno2nqOU8nmuyDE5ZI-2ilR" },
 ];
+
+// ─── Featured vehicles carousel ───────────────────────────────────────────────
+
+function initFeaturedCarousel(total) {
+  if (!total) return;
+  let current = 0;
+  let timer;
+
+  const track = document.getElementById('featured-track');
+  const dots  = document.getElementById('featured-dots');
+  const prev  = document.getElementById('carousel-prev');
+  const next  = document.getElementById('carousel-next');
+  if (!track) return;
+
+  if (dots) {
+    dots.innerHTML = Array.from({ length: total }, (_, i) =>
+      `<button class="carousel-dot${i === 0 ? ' active' : ''}" aria-label="Vehicle ${i + 1}" onclick="featCarouselGo(${i})"></button>`
+    ).join('');
+  }
+
+  window.featCarouselGo = function (n) {
+    current = ((n % total) + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current)
+    );
+    resetTimer();
+  };
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => window.featCarouselGo(current + 1), 5000);
+  }
+
+  if (prev) prev.addEventListener('click', () => window.featCarouselGo(current - 1));
+  if (next) next.addEventListener('click', () => window.featCarouselGo(current + 1));
+
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) window.featCarouselGo(diff > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  track.addEventListener('mouseenter', () => clearInterval(timer));
+  track.addEventListener('mouseleave', resetTimer);
+
+  resetTimer();
+}

@@ -218,7 +218,7 @@
 <header class="header" id="header">
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" width="286" height="300">
+      <img src="logo.png" alt="Nashmi Motors Logo" style="height:50px;width:auto;border-radius:8px">
     </a>
     <nav class="nav" id="nav">
       <a href="/" class="nav-link active">Home</a>
@@ -262,38 +262,41 @@
       <span></span><span></span><span></span>
     </button>
   </div>
+  <!-- Mobile Email/Call buttons — hidden on desktop via CSS -->
+  <div class="mobile-cta-row">
+    <a href="mailto:sales@nashmimotors.com" class="mobile-cta-email">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/></svg>
+      Email Us
+    </a>
+    <a href="tel:7177435175" class="mobile-cta-call">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.08 2.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" stroke="currentColor" stroke-width="2"/></svg>
+      Call Us
+    </a>
+  </div>
 </header>
 
 <main>
-<!-- HERO — FULL WIDTH BACKGROUND -->
-<section class="hero-full">
-  <!-- Background car image — swapped dynamically to Camry by heroImageInit() -->
-  <div class="hero-bg">
-    <img id="hero-bg-img"
-         src="https://imagescf.dealercenter.net/1024/768/202604-4b79213e173641bcb114456c4c6ea9f9.jpg"
-         alt="Nashmi Motors inventory" aria-hidden="true" loading="eager"
-         fetchpriority="high" width="1024" height="768">
-  </div>
-  <!-- Dark overlay -->
-  <div class="hero-overlay"></div>
-
-  <!-- Content -->
-  <div class="container hero-full-content animate-fade-up">
-    <div class="hero-eyebrow hero-eyebrow-light">Quality Used Cars &bull; Harrisburg, PA</div>
-    <h1 class="hero-full-title">
+<!-- HERO — ANIMATED -->
+<section class="hero-animated">
+  <div class="container hero-full-content">
+    <div class="hero-anim-logo">
+      <img src="logo.png" alt="Nashmi Motors" style="height:110px;width:auto;border-radius:12px;display:block;margin:0 auto">
+    </div>
+    <div class="hero-eyebrow hero-eyebrow-light hero-anim-eyebrow">Quality Used Cars &bull; Harrisburg, PA</div>
+    <h1 class="hero-full-title hero-anim-title">
       Why Wait?<br>
       <span class="hero-accent-light">Get the Keys Now &amp; Save Big.</span>
     </h1>
-    <p class="hero-full-sub">
+    <p class="hero-full-sub hero-anim-sub">
       Quality used cars, trucks &amp; SUVs — carefully inspected.<br>Fast, simple financing on every vehicle.
     </p>
-    <div class="hero-full-actions">
+    <div class="hero-full-actions hero-anim-actions">
       <a href="/inventory" class="btn btn-primary btn-lg">Browse Inventory</a>
       <a href="/apply" class="btn btn-outline-white btn-lg">Get Pre-Approved</a>
     </div>
 
     <!-- INLINE SEARCH -->
-    <div class="hero-search hero-search-dark">
+    <div class="hero-search hero-search-dark hero-anim-search">
       <select id="s-make" onchange="updateModels()" class="hero-select hero-select-dark" aria-label="Select make">
         <option value="">Any Make</option>
         <option>AUDI</option><option>CHRYSLER</option><option>FORD</option>
@@ -303,7 +306,7 @@
       <select id="s-model" class="hero-select hero-select-dark" aria-label="Select model">
         <option value="">Any Model</option>
       </select>
-      <select id="s-price" class="hero-select hero-select-dark" aria-label="Select max price">
+      <select id="s-price" class="hero-select hero-search-dark" aria-label="Select max price">
         <option value="">Any Price</option>
         <option value="6000">Under $6,000</option>
         <option value="9000">Under $9,000</option>
@@ -314,10 +317,10 @@
     </div>
 
     <!-- STAT CHIPS -->
-    <div class="hero-full-stats">
+    <div class="hero-full-stats hero-anim-stats">
       <div class="hero-stat-chip">
-        <span class="hero-stat-num">All Credit</span>
-        <span class="hero-stat-label">Types Welcome</span>
+        <span class="hero-stat-num">Fast</span>
+        <span class="hero-stat-label">Pre-Approval</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat-chip">
@@ -403,7 +406,12 @@
       <h2 class="section-title">Current Best Deals</h2>
       <p class="section-desc">Sale pricing on select vehicles. Limited availability — first come, first served.</p>
     </div>
-    <div class="cars-grid" id="featured-grid"></div>
+    <div class="featured-carousel-wrap">
+      <div class="carousel-track" id="featured-track"></div>
+      <button class="carousel-prev" id="carousel-prev" aria-label="Previous vehicle">&#8249;</button>
+      <button class="carousel-next" id="carousel-next" aria-label="Next vehicle">&#8250;</button>
+      <div class="carousel-dots" id="featured-dots"></div>
+    </div>
     <div class="section-cta animate-on-scroll">
       <a href="/inventory" class="btn btn-primary btn-lg">View All Vehicles</a>
     </div>
@@ -443,6 +451,11 @@
       </button>
     </div>
     <div class="rc-dots" id="rc-dots"></div>
+
+    <!-- CarFax Top-Rated Dealer widget -->
+    <div style="display:flex;justify-content:center;margin-top:32px;margin-bottom:8px">
+      <div data-cfx-widget data-compcode="CX8V36OQ5U" data-orientation="horizontal" version="2" style="background-color:#ffffff;width:498px;height:314px;max-width:100%"></div>
+    </div>
 
     <div class="section-cta animate-on-scroll">
       <a href="https://search.google.com/local/writereview?placeid=ChIJExTu9hy_yIkRgITEvi-g1R8"
@@ -699,13 +712,16 @@
 
 <script src="app.js"></script>
 <script>
-// Wire featured grid to async inventory loader
+// Wire featured carousel to async inventory loader
 onInventoryLoaded = function() {
-  // Sale cars first, then any with photos
   const sales     = inventory.filter(c => c.sale);
   const withPhoto = inventory.filter(c => c.img && !c.sale);
   const featured  = [...sales, ...withPhoto].slice(0, 6);
-  document.getElementById('featured-grid').innerHTML = featured.map(carCard).join('');
+  const track = document.getElementById('featured-track');
+  if (track) {
+    track.innerHTML = featured.map(c => `<div class="carousel-slide">${carCard(c)}</div>`).join('');
+    initFeaturedCarousel(featured.length);
+  }
 };
 
 loadInventory();
@@ -901,14 +917,18 @@ function closeLangMenu() {
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
 
-document.addEventListener('click',   function(e) {
+document.addEventListener('click',      function(e) {
   if (!e.target.closest('#lang-switcher')) closeLangMenu();
 });
+document.addEventListener('touchstart', function(e) {
+  if (!e.target.closest('#lang-switcher')) closeLangMenu();
+}, { passive: true });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLangMenu();
 });
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+<script id="cfx-script" src="https://ratings.carfax.com/top-rated/v1/js/cfx-loader.js" type="module"></script>
 
 <!-- ── Live Google Reviews Carousel ─────────────────────────────────────── -->
 <script>
