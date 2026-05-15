@@ -120,9 +120,11 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus — links to specific listing if VIN is in the map, else dealer profile
-  const cgBtn = c.vin
-    ? `<a href="${getCarGurusUrl(c.vin)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
+  // CarGurus — only shown when an explicit per-vehicle URL is provided.
+  // To add: paste the CarGurus listing URL into the vehicle's cargurusUrl field.
+  // Hiding the button is better than linking to a page that won't match the vehicle.
+  const cgBtn = c.cargurusUrl
+    ? `<a href="${h(c.cargurusUrl)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><svg class="cg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M16.5 8.5l-1.7-4.2A1.5 1.5 0 0013.4 3H6.6c-.6 0-1.1.4-1.4.9L3.5 8.5A2 2 0 002 10.4V14a1 1 0 001 1h1a2 2 0 004 0h4a2 2 0 004 0h1a1 1 0 001-1v-3.6a2 2 0 00-1.5-1.9zM7 15a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zM5 9l1.3-3.4a.5.5 0 01.5-.6h6.4c.2 0 .4.2.5.5L15 9H5z"/></svg><span>View on CarGurus</span></a>`
     : '';
 
   return `
@@ -189,6 +191,74 @@ document.getElementById('hamburger')?.addEventListener('click', function () {
   this.classList.toggle('open');
   document.getElementById('nav')?.classList.toggle('open');
 });
+
+// ─── Mobile language accordion ───────────────────────────────────────────────
+// Injected into #nav so it appears in the slide-down menu with no absolute/fixed
+// positioning — avoids iOS Safari tap-target issues with position:fixed dropdowns.
+(function () {
+  var LANGS = [
+    { code: 'en',    flag: '🇺🇸', label: 'English'   },
+    { code: 'zh-CN', flag: '🇨🇳', label: '中文'       },
+    { code: 'hi',    flag: '🇮🇳', label: 'हिन्दी'     },
+    { code: 'es',    flag: '🇪🇸', label: 'Español'    },
+    { code: 'fr',    flag: '🇫🇷', label: 'Français'   },
+    { code: 'ar',    flag: '🇸🇦', label: 'العربية'    },
+    { code: 'bn',    flag: '🇧🇩', label: 'বাংলা'      },
+    { code: 'pt',    flag: '🇧🇷', label: 'Português'  },
+    { code: 'ru',    flag: '🇷🇺', label: 'Русский'    },
+    { code: 'ur',    flag: '🇵🇰', label: 'اردو'       },
+    { code: 'id',    flag: '🇮🇩', label: 'Indonesia'  },
+    { code: 'de',    flag: '🇩🇪', label: 'Deutsch'    },
+    { code: 'ja',    flag: '🇯🇵', label: '日本語'      },
+    { code: 'pcm',   flag: '🇳🇬', label: 'Pidgin'     },
+    { code: 'mr',    flag: '🇮🇳', label: 'मराठी'      },
+  ];
+
+  function toggleMobileLangGrid() {
+    var grid = document.getElementById('mobile-lang-grid');
+    var toggle = document.getElementById('mobile-lang-toggle');
+    if (!grid || !toggle) return;
+    var nowHidden = grid.hasAttribute('hidden');
+    if (nowHidden) { grid.removeAttribute('hidden'); } else { grid.setAttribute('hidden', ''); }
+    toggle.setAttribute('aria-expanded', String(nowHidden));
+  }
+  window._toggleMobileLangGrid = toggleMobileLangGrid;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var nav = document.getElementById('nav');
+    if (!nav) return;
+
+    var btnHtml = LANGS.map(function (l) {
+      // onclick: close nav + call setLanguage (defined in the page's inline script)
+      var closeNav = "document.getElementById('nav').classList.remove('open');document.getElementById('hamburger').classList.remove('open');";
+      return '<button class="mobile-lang-opt lang-option" data-lang="' + l.code + '" ' +
+             'onclick="' + closeNav + 'setLanguage(\'' + l.code + '\')">' +
+             '<span class="lang-flag">' + l.flag + '</span>' + l.label + '</button>';
+    }).join('');
+
+    var section = document.createElement('div');
+    section.className = 'mobile-lang-section';
+    section.innerHTML =
+      '<button class="mobile-lang-toggle" id="mobile-lang-toggle" aria-expanded="false" ' +
+      'onclick="window._toggleMobileLangGrid()">' +
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+      'Language' +
+      '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="ml-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      '</button>' +
+      '<div class="mobile-lang-grid" id="mobile-lang-grid" hidden>' + btnHtml + '</div>';
+    nav.appendChild(section);
+
+    // Mark the current active language on the injected buttons
+    var cookieMatch = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+    var activeLang = cookieMatch ? cookieMatch[1] : null;
+    if (!activeLang) { try { activeLang = localStorage.getItem('nashmi_lang'); } catch (e) {} }
+    if (activeLang && activeLang !== 'en') {
+      section.querySelectorAll('[data-lang]').forEach(function (el) {
+        el.classList.toggle('active', el.getAttribute('data-lang') === activeLang);
+      });
+    }
+  });
+}());
 
 // ─── Lead submission helper ───────────────────────────────────────────────────
 // POSTs form data silently to /api/lead (Vercel function → Resend → DealerCenter CRM)
@@ -413,24 +483,24 @@ function injectInventoryListSchema(items) {
 // This is the last-known inventory — keeps the site working even if the scraper is down.
 
 const FALLBACK_INVENTORY = [
-  { vin:"1FAFP55284A197003", year:2004, make:"FORD",     model:"TAURUS",               type:"sedan", price:null,  sale:null,  miles:68431,  drive:"FWD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/ford/taurus/tw3/",                     carfax:null },
-  { vin:"1FMYU03152KD52361", year:2002, make:"FORD",     model:"ESCAPE",               type:"suv",   price:4995,  sale:null,  miles:150695, drive:"2WD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/ford/escape/a1033/",                   carfax:"https://www.carfax.com/vehiclehistory/ar20/MOa9z0iTa64nkDNsN-VnMKdY3qRUq0b1F-iB9YyeWe--6i1qqRDrBDoxztVpDXfKdce8u9USpRtYqQ2yVte3iajX3vGUZSDLer0" },
-  { vin:"JN8AS5MV7CW394605", year:2012, make:"NISSAN",   model:"ROGUE",                type:"suv",   price:5995,  sale:null,  miles:146441, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/nissan/rogue/a1038/",                  carfax:null },
-  { vin:"5XXGM4A74DG145701", year:2013, make:"KIA",      model:"OPTIMA",               type:"sedan", price:5995,  sale:null,  miles:125490, drive:"FWD", fuel:"Gasoline", img:"202604-b67a2027fd0541a2b950f2e5e20d9b72", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg", url:"https://www.nashmimotors.com/inventory/kia/optima/a1034/",    carfax:"https://www.carfax.com/vehiclehistory/ar20/-DJDP7tczx8kUU3gT_oUKKEngYGUxgOYZWghT", carfaxBadge:"Good Value" },
-  { vin:"3FADP4BJ2KM108166", year:2019, make:"FORD",     model:"FIESTA",               type:"sedan", price:6995,  sale:null,  miles:90319,  drive:"FWD", fuel:"Gasoline", img:"202604-039a484af9f5493d9a9d5c051585aa6f", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-039a484af9f5493d9a9d5c051585aa6f.jpg", url:"https://www.nashmimotors.com/inventory/ford/fiesta/r1002/",   carfax:null },
-  { vin:"1FMCU0GD6HUB33923", year:2017, make:"FORD",     model:"ESCAPE",               type:"suv",   price:8995,  sale:7995,  miles:123212, drive:"FWD", fuel:"Gasoline", img:"202603-de7f64126bdd4473984fc245269cbf86", imgUrl:"https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg", url:"https://www.nashmimotors.com/inventory/ford/escape/a1024/",   carfax:"https://www.carfax.com/vehiclehistory/ar20/nOrh0vlCkocW9BPQ6qfX6w2n8uU1GkQBIH3e9" },
-  { vin:"5N1AT2MV1FC890556", year:2015, make:"NISSAN",   model:"ROGUE",                type:"suv",   price:8995,  sale:null,  miles:139501, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/nissan/rogue/a1040/",                  carfax:null },
-  { vin:"1C4RJFCG1EC247856", year:2014, make:"JEEP",     model:"GRAND CHEROKEE",       type:"suv",   price:8995,  sale:null,  miles:173710, drive:"4WD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1039/",           carfax:null },
-  { vin:"1FMCU9HD0JUB66196", year:2018, make:"FORD",     model:"ESCAPE",               type:"suv",   price:10995, sale:9995,  miles:99203,  drive:"4WD", fuel:"Gasoline", img:"202603-a20d08755c204b30905a7dbb89efa304", imgUrl:"https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg", url:"https://www.nashmimotors.com/inventory/ford/escape/a1025/",   carfax:"https://www.carfax.com/vehiclehistory/ar20/SEDj8Ek0DyZN1rgYCKGlBtv3lJpIqiU75kjVU", carfaxBadge:"Great Value" },
-  { vin:"2C4RC1BG0HR503978", year:2017, make:"CHRYSLER", model:"PACIFICA",             type:"van",   price:9995,  sale:null,  miles:131087, drive:"FWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/chrysler/pacifica/a1032/",             carfax:null },
-  { vin:"2T1BURHE1GC506793", year:2016, make:"TOYOTA",   model:"COROLLA",              type:"sedan", price:10995, sale:null,  miles:93004,  drive:"FWD", fuel:"Gasoline", img:"202604-31b69fca67994ce3ae2fef2e1efd93df", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-31b69fca67994ce3ae2fef2e1efd93df.jpg", url:"https://www.nashmimotors.com/inventory/toyota/corolla/r1011/", carfax:"https://www.carfax.com/vehiclehistory/ar20/rlYJaSN70TsYHgheHYnbnicogGzGuNiswfjcv" },
-  { vin:"1FTFW1ET7BFC33259", year:2011, make:"FORD",     model:"F150 SUPERCREW CAB",   type:"truck", price:10995, sale:null,  miles:166862, drive:"4WD", fuel:"Gasoline", img:"202604-98d761fdfd6343498219fde07c02beb0", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-98d761fdfd6343498219fde07c02beb0.jpg", url:"https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/", carfax:"https://www.carfax.com/vehiclehistory/ar20/lrJeOmF1ZJWBCTMbn99IAhnOdIMqOHUbxfhcC" },
-  { vin:"5N1DL0MM3KC505596", year:2019, make:"INFINITI", model:"QX60",                 type:"suv",   price:11995, sale:null,  miles:137835, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/",                carfax:"https://www.carfax.com/vehiclehistory/ar20/TRZr7scIRL8HJoXSngEQL418KSEFqiRw-lJ0W" },
-  { vin:"1C4RJFBG3EC471289", year:2014, make:"JEEP",     model:"GRAND CHEROKEE",       type:"suv",   price:11995, sale:null,  miles:90100,  drive:"4WD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/",           carfax:"https://www.carfax.com/vehiclehistory/ar20/it0aN2TY534kzY7udLVZ6zVIKnaCVAEiFhqjy" },
-  { vin:"WA1ANAFY6J2019757", year:2018, make:"AUDI",     model:"Q5",                   type:"suv",   price:11995, sale:null,  miles:131931, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/audi/q5/a1041/",                      carfax:"https://www.carfax.com/vehiclehistory/ar20/pLUvCtAn0QsUjU16SNikq7QGDwxhRXFskntD8" },
-  { vin:"KNDJ23AU3P7884308", year:2023, make:"KIA",      model:"SOUL",                 type:"suv",   price:13995, sale:null,  miles:42418,  drive:"FWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/kia/soul/r1001/",                      carfax:"https://www.carfax.com/vehiclehistory/ar20/1h-7maQmXn6QVElPezj9A70WSQXoKjQiyZcHD" },
-  { vin:"5XXGT4L33LG422253", year:2020, make:"KIA",      model:"OPTIMA",               type:"sedan", price:15995, sale:14995, miles:52350,  drive:"FWD", fuel:"Gasoline", img:"202604-4b79213e173641bcb114456c4c6ea9f9", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg", url:"https://www.nashmimotors.com/inventory/kia/optima/a1014/", carfax:"https://www.carfax.com/vehiclehistory/ar20/NQ8F464oaGruFzc_CsMJ7wydQC85bu9OrJsSp", carfaxBadge:"Great Value" },
-  { vin:"1GTV2MEC9GZ177324", year:2016, make:"GMC",      model:"SIERRA 1500 DOUBLE CAB", type:"truck", price:15995, sale:null, miles:169485, drive:"4WD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/gmc/sierra-1500-double-cab/a1036/",  carfax:"https://www.carfax.com/vehiclehistory/ar20/GcaICloidDStF_Cno2nqOU8nmuyDE5ZI-2ilR" },
+  { vin:"1FAFP55284A197003", year:2004, make:"FORD",     model:"TAURUS",               type:"sedan", price:null,  sale:null,  miles:68431,  drive:"FWD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/ford/taurus/tw3/",                     carfax:null, cargurusUrl: null },
+  { vin:"1FMYU03152KD52361", year:2002, make:"FORD",     model:"ESCAPE",               type:"suv",   price:4995,  sale:null,  miles:150695, drive:"2WD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/ford/escape/a1033/",                   carfax:"https://www.carfax.com/vehiclehistory/ar20/MOa9z0iTa64nkDNsN-VnMKdY3qRUq0b1F-iB9YyeWe--6i1qqRDrBDoxztVpDXfKdce8u9USpRtYqQ2yVte3iajX3vGUZSDLer0", cargurusUrl: null },
+  { vin:"JN8AS5MV7CW394605", year:2012, make:"NISSAN",   model:"ROGUE",                type:"suv",   price:5995,  sale:null,  miles:146441, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/nissan/rogue/a1038/",                  carfax:null, cargurusUrl: null },
+  { vin:"5XXGM4A74DG145701", year:2013, make:"KIA",      model:"OPTIMA",               type:"sedan", price:5995,  sale:null,  miles:125490, drive:"FWD", fuel:"Gasoline", img:"202604-b67a2027fd0541a2b950f2e5e20d9b72", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-b67a2027fd0541a2b950f2e5e20d9b72.jpg", url:"https://www.nashmimotors.com/inventory/kia/optima/a1034/",    carfax:"https://www.carfax.com/vehiclehistory/ar20/-DJDP7tczx8kUU3gT_oUKKEngYGUxgOYZWghT", carfaxBadge:"Good Value", cargurusUrl: null },
+  { vin:"3FADP4BJ2KM108166", year:2019, make:"FORD",     model:"FIESTA",               type:"sedan", price:6995,  sale:null,  miles:90319,  drive:"FWD", fuel:"Gasoline", img:"202604-039a484af9f5493d9a9d5c051585aa6f", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-039a484af9f5493d9a9d5c051585aa6f.jpg", url:"https://www.nashmimotors.com/inventory/ford/fiesta/r1002/",   carfax:null, cargurusUrl: null },
+  { vin:"1FMCU0GD6HUB33923", year:2017, make:"FORD",     model:"ESCAPE",               type:"suv",   price:8995,  sale:7995,  miles:123212, drive:"FWD", fuel:"Gasoline", img:"202603-de7f64126bdd4473984fc245269cbf86", imgUrl:"https://imagescf.dealercenter.net/640/480/202603-de7f64126bdd4473984fc245269cbf86.jpg", url:"https://www.nashmimotors.com/inventory/ford/escape/a1024/",   carfax:"https://www.carfax.com/vehiclehistory/ar20/nOrh0vlCkocW9BPQ6qfX6w2n8uU1GkQBIH3e9", cargurusUrl: null },
+  { vin:"5N1AT2MV1FC890556", year:2015, make:"NISSAN",   model:"ROGUE",                type:"suv",   price:8995,  sale:null,  miles:139501, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/nissan/rogue/a1040/",                  carfax:null, cargurusUrl: null },
+  { vin:"1C4RJFCG1EC247856", year:2014, make:"JEEP",     model:"GRAND CHEROKEE",       type:"suv",   price:8995,  sale:null,  miles:173710, drive:"4WD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1039/",           carfax:null, cargurusUrl: null },
+  { vin:"1FMCU9HD0JUB66196", year:2018, make:"FORD",     model:"ESCAPE",               type:"suv",   price:10995, sale:9995,  miles:99203,  drive:"4WD", fuel:"Gasoline", img:"202603-a20d08755c204b30905a7dbb89efa304", imgUrl:"https://imagescf.dealercenter.net/640/480/202603-a20d08755c204b30905a7dbb89efa304.jpg", url:"https://www.nashmimotors.com/inventory/ford/escape/a1025/",   carfax:"https://www.carfax.com/vehiclehistory/ar20/SEDj8Ek0DyZN1rgYCKGlBtv3lJpIqiU75kjVU", carfaxBadge:"Great Value", cargurusUrl: null },
+  { vin:"2C4RC1BG0HR503978", year:2017, make:"CHRYSLER", model:"PACIFICA",             type:"van",   price:9995,  sale:null,  miles:131087, drive:"FWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/chrysler/pacifica/a1032/",             carfax:null, cargurusUrl: null },
+  { vin:"2T1BURHE1GC506793", year:2016, make:"TOYOTA",   model:"COROLLA",              type:"sedan", price:10995, sale:null,  miles:93004,  drive:"FWD", fuel:"Gasoline", img:"202604-31b69fca67994ce3ae2fef2e1efd93df", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-31b69fca67994ce3ae2fef2e1efd93df.jpg", url:"https://www.nashmimotors.com/inventory/toyota/corolla/r1011/", carfax:"https://www.carfax.com/vehiclehistory/ar20/rlYJaSN70TsYHgheHYnbnicogGzGuNiswfjcv", cargurusUrl: null },
+  { vin:"1FTFW1ET7BFC33259", year:2011, make:"FORD",     model:"F150 SUPERCREW CAB",   type:"truck", price:10995, sale:null,  miles:166862, drive:"4WD", fuel:"Gasoline", img:"202604-98d761fdfd6343498219fde07c02beb0", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-98d761fdfd6343498219fde07c02beb0.jpg", url:"https://www.nashmimotors.com/inventory/ford/f150-supercrew-cab/a1035/", carfax:"https://www.carfax.com/vehiclehistory/ar20/lrJeOmF1ZJWBCTMbn99IAhnOdIMqOHUbxfhcC", cargurusUrl: null },
+  { vin:"5N1DL0MM3KC505596", year:2019, make:"INFINITI", model:"QX60",                 type:"suv",   price:11995, sale:null,  miles:137835, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/infiniti/qx60/a1042/",                carfax:"https://www.carfax.com/vehiclehistory/ar20/TRZr7scIRL8HJoXSngEQL418KSEFqiRw-lJ0W", cargurusUrl: null },
+  { vin:"1C4RJFBG3EC471289", year:2014, make:"JEEP",     model:"GRAND CHEROKEE",       type:"suv",   price:11995, sale:null,  miles:90100,  drive:"4WD", fuel:"Flex",     img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/jeep/grand-cherokee/a1043/",           carfax:"https://www.carfax.com/vehiclehistory/ar20/it0aN2TY534kzY7udLVZ6zVIKnaCVAEiFhqjy", cargurusUrl: null },
+  { vin:"WA1ANAFY6J2019757", year:2018, make:"AUDI",     model:"Q5",                   type:"suv",   price:11995, sale:null,  miles:131931, drive:"AWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/audi/q5/a1041/",                      carfax:"https://www.carfax.com/vehiclehistory/ar20/pLUvCtAn0QsUjU16SNikq7QGDwxhRXFskntD8", cargurusUrl: null },
+  { vin:"KNDJ23AU3P7884308", year:2023, make:"KIA",      model:"SOUL",                 type:"suv",   price:13995, sale:null,  miles:42418,  drive:"FWD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/kia/soul/r1001/",                      carfax:"https://www.carfax.com/vehiclehistory/ar20/1h-7maQmXn6QVElPezj9A70WSQXoKjQiyZcHD", cargurusUrl: null },
+  { vin:"5XXGT4L33LG422253", year:2020, make:"KIA",      model:"OPTIMA",               type:"sedan", price:15995, sale:14995, miles:52350,  drive:"FWD", fuel:"Gasoline", img:"202604-4b79213e173641bcb114456c4c6ea9f9", imgUrl:"https://imagescf.dealercenter.net/640/480/202604-4b79213e173641bcb114456c4c6ea9f9.jpg", url:"https://www.nashmimotors.com/inventory/kia/optima/a1014/", carfax:"https://www.carfax.com/vehiclehistory/ar20/NQ8F464oaGruFzc_CsMJ7wydQC85bu9OrJsSp", carfaxBadge:"Great Value", cargurusUrl: null },
+  { vin:"1GTV2MEC9GZ177324", year:2016, make:"GMC",      model:"SIERRA 1500 DOUBLE CAB", type:"truck", price:15995, sale:null, miles:169485, drive:"4WD", fuel:"Gasoline", img:null, imgUrl:null, url:"https://www.nashmimotors.com/inventory/gmc/sierra-1500-double-cab/a1036/",  carfax:"https://www.carfax.com/vehiclehistory/ar20/GcaICloidDStF_Cno2nqOU8nmuyDE5ZI-2ilR", cargurusUrl: null },
 ];
 
 // ─── Featured vehicles carousel ───────────────────────────────────────────────

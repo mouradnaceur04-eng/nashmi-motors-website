@@ -24,7 +24,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=5">
 <style>
 /* ── Apply form extras ───────────────────────────────── */
 .apply-section { border:1px solid var(--border); border-radius:12px; padding:28px; margin-bottom:20px; background:#fff; }
@@ -967,7 +967,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=5"></script>
 <script>
 // Collapsible section toggle
 function toggleSection(id, open) {
@@ -1196,7 +1196,15 @@ function setLanguage(lang) {
     return;
   }
 
-  // Trigger inside user gesture (critical for Safari — don't reload first)
+  // Safari (desktop + iOS) doesn't reliably process programmatic GT combo triggers.
+  // Cookie is already set above — reload so GT reads it on page init.
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if (isSafari) {
+    location.reload();
+    return;
+  }
+
+  // Non-Safari: trigger combo directly inside user-gesture context
   if (_triggerCombo(lang)) return;
 
   // GT still loading — poll every 100ms while close to the user gesture

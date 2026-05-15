@@ -914,13 +914,12 @@ img { max-width: 100%; height: auto; display: block; }
 .cg-fair  .cg-value { background: #c47900; }
 .cg-high  .cg-value { background: #c0392b; }
 
-/* Placeholder spinner while fetching CarGurus rating */
 .cg-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  background: #00873C;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #4C8C2B;
   color: #fff;
   border-radius: 6px;
   font-size: 12px;
@@ -930,9 +929,7 @@ img { max-width: 100%; height: auto; display: block; }
   white-space: nowrap;
 }
 .cg-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-/* Hide fallback text once CarGurus badge script replaces the inner span */
-.cg-btn [class*="cg-dealrating"] ~ .cg-btn-fallback,
-.cg-btn img ~ .cg-btn-fallback { display: none; }
+.cg-icon { width: 16px; height: 16px; flex-shrink: 0; }
 .smtc-badge:hover { transform: translateY(-1px); opacity: 0.9; }
 
 /* ── Featured Carousel ───────────────────────────────── */
@@ -2718,6 +2715,62 @@ html                 { top: 0 !important; margin-top: 0 !important; }
 @media (max-width: 380px) {
   .lang-btn { padding: 7px 10px; font-size: 12px; gap: 5px; }
   .lang-option { font-size: 13px !important; padding: 11px 10px !important; }
+}
+
+/* ── Mobile language accordion (inside #nav) ────────────────────────────── */
+/* Hidden on desktop — only rendered inside the slide-down mobile nav */
+.mobile-lang-section { display: none; }
+.mobile-lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.mobile-lang-toggle:hover,
+.mobile-lang-toggle:active { background: rgba(255,255,255,0.06); color: #fff; }
+.ml-chevron { margin-left: auto; opacity: 0.5; transition: transform 0.2s; }
+.mobile-lang-toggle[aria-expanded="true"] .ml-chevron { transform: rotate(180deg); }
+.mobile-lang-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 6px 16px 14px;
+}
+.mobile-lang-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.15s;
+}
+.mobile-lang-opt.active { background: rgba(45,90,39,0.55); border-color: var(--green); color: #fff; }
+.mobile-lang-opt:active  { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 900px) {
+  /* Show the accordion inside #nav on mobile */
+  .mobile-lang-section { display: block; }
+  /* Globe button in header is replaced by the nav accordion — hide it */
+  .lang-btn { display: none; }
 }
 
 /* ── Animated Hero ───────────────────────────────────────────────────────── */

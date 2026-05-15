@@ -30,7 +30,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=5">
 <style>
 /* ── Vehicle Detail Page ── */
 .vd-hero {
@@ -1197,7 +1197,7 @@ body::after {
   </div>
 </footer>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=5"></script>
 <script>
 // ── Gallery state ──────────────────────────────────────────────────
 let galleryPhotos = [];
@@ -1381,11 +1381,10 @@ function renderVehicle(c) {
         <img src="${CFX_CDN}${smtcSvg}" alt="Show Me The CARFAX" loading="lazy">
       </a>`;
   }
-  if (c.vin) {
-    const cgPrice = c.sale || c.price || '';
-    const cgVin = c.vin.replace(/"/g, '');
-    const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/m-Nashmi-Motors-sp464929';
-    actionsHtml += `<a href="${CARGURUS_DEALER_URL}" target="_blank" rel="noopener noreferrer" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><span data-cg-vin="${cgVin}" data-cg-price="${cgPrice}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`;
+  // CarGurus button only shown when a per-vehicle listing URL is available.
+  // To add: paste the CarGurus listing URL into the vehicle's cargurusUrl field in inventory.
+  if (c.cargurusUrl) {
+    actionsHtml += `<a href="${c.cargurusUrl.replace(/"/g,'&quot;')}" target="_blank" rel="noopener noreferrer" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><svg class="cg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M16.5 8.5l-1.7-4.2A1.5 1.5 0 0013.4 3H6.6c-.6 0-1.1.4-1.4.9L3.5 8.5A2 2 0 002 10.4V14a1 1 0 001 1h1a2 2 0 004 0h4a2 2 0 004 0h1a1 1 0 001-1v-3.6a2 2 0 00-1.5-1.9zM7 15a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zM5 9l1.3-3.4a.5.5 0 01.5-.6h6.4c.2 0 .4.2.5.5L15 9H5z"/></svg><span>View on CarGurus</span></a>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
   if (window.CarGurus && window.CarGurus.DealRatingBadge && window.CarGurus.DealRatingBadge.run) {
@@ -1686,7 +1685,15 @@ function setLanguage(lang) {
     return;
   }
 
-  // Trigger inside user gesture (critical for Safari — don't reload first)
+  // Safari (desktop + iOS) doesn't reliably process programmatic GT combo triggers.
+  // Cookie is already set above — reload so GT reads it on page init.
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if (isSafari) {
+    location.reload();
+    return;
+  }
+
+  // Non-Safari: trigger combo directly inside user-gesture context
   if (_triggerCombo(lang)) return;
 
   // GT still loading — poll every 100ms while close to the user gesture
