@@ -357,33 +357,43 @@ function googleTranslateElementInit() {
     autoDisplay: false
   }, 'google_translate_element');
 
-  // Give the combo ~600 ms to appear in the DOM after init
-  setTimeout(function() {
-    window._gtReady = true;
+  // On page load, read stored language from cookie OR localStorage and apply it
+  // Polls every 200ms (max 5s) for the combo to appear, then fires change event
+  var targetLang = _readCookieLang() ||
+    (function(){ try { return localStorage.getItem('nashmi_lang'); } catch(e){ return null; } })();
+  if (targetLang && targetLang !== 'en') {
+    var attempts = 0;
+    var poll = setInterval(function() {
+      var sel = document.querySelector('.goog-te-combo');
+      if (sel) {
+        clearInterval(poll);
+        if (sel.value !== targetLang) {
+          sel.value = targetLang;
+          try {
+            var ev = document.createEvent('HTMLEvents');
+            ev.initEvent('change', true, true);
+            sel.dispatchEvent(ev);
+          } catch(e) {
+            sel.dispatchEvent(new Event('change'));
+          }
+        }
+      } else if (++attempts > 25) {
+        clearInterval(poll);
+      }
+    }, 200);
+  }
 
-    // If setLanguage() was called before GT was ready, apply it now
-    if (window._gtQueued && window._gtQueued !== 'en') {
-      _triggerCombo(window._gtQueued);
-      window._gtQueued = null;
-    }
-  }, 600);
-
-  // ── "Nuclear" MutationObserver — runs every time the page changes ──
+  // Suppress body jump and GT toolbar
   function stopTheJump() {
-    // Reset body top the instant Google shifts it
     document.body.style.top = '0px';
-    // Find and kill the banner iframe if it exists
     var googleFrame = document.querySelector('.goog-te-banner-frame');
     if (googleFrame) {
       googleFrame.style.display = 'none';
       googleFrame.style.height  = '0';
     }
-    // Kill tooltip
     var tt = document.getElementById('goog-gt-tt');
     if (tt) tt.style.display = 'none';
   }
-
-  // Run immediately and on every DOM/style mutation
   stopTheJump();
   var gtObserver = new MutationObserver(stopTheJump);
   gtObserver.observe(document.body, {

@@ -17,10 +17,7 @@ const CARGURUS_LISTINGS = {
 };
 
 function getCarGurusUrl(vin) {
-  const id = vin && CARGURUS_LISTINGS[String(vin).toUpperCase()];
-  return id
-    ? `https://www.cargurus.com/Cars/new/nl/filter?zip=17111#listing=${id}`
-    : CARGURUS_DEALER_URL;
+  return CARGURUS_DEALER_URL;
 }
 
 function h(s) {
