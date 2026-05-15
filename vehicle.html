@@ -1383,7 +1383,8 @@ function renderVehicle(c) {
   }
   if (c.vin) {
     const cgPrice = c.sale || c.price || '';
-    actionsHtml += `<span data-cg-vin="${c.vin.replace(/"/g,'')}" data-cg-price="${cgPrice}" style="margin-top:6px;display:block"></span>`;
+    const cgVin = c.vin.replace(/"/g, '');
+    actionsHtml += `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><span data-cg-vin="${cgVin}" data-cg-price="${cgPrice}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
   if (window.CarGurus && window.CarGurus.DealRatingBadge && window.CarGurus.DealRatingBadge.run) {
@@ -1747,7 +1748,5 @@ document.addEventListener('keydown', function(e) {
   CarGurus.DealRatingBadge.options = { style: 'STYLE2', defaultHeight: 55, live: true, liveIntervalMS: 500 };
   (function() { var s = document.createElement('script'); s.src = 'https://static.cargurus.com/js/api/en_US/1.0/dealratingbadge.js'; s.async = true; document.head.appendChild(s); })();
 </script>
-<script type="text/javascript">var _cgAppId="e52fb206-8b01-482e-bb75-3aa270c8cebb";var _cgAuthToken="54dcedda-fc55-4406-be9a-42331ccc15c7";</script>
-<script src="https://www.cargurus.com/Cars/dealerTrackingScript.js" async></script>
 </body>
 </html>

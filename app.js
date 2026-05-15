@@ -101,9 +101,9 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus official Deal Rating Badge — replaced by CarGurus JS embed
+  // CarGurus — always-visible link; dealratingbadge.js upgrades to rated badge if VIN is in CG database
   const cgBtn = c.vin
-    ? `<span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span>`
+    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
     : '';
 
   return `
