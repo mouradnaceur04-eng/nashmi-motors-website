@@ -305,7 +305,7 @@
       <select id="s-model" class="hero-select hero-select-dark" aria-label="Select model">
         <option value="">Any Model</option>
       </select>
-      <select id="s-price" class="hero-select hero-search-dark" aria-label="Select max price">
+      <select id="s-price" class="hero-select hero-select-dark" aria-label="Select max price">
         <option value="">Any Price</option>
         <option value="6000">Under $6,000</option>
         <option value="9000">Under $9,000</option>
@@ -834,22 +834,7 @@ function setLanguage(lang) {
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
   _setCookie(lang);
-
-  if (lang === 'en') { location.reload(); return; }
-
-  // Retry finding the GT combo every 200ms (up to 3 seconds) before falling back to reload
-  var _cgAttempts = 0;
-  function _tryTrigger() {
-    if (_triggerCombo(lang)) return; // success
-    _cgAttempts++;
-    if (_cgAttempts < 15) {
-      setTimeout(_tryTrigger, 200);
-    } else {
-      // GT combo never appeared — reload with cookie set (reliable fallback)
-      location.reload();
-    }
-  }
-  _tryTrigger();
+  location.reload();
 }
 
 // ── Restore language UI on every page load ────────────────────────

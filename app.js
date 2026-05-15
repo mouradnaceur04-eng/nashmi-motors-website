@@ -4,6 +4,25 @@
 
 const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/m-Nashmi-Motors-sp464929';
 
+const CARGURUS_LISTINGS = {
+  '1FAHP2E84HG131823': '427955121',
+  '1FMCU0GD6HUB33923': '444980028',
+  '5XYZUDLB1EG228476': '444973402',
+  'KNDPMCAC0J7307268': '448032285',
+  '3VV2B7AX8KM053490': '448032286',
+  'JN8AS5MV7CW394605': '448032284',
+  '3FADP4BJ2KM108166': '444980026',
+  '5XXGM4A74DG145701': '442568176',
+  'KNDJ23AU3P7884308': '448032287',
+};
+
+function getCarGurusUrl(vin) {
+  const id = vin && CARGURUS_LISTINGS[String(vin).toUpperCase()];
+  return id
+    ? `https://www.cargurus.com/Cars/new/nl/filter?zip=17111#listing=${id}`
+    : CARGURUS_DEALER_URL;
+}
+
 function h(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
@@ -103,9 +122,9 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus — always-visible link; dealratingbadge.js upgrades to rated badge if VIN is in CG database
+  // CarGurus — links to specific listing if VIN is in the map, else dealer profile
   const cgBtn = c.vin
-    ? `<a href="${CARGURUS_DEALER_URL}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
+    ? `<a href="${getCarGurusUrl(c.vin)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`
     : '';
 
   return `

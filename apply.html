@@ -43,6 +43,13 @@
 .cobuy-header { background:linear-gradient(135deg,#1a3c2e,#2d5a3d); color:#fff; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
 .cobuy-header h3 { margin:0 0 4px; font-size:15px; }
 .cobuy-header p { margin:0; font-size:13px; opacity:0.8; }
+/* Always show form containers — don't let scroll-animation hide them on mobile */
+.apply-form-wrap.animate-on-scroll,
+.apply-sidebar.animate-on-scroll {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
 @media (max-width: 768px) {
   body { overflow-x: hidden; }
   .apply-layout { display: block !important; }
@@ -1173,28 +1180,7 @@ function setLanguage(lang) {
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
   _setCookie(lang);
-
-  if (lang === 'en') {
-    // Reload without the cookie — GT shows original English page
-    location.reload();
-    return;
-  }
-
-  if (window._gtReady) {
-    // GT is ready — trigger immediately
-    if (!_triggerCombo(lang)) {
-      // combo not found (shouldn't happen) — fall back to reload
-      location.reload();
-    }
-  } else {
-    // GT still loading — queue the language; the init callback will apply it
-    window._gtQueued = lang;
-    // Also reload as safety net: cookie is set, so GT will auto-translate on load
-    // (only if GT takes > 5 s — very unlikely on a fast CDN)
-    setTimeout(function() {
-      if (window._gtQueued === lang) location.reload();
-    }, 5000);
-  }
+  location.reload();
 }
 
 // ── Restore language UI on every page load ────────────────────────

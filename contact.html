@@ -388,28 +388,7 @@ function setLanguage(lang) {
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
   _setCookie(lang);
-
-  if (lang === 'en') {
-    // Reload without the cookie — GT shows original English page
-    location.reload();
-    return;
-  }
-
-  if (window._gtReady) {
-    // GT is ready — trigger immediately
-    if (!_triggerCombo(lang)) {
-      // combo not found (shouldn't happen) — fall back to reload
-      location.reload();
-    }
-  } else {
-    // GT still loading — queue the language; the init callback will apply it
-    window._gtQueued = lang;
-    // Also reload as safety net: cookie is set, so GT will auto-translate on load
-    // (only if GT takes > 5 s — very unlikely on a fast CDN)
-    setTimeout(function() {
-      if (window._gtQueued === lang) location.reload();
-    }, 5000);
-  }
+  location.reload();
 }
 
 // ── Restore language UI on every page load ────────────────────────

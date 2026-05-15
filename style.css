@@ -2476,9 +2476,11 @@ img { max-width: 100%; height: auto; display: block; }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom .container { flex-direction: column; gap: 4px; text-align: center; }
 
-  /* Car card actions — 2 equal buttons */
+  /* Car card actions — 2 equal buttons, badges span full row */
   .car-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .car-actions .btn { width: 100%; }
+  .car-actions .cg-btn { grid-column: 1 / -1; width: 100%; justify-content: center; }
+  .car-actions .smtc-badge { grid-column: 1 / -1; }
 
   /* Inventory layout padding */
   .inventory-layout { padding: 24px 0 48px; }
