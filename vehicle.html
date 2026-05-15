@@ -1382,10 +1382,13 @@ function renderVehicle(c) {
       </a>`;
   }
   if (c.vin) {
-    actionsHtml += `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" data-vin="${c.vin.replace(/"/g,'')}" style="margin-top:6px;display:block">View on CarGurus</a>`;
+    const cgPrice = c.sale || c.price || '';
+    actionsHtml += `<span data-cg-vin="${c.vin.replace(/"/g,'')}" data-cg-price="${cgPrice}" style="margin-top:6px;display:block"></span>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;
-  window.loadCarGurusRatings && window.loadCarGurusRatings();
+  if (window.CarGurus && window.CarGurus.DealRatingBadge && window.CarGurus.DealRatingBadge.run) {
+    window.CarGurus.DealRatingBadge.run();
+  }
 
   // Pre-fill the reserve modal with vehicle info
   const modalVehicleField = document.getElementById('reserve-vehicle-field');
@@ -1731,5 +1734,10 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+<script>
+  window.CarGurus = window.CarGurus || { DealRatingBadge: {} };
+  CarGurus.DealRatingBadge.options = { style: 'STYLE2', defaultHeight: 55, live: true, liveIntervalMS: 500 };
+  (function() { var s = document.createElement('script'); s.src = 'https://static.cargurus.com/js/api/en_US/1.0/dealratingbadge.js'; s.async = true; document.head.appendChild(s); })();
+</script>
 </body>
 </html>

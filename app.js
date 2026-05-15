@@ -101,9 +101,9 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus — fallback link always visible; loadCarGurusRatings() upgrades to deal badge if API responds
+  // CarGurus official Deal Rating Badge — replaced by CarGurus JS embed
   const cgBtn = c.vin
-    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" data-vin="${h(c.vin)}">View on CarGurus</a>`
+    ? `<span data-cg-vin="${h(c.vin)}" data-cg-price="${displayPrice || ''}"></span>`
     : '';
 
   return `
@@ -463,43 +463,5 @@ function initFeaturedCarousel(total) {
   resetTimer();
 }
 
-// ─── CarGurus deal rating badges ─────────────────────────────────────────────
-
-const CG_RATING = {
-  GREAT_PRICE: { label: 'Great Deal', cls: 'cg-great' },
-  GOOD_PRICE:  { label: 'Good Deal',  cls: 'cg-good'  },
-  FAIR_PRICE:  { label: 'Fair Deal',  cls: 'cg-fair'  },
-  HIGH_PRICE:  { label: 'High Price', cls: 'cg-high'  },
-  OVERPRICED:  { label: 'Overpriced', cls: 'cg-high'  },
-};
-
-async function loadCarGurusRatings() {
-  const btns = document.querySelectorAll('.cg-btn[data-vin]');
-  if (!btns.length) return;
-
-  await Promise.all(Array.from(btns).map(async (el) => {
-    const vin = el.dataset.vin;
-    if (!vin) return;
-    try {
-      const r = await fetch(`/api/cargurus?vin=${encodeURIComponent(vin)}`);
-      if (!r.ok) return; // keep fallback link as-is
-      const data = await r.json();
-      const rating = CG_RATING[data.priceEvaluation];
-      if (!rating) return; // keep fallback link, no deal rating available
-      const url = data.listingUrl || el.href || `https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(vin)}`;
-      const badge = document.createElement('a');
-      badge.href = url;
-      badge.target = '_blank';
-      badge.rel = 'noopener';
-      badge.className = `cg-badge ${rating.cls}`;
-      badge.title = `CarGurus ${rating.label}`;
-      badge.setAttribute('onclick', 'event.stopPropagation()');
-      badge.innerHTML = `<span class="cg-label">CarGurus</span><span class="cg-value">${rating.label}</span>`;
-      el.replaceWith(badge);
-    } catch (e) {
-      // keep fallback link on any error
-    }
-  }));
-}
-
-window.loadCarGurusRatings = loadCarGurusRatings;
+// CarGurus badge rendering is handled by their official embed script (dealratingbadge.js)
+// Placeholders: <span data-cg-vin="..." data-cg-price="..."> — injected in carCard()

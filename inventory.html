@@ -325,7 +325,7 @@ function applyFilters() {
   } else {
     noRes.style.display = 'none';
     grid.innerHTML = results.map(carCard).join('');
-    window.loadCarGurusRatings && window.loadCarGurusRatings();
+    // CarGurus badge JS handles rendering via live polling
   }
 }
 
@@ -549,5 +549,10 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
+<script>
+  window.CarGurus = window.CarGurus || { DealRatingBadge: {} };
+  CarGurus.DealRatingBadge.options = { style: 'STYLE2', defaultHeight: 55, live: true, liveIntervalMS: 500 };
+  (function() { var s = document.createElement('script'); s.src = 'https://static.cargurus.com/js/api/en_US/1.0/dealratingbadge.js'; s.async = true; document.head.appendChild(s); })();
+</script>
 </body>
 </html>
