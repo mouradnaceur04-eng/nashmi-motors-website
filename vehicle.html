@@ -1266,7 +1266,7 @@ function renderVehicle(c) {
 
   // ── CarFax badges ──────────────────────────────────────────────
   // Effective URL: dealer-specific link first, free VIN-based link as fallback
-  const cfxLink = c.carfax || (c.vin ? `https://www.carfax.com/showmethefax/${c.vin}` : null);
+  const cfxLink = c.carfax || (c.vin ? `https://www.carfaxonline.com/vhrs/CX8V36OQ5U?vin=${c.vin}` : null);
   const cfxB    = (c.carfaxBadge || '').toLowerCase();
   const cfxIs1Own = cfxB.includes('1own');
 
@@ -1388,6 +1388,14 @@ function renderVehicle(c) {
   document.getElementById('vd-actions').innerHTML = actionsHtml;
   if (window.CarGurus && window.CarGurus.DealRatingBadge && window.CarGurus.DealRatingBadge.run) {
     window.CarGurus.DealRatingBadge.run();
+  }
+
+  // CarGurus VIN-level tracking — fires once per VDP load with the actual VIN
+  if (c.vin && !window._cgVinTracked) {
+    window._cgVinTracked = true;
+    window._cgVinAppId = '0b486895-48cb-4b56-97c4-a25847b01d66';
+    window._cgVinAuthToken = '68d56bf1-b4e6-42e2-ac4c-a3c3bbcff108';
+    window._cgVin = c.vin;
   }
 
   // Pre-fill the reserve modal with vehicle info
@@ -1739,5 +1747,7 @@ document.addEventListener('keydown', function(e) {
   CarGurus.DealRatingBadge.options = { style: 'STYLE2', defaultHeight: 55, live: true, liveIntervalMS: 500 };
   (function() { var s = document.createElement('script'); s.src = 'https://static.cargurus.com/js/api/en_US/1.0/dealratingbadge.js'; s.async = true; document.head.appendChild(s); })();
 </script>
+<script type="text/javascript">var _cgAppId="e52fb206-8b01-482e-bb75-3aa270c8cebb";var _cgAuthToken="54dcedda-fc55-4406-be9a-42331ccc15c7";</script>
+<script src="https://www.cargurus.com/Cars/dealerTrackingScript.js" async></script>
 </body>
 </html>

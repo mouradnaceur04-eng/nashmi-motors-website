@@ -82,7 +82,7 @@ function carCard(c) {
 
   // Effective CarFax URL: use dealer-specific URL if available,
   // otherwise generate a free VIN-based SMTC link (works for any VIN)
-  const cfxUrl = safeUrl(c.carfax) || (c.vin ? `https://www.carfax.com/showmethefax/${encodeURIComponent(c.vin)}` : null);
+  const cfxUrl = safeUrl(c.carfax) || (c.vin ? `https://www.carfaxonline.com/vhrs/CX8V36OQ5U?vin=${encodeURIComponent(c.vin)}` : null);
 
   // Pick the most informative SVG for the "Show Me The CARFAX" button
   const smtcSvg = hasOwner && badge.includes('great') ? '1own_great.svg'
