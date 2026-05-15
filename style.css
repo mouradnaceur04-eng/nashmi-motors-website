@@ -2521,13 +2521,11 @@ img { max-width: 100%; height: auto; display: block; }
    trigger. Instead we park it far off-screen.                        ── */
 #google_translate_element {
   position: absolute !important;
-  top: -9999px !important;
   left: -9999px !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
+  top: 0 !important;
   pointer-events: none !important;
   opacity: 0 !important;
+  /* No width/height/overflow constraints — GT needs to render the combo at natural size */
 }
 
 /* ═══════════════════════════════════════════════════════════════

@@ -31,7 +31,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -271,7 +271,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 <script>
 // Pre-set filters from URL params (runs immediately — no inventory needed)
 const params = new URLSearchParams(location.search);
@@ -408,7 +408,7 @@ function _triggerCombo(lang) {
     ev.initEvent('change', true, true);
     sel.dispatchEvent(ev);
   } catch(e) {
-    sel.dispatchEvent(new Event('change'));
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
   }
   return true;
 }
@@ -449,7 +449,7 @@ function googleTranslateElementInit() {
             ev.initEvent('change', true, true);
             sel.dispatchEvent(ev);
           } catch(e) {
-            sel.dispatchEvent(new Event('change'));
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
           }
         }
       } else if (++attempts > 25) {
@@ -484,43 +484,33 @@ function setLanguage(lang) {
   closeLangMenu();
   _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
+  _setCookie(lang);
 
-  if (lang === 'en') {
-    // If browsing through translate.goog proxy, return to the real site
-    if (window.location.hostname.endsWith('.translate.goog')) {
-      window.location.href = 'https://nashmimotors.com' + window.location.pathname + window.location.search;
-    } else {
-      location.reload();
+  if (lang === 'en') { location.reload(); return; }
+
+  // Try the GT combo immediately (it's usually ready after the first click)
+  if (_triggerCombo(lang)) return;
+
+  // GT still loading — poll every 100ms for up to 5 seconds
+  var attempts = 0;
+  var poll = setInterval(function() {
+    if (_triggerCombo(lang)) {
+      clearInterval(poll);
+    } else if (++attempts >= 50) {
+      clearInterval(poll);
+      // GT failed to load — fall back to Google Translate website
+      window.location.href = 'https://translate.google.com/translate?sl=en&tl=' +
+        lang + '&u=' + encodeURIComponent(location.href);
     }
-    return;
-  }
-
-  // Use Google Translate URL proxy — works on all browsers including Safari iOS
-  // No widget, no combo trigger, no cookies needed — just a redirect
-  if (window.location.hostname.endsWith('.translate.goog')) {
-    var u = new URL(window.location.href);
-    u.searchParams.set('_x_tr_tl', lang);
-    window.location.href = u.toString();
-  } else {
-    var tHost = window.location.hostname.replace(/\./g, '-') + '.translate.goog';
-    var qs = window.location.search;
-    window.location.href = 'https://' + tHost + window.location.pathname + qs +
-      (qs ? '&' : '?') + '_x_tr_sl=en&_x_tr_tl=' + lang + '&_x_tr_hl=en-US&_x_tr_pto=wapp';
-  }
+  }, 100);
 }
 
 // ── Restore language UI on every page load ────────────────────────
 // (Actual translation is handled by GT reading the googtrans cookie.)
 (function restoreUI() {
-  var lang = 'en';
-  if (window.location.hostname.endsWith('.translate.goog')) {
-    var p = new URLSearchParams(window.location.search);
-    lang = p.get('_x_tr_tl') || 'en';
-  } else {
-    lang = _readCookieLang() ||
-           (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
-           'en';
-  }
+  var lang = _readCookieLang() ||
+             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
+             'en';
   if (lang !== 'en') _updateUI(lang);
 })();
 
