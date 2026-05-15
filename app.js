@@ -101,9 +101,9 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus placeholder — replaced async by loadCarGurusRatings() after inventory loads
+  // CarGurus — fallback link always visible; loadCarGurusRatings() upgrades to deal badge if API responds
   const cgBtn = c.vin
-    ? `<span class="cg-btn" data-vin="${h(c.vin)}">CarGurus</span>`
+    ? `<a href="https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(c.vin)}" target="_blank" rel="noopener" class="cg-btn" data-vin="${h(c.vin)}">View on CarGurus</a>`
     : '';
 
   return `
@@ -474,19 +474,19 @@ const CG_RATING = {
 };
 
 async function loadCarGurusRatings() {
-  const placeholders = document.querySelectorAll('.cg-btn[data-vin]');
-  if (!placeholders.length) return;
+  const btns = document.querySelectorAll('.cg-btn[data-vin]');
+  if (!btns.length) return;
 
-  await Promise.all(Array.from(placeholders).map(async (el) => {
+  await Promise.all(Array.from(btns).map(async (el) => {
     const vin = el.dataset.vin;
     if (!vin) return;
     try {
       const r = await fetch(`/api/cargurus?vin=${encodeURIComponent(vin)}`);
-      if (!r.ok) { el.remove(); return; }
+      if (!r.ok) return; // keep fallback link as-is
       const data = await r.json();
       const rating = CG_RATING[data.priceEvaluation];
-      if (!rating) { el.remove(); return; }
-      const url = data.listingUrl || `https://www.cargurus.com/Cars/new/nl/search?zip=17111&showNegotiable=true`;
+      if (!rating) return; // keep fallback link, no deal rating available
+      const url = data.listingUrl || el.href || `https://www.cargurus.com/Cars/new/nl/search?zip=17111&vin=${encodeURIComponent(vin)}`;
       const badge = document.createElement('a');
       badge.href = url;
       badge.target = '_blank';
@@ -497,7 +497,7 @@ async function loadCarGurusRatings() {
       badge.innerHTML = `<span class="cg-label">CarGurus</span><span class="cg-value">${rating.label}</span>`;
       el.replaceWith(badge);
     } catch (e) {
-      el.remove();
+      // keep fallback link on any error
     }
   }));
 }
