@@ -1384,8 +1384,7 @@ function renderVehicle(c) {
   if (c.vin) {
     const cgPrice = c.sale || c.price || '';
     const cgVin = c.vin.replace(/"/g, '');
-    // TODO: Replace CARGURUS_DEALER_URL with real profile URL from dealers.cargurus.com → "View My Storefront"
-    const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/forsale-l-Harrisburg-PA';
+    const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/m-Nashmi-Motors-sp464929';
     actionsHtml += `<a href="${CARGURUS_DEALER_URL}" target="_blank" rel="noopener noreferrer" class="cg-btn" style="margin-top:6px;display:flex;width:100%;justify-content:center"><span data-cg-vin="${cgVin}" data-cg-price="${cgPrice}"></span><span class="cg-btn-fallback">View on CarGurus</span></a>`;
   }
   document.getElementById('vd-actions').innerHTML = actionsHtml;

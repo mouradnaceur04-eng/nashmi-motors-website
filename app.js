@@ -2,8 +2,7 @@
 // Inventory is fetched live from /api/inventory (Vercel serverless, 30-second CDN cache)
 // which proxies the DealerCenter XML feed in real time.
 
-// TODO: Replace with real dealer profile URL from dealers.cargurus.com → "View My Storefront"
-const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/forsale-l-Harrisburg-PA';
+const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/m-Nashmi-Motors-sp464929';
 
 function h(s) {
   return String(s == null ? '' : s)
