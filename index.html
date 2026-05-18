@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nashmi Motors — Quality Used Cars in Harrisburg, PA</title>
 <meta name="description" content="Quality used cars in Harrisburg, PA. Fast, simple financing on every vehicle. Call (717) 743-5175.">
@@ -36,7 +36,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=12">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -215,48 +215,46 @@
 
 <!-- HEADER -->
 <header class="header" id="header">
+  <div class="mobile-hours-bar">Mon&ndash;Fri 10am&ndash;6pm &bull; Sat 10am&ndash;3pm &bull; Sun Closed</div>
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" style="height:54px;width:auto">
+      <img src="logo.png" alt="Nashmi Motors Logo">
     </a>
     <nav class="nav" id="nav">
-      <a href="/" class="nav-link active">Home</a>
-      <a href="/inventory" class="nav-link">Inventory</a>
-      <a href="/car-finder" class="nav-link">Car Finder</a>
-      <a href="/apply" class="nav-link">Apply Online</a>
-      <a href="/sell" class="nav-link">We Buy Cars</a>
-      <a href="/about" class="nav-link">About</a>
-      <a href="/contact" class="nav-link">Contact</a>
+      <a href="/" class="nav-link active" data-i18n="nav_home">Home</a>
+      <a href="/inventory" class="nav-link" data-i18n="nav_inventory">Inventory</a>
+      <a href="/car-finder" class="nav-link" data-i18n="nav_car_finder">Car Finder</a>
+      <a href="/apply" class="nav-link" data-i18n="nav_apply">Apply Online</a>
+      <a href="/sell" class="nav-link" data-i18n="nav_sell">We Buy Cars</a>
+      <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+      <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
     </nav>
-    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <a href="tel:7177435175" class="btn btn-primary header-cta" data-i18n="nav_call_now">Call Now</a>
     <!-- Custom Language Switcher -->
     <div class="lang-switcher" id="lang-switcher">
-      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
+      <button class="lang-btn" id="lang-btn" onpointerdown="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span id="lang-label">EN</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="lang-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="lang-menu" id="lang-menu" role="menu">
-        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
-        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-flag">🇨🇳</span> 中文</button>
-        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-flag">🇮🇳</span> हिन्दी</button>
-        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
-        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
-        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
-        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-flag">🇧🇩</span> বাংলা</button>
-        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-flag">🇧🇷</span> Português</button>
-        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-flag">🇷🇺</span> Русский</button>
-        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-flag">🇵🇰</span> اردو</button>
-        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-flag">🇮🇩</span> Indonesia</button>
-        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
-        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-flag">🇯🇵</span> 日本語</button>
-        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-flag">🇳🇬</span> Pidgin</button>
-        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-flag">🇮🇳</span> मराठी</button>
+        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-code">EN</span> English</button>
+        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-code">ZH</span> 中文</button>
+        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-code">HI</span> हिन्दी</button>
+        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-code">ES</span> Español</button>
+        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-code">FR</span> Français</button>
+        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-code">AR</span> العربية</button>
+        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-code">BN</span> বাংলা</button>
+        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-code">PT</span> Português</button>
+        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-code">RU</span> Русский</button>
+        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-code">UR</span> اردو</button>
+        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-code">ID</span> Indonesia</button>
+        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
+        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-code">JA</span> 日本語</button>
+        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-code">PCM</span> Pidgin</button>
+        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-code">MR</span> मराठी</button>
       </div>
     </div>
-    <!-- Google Translate hidden widget — powers setLanguage() -->
-    <!-- GT widget must stay renderable — CSS parks it off-screen -->
-    <div id="google_translate_element"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -278,20 +276,17 @@
 <!-- HERO — ANIMATED -->
 <section class="hero-animated">
   <div class="container hero-full-content">
-    <div class="hero-anim-logo">
-      <img src="logo.png" alt="Nashmi Motors" style="height:110px;width:auto;border-radius:12px;display:block;margin:0 auto">
-    </div>
-    <div class="hero-eyebrow hero-eyebrow-light hero-anim-eyebrow">Quality Used Cars &bull; Harrisburg, PA</div>
+    <div class="hero-eyebrow hero-eyebrow-light hero-anim-eyebrow" data-i18n="hero_eyebrow">Quality Used Cars &bull; Harrisburg, PA</div>
     <h1 class="hero-full-title hero-anim-title">
-      Why Wait?<br>
-      <span class="hero-accent-light">Get the Keys Now &amp; Save Big.</span>
+      <span data-i18n="hero_h1_1">Why Wait?</span><br>
+      <span class="hero-accent-light" data-i18n="hero_h1_2">Get the Keys Now &amp; Save Big.</span>
     </h1>
-    <p class="hero-full-sub hero-anim-sub">
+    <p class="hero-full-sub hero-anim-sub" data-i18n="hero_sub">
       Quality used cars, trucks &amp; SUVs — carefully inspected.<br>Fast, simple financing on every vehicle.
     </p>
     <div class="hero-full-actions hero-anim-actions">
-      <a href="/inventory" class="btn btn-primary btn-lg">Browse Inventory</a>
-      <a href="/apply" class="btn btn-outline-white btn-lg">Get Pre-Approved</a>
+      <a href="/inventory" class="btn btn-primary btn-lg" data-i18n="hero_browse">Browse Inventory</a>
+      <a href="/apply" class="btn btn-outline-white btn-lg" data-i18n="hero_preapproved">Get Pre-Approved</a>
     </div>
 
     <!-- INLINE SEARCH -->
@@ -312,86 +307,61 @@
         <option value="12000">Under $12,000</option>
         <option value="16000">Under $16,000</option>
       </select>
-      <button class="btn btn-primary" onclick="runSearch()">Search</button>
+      <button class="btn btn-primary" onclick="runSearch()" data-i18n="hero_search">Search</button>
     </div>
 
     <!-- STAT CHIPS -->
     <div class="hero-full-stats hero-anim-stats">
       <div class="hero-stat-chip">
-        <span class="hero-stat-num">Fast</span>
-        <span class="hero-stat-label">Pre-Approval</span>
+        <span class="hero-stat-num" data-i18n="hero_stat1">Fast</span>
+        <span class="hero-stat-label" data-i18n="hero_stat_label1">Pre-Approval</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat-chip">
-        <span class="hero-stat-num">6 Days</span>
-        <span class="hero-stat-label">A Week Open</span>
+        <span class="hero-stat-num" data-i18n="hero_stat2">6 Days</span>
+        <span class="hero-stat-label" data-i18n="hero_stat_label2">A Week Open</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BROWSE BY TYPE -->
-<section class="section section-white">
+<!-- SHOP BY BUDGET -->
+<section class="section budget-section">
   <div class="container">
     <div class="section-header animate-on-scroll">
-      <span class="section-eyebrow">Browse By Type</span>
-      <h2 class="section-title">Find Your Perfect Match</h2>
+      <span class="section-eyebrow">Every Budget Counts</span>
+      <h2 class="section-title">Shop By Price</h2>
+      <p class="section-desc">Find your next car without breaking the bank. Pick your range and we'll show you what fits.</p>
     </div>
-    <div class="body-types">
-      <a href="inventory.html?type=sedan" class="body-type-card animate-on-scroll">
-        <div class="body-type-icon">
-          <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="28">
-            <path d="M5 17h30M7 17L11 9h18l4 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M13 9l2-4h10l2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="11" cy="19" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="29" cy="19" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+    <div class="budget-grid">
+      <a href="/inventory?price=5000" class="budget-card animate-on-scroll">
+        <span class="budget-range-label">Under</span>
+        <div class="budget-price">$5,000</div>
+        <div class="budget-cta">Browse
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <span>Sedan</span>
       </a>
-      <a href="inventory.html?type=suv" class="body-type-card animate-on-scroll delay-1">
-        <div class="body-type-icon">
-          <svg viewBox="0 0 44 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="28">
-            <path d="M5 18h34M7 18L10 9h24l3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M11 9V5h22v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="12" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="32" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+      <a href="/inventory?price=10000" class="budget-card animate-on-scroll delay-1">
+        <div class="budget-badge">Most Popular</div>
+        <span class="budget-range-label">Under</span>
+        <div class="budget-price">$10,000</div>
+        <div class="budget-cta">Browse
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <span>SUV</span>
       </a>
-      <a href="inventory.html?type=truck" class="body-type-card animate-on-scroll delay-2">
-        <div class="body-type-icon">
-          <svg viewBox="0 0 48 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="28">
-            <path d="M4 18h40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M6 18V8h20v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M26 12h10l6 6H26V12z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <circle cx="12" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="35" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+      <a href="/inventory?price=15000" class="budget-card animate-on-scroll delay-2">
+        <span class="budget-range-label">Under</span>
+        <div class="budget-price">$15,000</div>
+        <div class="budget-cta">Browse
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <span>Truck</span>
       </a>
-      <a href="inventory.html?type=van" class="body-type-card animate-on-scroll delay-3">
-        <div class="body-type-icon">
-          <svg viewBox="0 0 46 26" fill="none" xmlns="http://www.w3.org/2000/svg" width="50" height="28">
-            <path d="M5 18h36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M7 18V6h28l4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M7 11h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="13" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="33" cy="20.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+      <a href="/inventory" class="budget-card animate-on-scroll delay-3">
+        <span class="budget-range-label">Browse</span>
+        <div class="budget-price">All Vehicles</div>
+        <div class="budget-cta">View All
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <span>Van</span>
-      </a>
-      <a href="/inventory" class="body-type-card animate-on-scroll delay-4">
-        <div class="body-type-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-            <path d="M20 20l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <span>All Vehicles</span>
       </a>
     </div>
   </div>
@@ -401,8 +371,8 @@
 <section class="section section-bg" id="featured">
   <div class="container">
     <div class="section-header animate-on-scroll">
-      <span class="section-eyebrow">Featured Vehicles</span>
-      <h2 class="section-title">Current Best Deals</h2>
+      <span class="section-eyebrow" data-i18n="featured_eyebrow">Featured Vehicles</span>
+      <h2 class="section-title" data-i18n="featured_h2">Current Best Deals</h2>
       <p class="section-desc">Sale pricing on select vehicles. Limited availability — first come, first served.</p>
     </div>
     <div class="featured-carousel-wrap">
@@ -412,7 +382,7 @@
       <div class="carousel-dots" id="featured-dots"></div>
     </div>
     <div class="section-cta animate-on-scroll">
-      <a href="/inventory" class="btn btn-primary btn-lg">View All Vehicles</a>
+      <a href="/inventory" class="btn btn-primary btn-lg" data-i18n="featured_view_all">View All Vehicles</a>
     </div>
   </div>
 </section>
@@ -421,8 +391,8 @@
 <section class="section section-white" id="reviews-section">
   <div class="container">
     <div class="section-header animate-on-scroll">
-      <span class="section-eyebrow">Google Reviews</span>
-      <h2 class="section-title">What Our Customers Say</h2>
+      <span class="section-eyebrow" data-i18n="reviews_eyebrow">Google Reviews</span>
+      <h2 class="section-title" data-i18n="reviews_h2">What Our Customers Say</h2>
       <div class="reviews-rating-summary animate-on-scroll" id="reviews-summary">
         <div class="reviews-score" id="reviews-score">5.0</div>
         <div class="reviews-summary-right">
@@ -477,37 +447,37 @@
 <section class="section section-dark">
   <div class="container">
     <div class="section-header animate-on-scroll" style="color:#fff">
-      <span class="section-eyebrow" style="color:var(--green-bright)">Why Nashmi Motors</span>
-      <h2 class="section-title" style="color:#fff">A Better Way to Buy</h2>
+      <span class="section-eyebrow" style="color:var(--green-bright)" data-i18n="why_eyebrow">Why Nashmi Motors</span>
+      <h2 class="section-title" style="color:#fff" data-i18n="why_h2">A Better Way to Buy</h2>
     </div>
     <div class="features-grid">
       <div class="feature-card animate-on-scroll">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3>Transparent Pricing</h3>
-        <p>Clearly marked prices on every vehicle. What you see is what you pay — no last-minute fees or back-and-forth.</p>
+        <h3 data-i18n="why_pricing_h">Transparent Pricing</h3>
+        <p data-i18n="why_pricing_p">Clearly marked prices on every vehicle. What you see is what you pay — no last-minute fees or back-and-forth.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-1">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" stroke-width="2"/><path d="M2 10h20" stroke="currentColor" stroke-width="2"/></svg>
         </div>
-        <h3>Fast, Simple Financing</h3>
-        <p>Apply online in minutes. We'll handle the paperwork — just show up ready to drive.</p>
+        <h3 data-i18n="why_financing_h">Fast, Simple Financing</h3>
+        <p data-i18n="why_financing_p">Apply online in minutes. We'll handle the paperwork — just show up ready to drive.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-2">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h3>We Buy Your Car</h3>
-        <p>Selling outright or trading in? Bring your vehicle in for a fair offer — cash payment or trade credit toward your next purchase.</p>
+        <h3 data-i18n="why_buy_h">We Buy Your Car</h3>
+        <p data-i18n="why_buy_p">Selling outright or trading in? Bring your vehicle in for a fair offer — cash payment or trade credit toward your next purchase.</p>
       </div>
       <div class="feature-card animate-on-scroll delay-3">
         <div class="feature-icon-wrap">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
-        <h3>Open Six Days a Week</h3>
-        <p>Stop by Monday through Friday 10am–6pm or Saturday 10am–3pm. No appointment needed for a test drive.</p>
+        <h3 data-i18n="why_open_h">Open Six Days a Week</h3>
+        <p data-i18n="why_open_p">Stop by Monday through Friday 10am–6pm or Saturday 10am–3pm. No appointment needed for a test drive.</p>
       </div>
     </div>
   </div>
@@ -518,9 +488,9 @@
   <div class="container">
     <div class="testdrive-layout">
       <div class="testdrive-text animate-on-scroll">
-        <span class="section-eyebrow">No Pressure, No Obligation</span>
-        <h2 class="section-title">Schedule a Test Drive</h2>
-        <p>Found a car you like? Reserve a time to come in and drive it. Takes less than a minute to request — we'll confirm by phone.</p>
+        <span class="section-eyebrow" data-i18n="td_eyebrow">No Pressure, No Obligation</span>
+        <h2 class="section-title" data-i18n="td_h2">Schedule a Test Drive</h2>
+        <p data-i18n="td_desc">Found a car you like? Reserve a time to come in and drive it. Takes less than a minute to request — we'll confirm by phone.</p>
         <ul class="testdrive-perks">
           <li>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -548,16 +518,16 @@
         <form class="testdrive-form" id="testdrive-form" onsubmit="handleTestDrive(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off">
           <h3>Request a Test Drive</h3>
           <div class="form-group">
-            <label for="td-name">Your Name *</label>
-            <input type="text" id="td-name" name="Name" placeholder="Full name" required>
+            <label for="td-name" data-i18n="td_name_label">Your Name *</label>
+            <input type="text" id="td-name" name="Name" placeholder="Full name" required data-i18n-placeholder="td_name_ph">
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="td-phone">Phone *</label>
+              <label for="td-phone" data-i18n="td_phone_label">Phone *</label>
               <input type="tel" id="td-phone" name="Phone" placeholder="(717) 000-0000" required>
             </div>
             <div class="form-group">
-              <label for="td-email">Email</label>
+              <label for="td-email" data-i18n="td_email_label">Email</label>
               <input type="email" id="td-email" name="Email" placeholder="Optional">
             </div>
           </div>
@@ -599,7 +569,7 @@
               </select>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;padding:15px;font-size:14px">
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:15px;font-size:14px" data-i18n="td_submit">
             Request Test Drive
           </button>
           <p style="font-size:11.5px;color:var(--gray-light);text-align:center;margin-top:12px">
@@ -622,12 +592,11 @@
 <section class="section section-bg">
   <div class="container about-strip">
     <div class="about-strip-text animate-on-scroll">
-      <span class="section-eyebrow">Our Dealership</span>
-      <h2 class="section-title">Straightforward Car Buying in Harrisburg</h2>
+      <span class="section-eyebrow" data-i18n="about_strip_eyebrow">Our Dealership</span>
+      <h2 class="section-title" data-i18n="about_strip_h2">Straightforward Car Buying in Harrisburg</h2>
       <p>Nashmi Motors is an independent used car dealer on Paxton Street in Harrisburg. We carry a tight, carefully selected inventory — sedans, SUVs, trucks, and vans — at prices built for real budgets.</p>
-      <p>Our focus: honest pricing, flexible financing, and a no-pressure experience. Stop by, take a drive, see for yourself.</p>
       <div class="about-actions">
-        <a href="/about" class="btn btn-primary">About Us</a>
+        <a href="/about" class="btn btn-primary" data-i18n="about_us_btn">About Us</a>
         <a href="/contact" class="btn btn-ghost">Get Directions</a>
       </div>
     </div>
@@ -647,11 +616,11 @@
 <section class="cta-banner animate-on-scroll">
   <div class="container cta-banner-inner">
     <div>
-      <h2>Ready to drive home today?</h2>
-      <p>Apply online in minutes. Simple financing, no pressure.</p>
+      <h2 data-i18n="cta_h2">Ready to drive home today?</h2>
+      <p data-i18n="cta_p">Apply online in minutes. Simple financing, no pressure.</p>
     </div>
     <div class="cta-banner-actions">
-      <a href="/apply" class="btn btn-white btn-lg">Apply for Financing</a>
+      <a href="/apply" class="btn btn-white btn-lg" data-i18n="cta_apply">Apply for Financing</a>
       <a href="tel:7177435175" class="btn btn-outline-white btn-lg">(717) 743-5175</a>
     </div>
   </div>
@@ -664,7 +633,7 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <img src="logo.png" alt="Nashmi Motors" height="44">
-      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <p data-i18n="footer_tagline">Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
       <div class="footer-social">
         <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -709,7 +678,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=12"></script>
 <script>
 // Wire featured carousel to async inventory loader
 onInventoryLoaded = function() {
@@ -739,164 +708,67 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
+<script src="/translations.js" defer></script>
 <script>
-// ══════════════════════════════════════════════════════════════════
-//  NASHMI MOTORS — Language Switcher  (Google Translate backend)
-// ══════════════════════════════════════════════════════════════════
-
-const LANG_LABELS = {
+var LANG_LABELS = {
   en: 'EN', 'zh-CN': '中文', hi: 'HI', es: 'ES', fr: 'FR',
   ar: 'AR', bn: 'BN', pt: 'PT', ru: 'RU', ur: 'UR',
   id: 'ID', de: 'DE', ja: 'JA', pcm: 'PCM', mr: 'MR'
 };
+var RTL_LANGS = { ar: true, ur: true };
 
-// ── cookie helpers ────────────────────────────────────────────────
-function _setCookie(lang) {
-  var val = lang === 'en' ? '' : '/en/' + lang;
-  var exp = lang === 'en' ? 'expires=Thu, 01 Jan 1970 00:00:01 GMT;' : '';
-  // Set on root path AND domain prefix for cross-page persistence
-  document.cookie = 'googtrans=' + val + '; ' + exp + ' path=/; SameSite=Lax';
-  try {
-    document.cookie = 'googtrans=' + val + '; ' + exp +
-                      ' path=/; domain=.' + location.hostname + '; SameSite=Lax';
-  } catch(e) {}
-}
-
-function _readCookieLang() {
-  var m = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-  return m ? m[1] : null;
-}
-
-// ── GT combo trigger ──────────────────────────────────────────────
-function _triggerCombo(lang) {
-  var sel = document.querySelector('.goog-te-combo');
-  if (!sel) return false;
-  sel.value = lang;
-  // Use both createEvent (legacy) and Event constructor for max compatibility
-  try {
-    var ev = document.createEvent('HTMLEvents');
-    ev.initEvent('change', true, true);
-    sel.dispatchEvent(ev);
-  } catch(e) {
-    sel.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-  return true;
-}
-
-// ── UI helpers ────────────────────────────────────────────────────
-function _updateUI(lang) {
+function applyLang(lang) {
+  var t = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(function(el) {
+    var key = el.dataset.i18nAriaLabel;
+    if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+  });
   var lbl = document.getElementById('lang-label');
-  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
+  if (lbl) lbl.textContent = LANG_LABELS[lang] || lang.toUpperCase();
   document.querySelectorAll('.lang-option').forEach(function(el) {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
 }
 
-// ── Google Translate initialisation callback ──────────────────────
-// GT calls this function when the engine + combo are fully ready.
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,zh-CN,hi,es,fr,ar,bn,pt,ru,ur,id,de,ja,pcm,mr',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-
-  // On page load, read stored language from cookie OR localStorage and apply it
-  // Polls every 200ms (max 5s) for the combo to appear, then fires change event
-  var targetLang = _readCookieLang() ||
-    (function(){ try { return localStorage.getItem('nashmi_lang'); } catch(e){ return null; } })();
-  if (targetLang && targetLang !== 'en') {
-    var attempts = 0;
-    var poll = setInterval(function() {
-      var sel = document.querySelector('.goog-te-combo');
-      if (sel) {
-        clearInterval(poll);
-        if (sel.value !== targetLang) {
-          sel.value = targetLang;
-          try {
-            var ev = document.createEvent('HTMLEvents');
-            ev.initEvent('change', true, true);
-            sel.dispatchEvent(ev);
-          } catch(e) {
-            sel.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        }
-      } else if (++attempts > 25) {
-        clearInterval(poll);
-      }
-    }, 200);
-  }
-
-  // Suppress body jump and GT toolbar
-  function stopTheJump() {
-    document.body.style.top = '0px';
-    var googleFrame = document.querySelector('.goog-te-banner-frame');
-    if (googleFrame) {
-      googleFrame.style.display = 'none';
-      googleFrame.style.height  = '0';
-    }
-    var tt = document.getElementById('goog-gt-tt');
-    if (tt) tt.style.display = 'none';
-  }
-  stopTheJump();
-  var gtObserver = new MutationObserver(stopTheJump);
-  gtObserver.observe(document.body, {
-    attributes:    true,
-    attributeFilter: ['style', 'class'],
-    childList:     true,
-    subtree:       false
-  });
-}
-
-// ── Main switch function (called by custom dropdown buttons) ──────
 function setLanguage(lang) {
   closeLangMenu();
-  _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
-  _setCookie(lang);
-
-  if (lang === 'en') { location.reload(); return; }
-
-  // Try the GT combo immediately (it's usually ready after the first click)
-  if (_triggerCombo(lang)) return;
-
-  // GT still loading — poll every 100ms for up to 5 seconds
-  var attempts = 0;
-  var poll = setInterval(function() {
-    if (_triggerCombo(lang)) {
-      clearInterval(poll);
-    } else if (++attempts >= 50) {
-      clearInterval(poll);
-      // GT failed to load — fall back to Google Translate website
-      window.location.href = 'https://translate.google.com/translate?sl=en&tl=' +
-        lang + '&u=' + encodeURIComponent(location.href);
-    }
-  }, 100);
+  applyLang(lang);
 }
 
-// ── Restore language UI on every page load ────────────────────────
-// (Actual translation is handled by GT reading the googtrans cookie.)
-(function restoreUI() {
-  var lang = _readCookieLang() ||
-             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
-             'en';
-  if (lang !== 'en') _updateUI(lang);
-})();
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = null;
+  try { saved = localStorage.getItem('nashmi_lang'); } catch(e) {}
+  if (saved && window.TRANSLATIONS && window.TRANSLATIONS[saved]) {
+    applyLang(saved);
+  }
+});
 
-// ── Dropdown open / close ─────────────────────────────────────────
 function toggleLangMenu(e) {
-  e && e.stopPropagation();
+  if (e) { e.stopPropagation(); e.preventDefault(); }
   var menu = document.getElementById('lang-menu');
   var btn  = document.getElementById('lang-btn');
   var open = menu.classList.contains('open');
   if (!open) {
-    var rect    = btn.getBoundingClientRect();
-    var vw      = window.innerWidth;
+    var rect = btn.getBoundingClientRect();
+    var vw   = window.innerWidth;
     if (vw <= 900) {
-      // Menu width: fill most of the screen but cap at 340px
-      var mw = Math.min(vw - 20, 340);
-      // Anchor from the button's left edge; clamp so it never goes off-screen
+      var mw   = Math.min(vw - 20, 340);
       var left = Math.max(10, Math.min(rect.left, vw - mw - 10));
       menu.style.top   = (rect.bottom + 8) + 'px';
       menu.style.left  = left + 'px';
@@ -917,17 +789,13 @@ function closeLangMenu() {
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
 
-document.addEventListener('click',      function(e) {
+document.addEventListener('pointerdown', function(e) {
   if (!e.target.closest('#lang-switcher')) closeLangMenu();
 });
-document.addEventListener('touchstart', function(e) {
-  if (!e.target.closest('#lang-switcher')) closeLangMenu();
-}, { passive: true });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLangMenu();
 });
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 <script id="cfx-script" src="https://ratings.carfax.com/top-rated/v1/js/cfx-loader.js" type="module"></script>
 
 <!-- ── Live Google Reviews Carousel ─────────────────────────────────────── -->
