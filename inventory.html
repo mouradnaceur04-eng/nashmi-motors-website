@@ -3,8 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventory — Nashmi Motors | Used Cars in Harrisburg, PA</title>
@@ -31,7 +30,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
 
@@ -50,48 +49,46 @@
 
 <!-- HEADER -->
 <header class="header" id="header">
+  <div class="mobile-hours-bar">Mon&ndash;Fri 10am&ndash;6pm &bull; Sat 10am&ndash;3pm &bull; Sun Closed</div>
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" style="height:50px;width:auto;border-radius:8px">
+      <img src="logo.png" alt="Nashmi Motors Logo">
     </a>
     <nav class="nav" id="nav">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/inventory" class="nav-link active">Inventory</a>
-      <a href="/car-finder" class="nav-link">Car Finder</a>
-      <a href="/apply" class="nav-link">Apply Online</a>
-      <a href="/sell" class="nav-link">We Buy Cars</a>
-      <a href="/about" class="nav-link">About</a>
-      <a href="/contact" class="nav-link">Contact</a>
+      <a href="/" class="nav-link" data-i18n="nav_home">Home</a>
+      <a href="/inventory" class="nav-link active" data-i18n="nav_inventory">Inventory</a>
+      <a href="/car-finder" class="nav-link" data-i18n="nav_car_finder">Car Finder</a>
+      <a href="/apply" class="nav-link" data-i18n="nav_apply">Apply Online</a>
+      <a href="/sell" class="nav-link" data-i18n="nav_sell">We Buy Cars</a>
+      <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+      <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
     </nav>
-    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <a href="tel:7177435175" class="btn btn-primary header-cta" data-i18n="nav_call_now">Call Now</a>
     <!-- Custom Language Switcher -->
     <div class="lang-switcher" id="lang-switcher">
-      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
+      <button class="lang-btn" id="lang-btn" onpointerdown="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span id="lang-label">EN</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="lang-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="lang-menu" id="lang-menu" role="menu">
-        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
-        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-flag">🇨🇳</span> 中文</button>
-        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-flag">🇮🇳</span> हिन्दी</button>
-        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
-        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
-        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
-        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-flag">🇧🇩</span> বাংলা</button>
-        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-flag">🇧🇷</span> Português</button>
-        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-flag">🇷🇺</span> Русский</button>
-        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-flag">🇵🇰</span> اردو</button>
-        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-flag">🇮🇩</span> Indonesia</button>
-        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
-        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-flag">🇯🇵</span> 日本語</button>
-        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-flag">🇳🇬</span> Pidgin</button>
-        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-flag">🇮🇳</span> मराठी</button>
+        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-code">EN</span> English</button>
+        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-code">ZH</span> 中文</button>
+        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-code">HI</span> हिन्दी</button>
+        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-code">ES</span> Español</button>
+        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-code">FR</span> Français</button>
+        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-code">AR</span> العربية</button>
+        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-code">BN</span> বাংলা</button>
+        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-code">PT</span> Português</button>
+        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-code">RU</span> Русский</button>
+        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-code">UR</span> اردو</button>
+        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-code">ID</span> Indonesia</button>
+        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
+        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-code">JA</span> 日本語</button>
+        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-code">PCM</span> Pidgin</button>
+        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-code">MR</span> मराठी</button>
       </div>
     </div>
-    <!-- Google Translate hidden widget — powers setLanguage() -->
-    <!-- GT widget must stay renderable — CSS parks it off-screen -->
-    <div id="google_translate_element"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -112,12 +109,12 @@
   <!-- SIDEBAR FILTERS -->
   <aside class="filter-sidebar" id="filter-sidebar">
     <div class="filter-header">
-      <h3>Filter</h3>
-      <button class="filter-clear" onclick="clearFilters()">Clear All</button>
+      <h3 data-i18n="filter_h">Filter</h3>
+      <button class="filter-clear" onclick="clearFilters()" data-i18n="filter_clear">Clear All</button>
     </div>
 
     <div class="filter-group">
-      <h4 class="filter-group-toggle">Body Type</h4>
+      <h4 class="filter-group-toggle" data-i18n="filter_body_type">Body Type</h4>
       <div class="filter-group-body">
         <label><input type="checkbox" name="type" value="sedan"> Sedan</label>
         <label><input type="checkbox" name="type" value="suv"> SUV / Crossover</label>
@@ -127,7 +124,7 @@
     </div>
 
     <div class="filter-group">
-      <h4 class="filter-group-toggle">Make</h4>
+      <h4 class="filter-group-toggle" data-i18n="filter_make">Make</h4>
       <div class="filter-group-body">
         <label><input type="checkbox" name="make" value="AUDI"> Audi</label>
         <label><input type="checkbox" name="make" value="CHRYSLER"> Chrysler</label>
@@ -142,7 +139,7 @@
     </div>
 
     <div class="filter-group">
-      <h4 class="filter-group-toggle">Drivetrain</h4>
+      <h4 class="filter-group-toggle" data-i18n="filter_drivetrain">Drivetrain</h4>
       <div class="filter-group-body">
         <label><input type="checkbox" name="drive" value="FWD"> FWD</label>
         <label><input type="checkbox" name="drive" value="AWD"> AWD</label>
@@ -152,7 +149,7 @@
     </div>
 
     <div class="filter-group">
-      <h4 class="filter-group-toggle">Price Range</h4>
+      <h4 class="filter-group-toggle" data-i18n="filter_price">Price Range</h4>
       <div class="filter-group-body">
         <div class="price-inputs">
           <input type="number" id="f-min-price" placeholder="Min $" min="0" step="500" oninput="applyFilters()">
@@ -163,7 +160,7 @@
     </div>
 
     <div class="filter-group">
-      <h4 class="filter-group-toggle">Condition</h4>
+      <h4 class="filter-group-toggle" data-i18n="filter_condition">Condition</h4>
       <div class="filter-group-body">
         <label><input type="checkbox" name="special" value="sale"> On Sale</label>
         <label><input type="checkbox" name="special" value="photo"> Has Photos</label>
@@ -171,7 +168,7 @@
     </div>
 
     <div style="padding:16px 20px">
-      <button class="btn btn-primary" style="width:100%" onclick="applyFilters()">Apply Filters</button>
+      <button class="btn btn-primary" style="width:100%" onclick="applyFilters()" data-i18n="filter_apply_btn">Apply Filters</button>
     </div>
   </aside>
 
@@ -185,7 +182,7 @@
           Filters
         </button>
         <div class="sort-wrap">
-          <label>Sort by:</label>
+          <label data-i18n="sort_label">Sort by:</label>
           <select id="sort-select" class="sort-select" onchange="applyFilters()">
             <option value="default">Featured</option>
             <option value="price-asc">Price: Low to High</option>
@@ -197,10 +194,11 @@
       </div>
     </div>
     <div class="cars-grid" id="inv-grid"></div>
+    <div id="inv-pagination" class="inv-pagination"></div>
     <div id="no-results" class="no-results" style="display:none">
-      <span>🔍</span>
-      <h3>No vehicles match your filters</h3>
-      <p>Try adjusting or clearing your filters.</p>
+      <span style="display:flex;justify-content:center;margin-bottom:8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <h3 data-i18n="no_results_h">No vehicles match your filters</h3>
+      <p data-i18n="no_results_p">Try adjusting or clearing your filters.</p>
       <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
     </div>
   </div>
@@ -225,8 +223,8 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="logo.png" alt="Nashmi Motors" height="44" style="border-radius:6px">
-      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <img src="logo.png" alt="Nashmi Motors" height="44" style="">
+      <p data-i18n="footer_tagline">Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
       <div class="footer-social">
         <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -271,7 +269,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=12"></script>
 <script>
 // Pre-set filters from URL params (runs immediately — no inventory needed)
 const params = new URLSearchParams(location.search);
@@ -283,6 +281,10 @@ if (urlMake)  { const cb = document.querySelector(`input[name="make"][value="${u
 if (urlPrice) { document.getElementById('f-max-price').value = urlPrice; }
 
 document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.addEventListener('change', applyFilters));
+
+const CARS_PER_PAGE = 6;
+let filteredResults = [];
+let currentPage = 1;
 
 function getChecked(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
@@ -314,19 +316,56 @@ function applyFilters() {
   if (sort === 'year-desc')  results.sort((a,b) => b.year - a.year);
   if (sort === 'miles-asc')  results.sort((a,b) => (a.miles||999999) - (b.miles||999999));
 
+  filteredResults = results;
+  currentPage = 1;
+  renderPage();
+}
+
+function renderPage() {
   const grid  = document.getElementById('inv-grid');
   const noRes = document.getElementById('no-results');
-  document.getElementById('results-count').textContent =
-    results.length + ' vehicle' + (results.length !== 1 ? 's' : '') + ' found';
+  const total = filteredResults.length;
+  const totalPages = Math.ceil(total / CARS_PER_PAGE);
+  const start = (currentPage - 1) * CARS_PER_PAGE;
+  const end   = Math.min(start + CARS_PER_PAGE, total);
 
-  if (results.length === 0) {
+  document.getElementById('results-count').textContent = total === 0
+    ? '0 vehicles found'
+    : `${start + 1}–${end} of ${total} vehicle${total !== 1 ? 's' : ''}`;
+
+  if (total === 0) {
     grid.innerHTML = '';
     noRes.style.display = 'flex';
-  } else {
-    noRes.style.display = 'none';
-    grid.innerHTML = results.map(carCard).join('');
-    // CarGurus badge JS handles rendering via live polling
+    document.getElementById('inv-pagination').innerHTML = '';
+    return;
   }
+
+  noRes.style.display = 'none';
+  grid.innerHTML = filteredResults.slice(start, end).map(carCard).join('');
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const el = document.getElementById('inv-pagination');
+  if (!el) return;
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  el.innerHTML =
+    `<button class="pg-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous page">` +
+      `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>` +
+      `Prev` +
+    `</button>` +
+    `<span class="pg-info">Page ${currentPage} of ${totalPages}</span>` +
+    `<button class="pg-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next page">` +
+      `Next` +
+      `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>` +
+    `</button>`;
+}
+
+function goPage(n) {
+  currentPage = n;
+  renderPage();
+  document.getElementById('inv-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function clearFilters() {
@@ -363,170 +402,67 @@ onInventoryLoaded = function() {
 };
 loadInventory();
 </script>
+<script src="/translations.js" defer></script>
 <script>
-// ══════════════════════════════════════════════════════════════════
-//  NASHMI MOTORS — Language Switcher  (Google Translate backend)
-// ══════════════════════════════════════════════════════════════════
-
-const LANG_LABELS = {
+var LANG_LABELS = {
   en: 'EN', 'zh-CN': '中文', hi: 'HI', es: 'ES', fr: 'FR',
   ar: 'AR', bn: 'BN', pt: 'PT', ru: 'RU', ur: 'UR',
   id: 'ID', de: 'DE', ja: 'JA', pcm: 'PCM', mr: 'MR'
 };
+var RTL_LANGS = { ar: true, ur: true };
 
-// ── readiness gate ────────────────────────────────────────────────
-// GT calls googleTranslateElementInit() when the engine is ready.
-// We set this flag there so setLanguage() knows it can use the combo.
-window._gtReady   = false;
-window._gtQueued  = null;   // language to apply once GT is ready
-
-// ── cookie helpers ────────────────────────────────────────────────
-function _setCookie(lang) {
-  var val = lang === 'en' ? '' : '/en/' + lang;
-  var exp = lang === 'en' ? 'expires=Thu, 01 Jan 1970 00:00:01 GMT;' : '';
-  // Set on root path AND domain prefix for cross-page persistence
-  document.cookie = 'googtrans=' + val + '; ' + exp + ' path=/; SameSite=Lax';
-  try {
-    document.cookie = 'googtrans=' + val + '; ' + exp +
-                      ' path=/; domain=.' + location.hostname + '; SameSite=Lax';
-  } catch(e) {}
-}
-
-function _readCookieLang() {
-  var m = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-  return m ? m[1] : null;
-}
-
-// ── GT combo trigger ──────────────────────────────────────────────
-function _triggerCombo(lang) {
-  var sel = document.querySelector('.goog-te-combo');
-  if (!sel) return false;
-  sel.value = lang;
-  // Use both createEvent (legacy) and Event constructor for max compatibility
-  try {
-    var ev = document.createEvent('HTMLEvents');
-    ev.initEvent('change', true, true);
-    sel.dispatchEvent(ev);
-  } catch(e) {
-    sel.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-  return true;
-}
-
-// ── UI helpers ────────────────────────────────────────────────────
-function _updateUI(lang) {
+function applyLang(lang) {
+  var t = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(function(el) {
+    var key = el.dataset.i18nAriaLabel;
+    if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+  });
   var lbl = document.getElementById('lang-label');
-  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
+  if (lbl) lbl.textContent = LANG_LABELS[lang] || lang.toUpperCase();
   document.querySelectorAll('.lang-option').forEach(function(el) {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
 }
 
-// ── Google Translate initialisation callback ──────────────────────
-// GT calls this function when the engine + combo are fully ready.
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,zh-CN,hi,es,fr,ar,bn,pt,ru,ur,id,de,ja,pcm,mr',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-
-  // On page load, read stored language from cookie OR localStorage and apply it
-  // Polls every 200ms (max 5s) for the combo to appear, then fires change event
-  var targetLang = _readCookieLang() ||
-    (function(){ try { return localStorage.getItem('nashmi_lang'); } catch(e){ return null; } })();
-  if (targetLang && targetLang !== 'en') {
-    var attempts = 0;
-    var poll = setInterval(function() {
-      var sel = document.querySelector('.goog-te-combo');
-      if (sel) {
-        clearInterval(poll);
-        if (sel.value !== targetLang) {
-          sel.value = targetLang;
-          try {
-            var ev = document.createEvent('HTMLEvents');
-            ev.initEvent('change', true, true);
-            sel.dispatchEvent(ev);
-          } catch(e) {
-            sel.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        }
-      } else if (++attempts > 25) {
-        clearInterval(poll);
-      }
-    }, 200);
-  }
-
-  // Suppress body jump and GT toolbar
-  function stopTheJump() {
-    document.body.style.top = '0px';
-    var googleFrame = document.querySelector('.goog-te-banner-frame');
-    if (googleFrame) {
-      googleFrame.style.display = 'none';
-      googleFrame.style.height  = '0';
-    }
-    var tt = document.getElementById('goog-gt-tt');
-    if (tt) tt.style.display = 'none';
-  }
-  stopTheJump();
-  var gtObserver = new MutationObserver(stopTheJump);
-  gtObserver.observe(document.body, {
-    attributes:    true,
-    attributeFilter: ['style', 'class'],
-    childList:     true,
-    subtree:       false
-  });
-}
-
-// ── Main switch function (called by custom dropdown buttons) ──────
 function setLanguage(lang) {
   closeLangMenu();
-  _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
-  _setCookie(lang);
-
-  if (lang === 'en') { location.reload(); return; }
-
-  // Try the GT combo immediately (it's usually ready after the first click)
-  if (_triggerCombo(lang)) return;
-
-  // GT still loading — poll every 100ms for up to 5 seconds
-  var attempts = 0;
-  var poll = setInterval(function() {
-    if (_triggerCombo(lang)) {
-      clearInterval(poll);
-    } else if (++attempts >= 50) {
-      clearInterval(poll);
-      // GT failed to load — fall back to Google Translate website
-      window.location.href = 'https://translate.google.com/translate?sl=en&tl=' +
-        lang + '&u=' + encodeURIComponent(location.href);
-    }
-  }, 100);
+  applyLang(lang);
 }
 
-// ── Restore language UI on every page load ────────────────────────
-// (Actual translation is handled by GT reading the googtrans cookie.)
-(function restoreUI() {
-  var lang = _readCookieLang() ||
-             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
-             'en';
-  if (lang !== 'en') _updateUI(lang);
-})();
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = null;
+  try { saved = localStorage.getItem('nashmi_lang'); } catch(e) {}
+  if (saved && window.TRANSLATIONS && window.TRANSLATIONS[saved]) {
+    applyLang(saved);
+  }
+});
 
-// ── Dropdown open / close ─────────────────────────────────────────
 function toggleLangMenu(e) {
-  e && e.stopPropagation();
+  if (e) { e.stopPropagation(); e.preventDefault(); }
   var menu = document.getElementById('lang-menu');
   var btn  = document.getElementById('lang-btn');
   var open = menu.classList.contains('open');
   if (!open) {
-    var rect    = btn.getBoundingClientRect();
-    var vw      = window.innerWidth;
+    var rect = btn.getBoundingClientRect();
+    var vw   = window.innerWidth;
     if (vw <= 900) {
-      // Menu width: fill most of the screen but cap at 340px
-      var mw = Math.min(vw - 20, 340);
-      // Anchor from the button's left edge; clamp so it never goes off-screen
+      var mw   = Math.min(vw - 20, 340);
       var left = Math.max(10, Math.min(rect.left, vw - mw - 10));
       menu.style.top   = (rect.bottom + 8) + 'px';
       menu.style.left  = left + 'px';
@@ -547,18 +483,12 @@ function closeLangMenu() {
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
 
-document.addEventListener('click',   function(e) {
+document.addEventListener('pointerdown', function(e) {
   if (!e.target.closest('#lang-switcher')) closeLangMenu();
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLangMenu();
 });
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
-<script>
-  window.CarGurus = window.CarGurus || { DealRatingBadge: {} };
-  CarGurus.DealRatingBadge.options = { style: 'STYLE2', defaultHeight: 55, live: true, liveIntervalMS: 500 };
-  (function() { var s = document.createElement('script'); s.src = 'https://static.cargurus.com/js/api/en_US/1.0/dealratingbadge.js'; s.async = true; document.head.appendChild(s); })();
 </script>
 </body>
 </html>
