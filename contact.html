@@ -3,8 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us — Nashmi Motors | Harrisburg, PA</title>
@@ -24,7 +23,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
 
@@ -35,56 +34,54 @@
       <span class="topbar-hours">⏰ Mon–Fri 10am–6pm &nbsp;|&nbsp; Sat 10am–3pm &nbsp;|&nbsp; Sun Closed</span>
     </div>
     <div class="topbar-right">
-      <a href="mailto:sales@nashmimotors.com" class="topbar-link">✉️ sales@nashmimotors.com</a>
-      <a href="tel:7177435175" class="topbar-link">📞 (717) 743-5175</a>
+      <a href="mailto:sales@nashmimotors.com" class="topbar-link">sales@nashmimotors.com</a>
+      <a href="tel:7177435175" class="topbar-link">(717) 743-5175</a>
     </div>
   </div>
 </div>
 
 <!-- HEADER -->
 <header class="header" id="header">
+  <div class="mobile-hours-bar">Mon&ndash;Fri 10am&ndash;6pm &bull; Sat 10am&ndash;3pm &bull; Sun Closed</div>
   <div class="container header-inner">
     <a href="/" class="logo">
-      <img src="logo.png" alt="Nashmi Motors Logo" style="height:50px;width:auto;border-radius:8px">
+      <img src="logo.png" alt="Nashmi Motors Logo">
     </a>
     <nav class="nav" id="nav">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/inventory" class="nav-link">Inventory</a>
-      <a href="/car-finder" class="nav-link">Car Finder</a>
-      <a href="/apply" class="nav-link">Apply Online</a>
-      <a href="/sell" class="nav-link">We Buy Cars</a>
-      <a href="/about" class="nav-link">About</a>
-      <a href="/contact" class="nav-link active">Contact</a>
+      <a href="/" class="nav-link" data-i18n="nav_home">Home</a>
+      <a href="/inventory" class="nav-link" data-i18n="nav_inventory">Inventory</a>
+      <a href="/car-finder" class="nav-link" data-i18n="nav_car_finder">Car Finder</a>
+      <a href="/apply" class="nav-link" data-i18n="nav_apply">Apply Online</a>
+      <a href="/sell" class="nav-link" data-i18n="nav_sell">We Buy Cars</a>
+      <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+      <a href="/contact" class="nav-link active" data-i18n="nav_contact">Contact</a>
     </nav>
-    <a href="tel:7177435175" class="btn btn-primary header-cta">Call Now</a>
+    <a href="tel:7177435175" class="btn btn-primary header-cta" data-i18n="nav_call_now">Call Now</a>
     <!-- Custom Language Switcher -->
     <div class="lang-switcher" id="lang-switcher">
-      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
+      <button class="lang-btn" id="lang-btn" onpointerdown="toggleLangMenu(event)" aria-label="Select language" aria-expanded="false">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span id="lang-label">EN</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="lang-chevron" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="lang-menu" id="lang-menu" role="menu">
-        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-flag">🇺🇸</span> English</button>
-        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-flag">🇨🇳</span> 中文</button>
-        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-flag">🇮🇳</span> हिन्दी</button>
-        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-flag">🇪🇸</span> Español</button>
-        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-flag">🇫🇷</span> Français</button>
-        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-flag">🇸🇦</span> العربية</button>
-        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-flag">🇧🇩</span> বাংলা</button>
-        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-flag">🇧🇷</span> Português</button>
-        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-flag">🇷🇺</span> Русский</button>
-        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-flag">🇵🇰</span> اردو</button>
-        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-flag">🇮🇩</span> Indonesia</button>
-        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-flag">🇩🇪</span> Deutsch</button>
-        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-flag">🇯🇵</span> 日本語</button>
-        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-flag">🇳🇬</span> Pidgin</button>
-        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-flag">🇮🇳</span> मराठी</button>
+        <button class="lang-option active" data-lang="en"    onclick="setLanguage('en')"    role="menuitem"><span class="lang-code">EN</span> English</button>
+        <button class="lang-option"        data-lang="zh-CN" onclick="setLanguage('zh-CN')" role="menuitem"><span class="lang-code">ZH</span> 中文</button>
+        <button class="lang-option"        data-lang="hi"    onclick="setLanguage('hi')"    role="menuitem"><span class="lang-code">HI</span> हिन्दी</button>
+        <button class="lang-option"        data-lang="es"    onclick="setLanguage('es')"    role="menuitem"><span class="lang-code">ES</span> Español</button>
+        <button class="lang-option"        data-lang="fr"    onclick="setLanguage('fr')"    role="menuitem"><span class="lang-code">FR</span> Français</button>
+        <button class="lang-option"        data-lang="ar"    onclick="setLanguage('ar')"    role="menuitem"><span class="lang-code">AR</span> العربية</button>
+        <button class="lang-option"        data-lang="bn"    onclick="setLanguage('bn')"    role="menuitem"><span class="lang-code">BN</span> বাংলা</button>
+        <button class="lang-option"        data-lang="pt"    onclick="setLanguage('pt')"    role="menuitem"><span class="lang-code">PT</span> Português</button>
+        <button class="lang-option"        data-lang="ru"    onclick="setLanguage('ru')"    role="menuitem"><span class="lang-code">RU</span> Русский</button>
+        <button class="lang-option"        data-lang="ur"    onclick="setLanguage('ur')"    role="menuitem"><span class="lang-code">UR</span> اردو</button>
+        <button class="lang-option"        data-lang="id"    onclick="setLanguage('id')"    role="menuitem"><span class="lang-code">ID</span> Indonesia</button>
+        <button class="lang-option"        data-lang="de"    onclick="setLanguage('de')"    role="menuitem"><span class="lang-code">DE</span> Deutsch</button>
+        <button class="lang-option"        data-lang="ja"    onclick="setLanguage('ja')"    role="menuitem"><span class="lang-code">JA</span> 日本語</button>
+        <button class="lang-option"        data-lang="pcm"   onclick="setLanguage('pcm')"   role="menuitem"><span class="lang-code">PCM</span> Pidgin</button>
+        <button class="lang-option"        data-lang="mr"    onclick="setLanguage('mr')"    role="menuitem"><span class="lang-code">MR</span> मराठी</button>
       </div>
     </div>
-    <!-- Google Translate hidden widget — powers setLanguage() -->
-    <!-- GT widget must stay renderable — CSS parks it off-screen -->
-    <div id="google_translate_element"></div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -94,8 +91,8 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
-    <h1>Contact Us</h1>
-    <p>Call, email, or stop by the lot. We're here to help you find the right car.</p>
+    <h1 data-i18n="contact_hero_h1">Contact Us</h1>
+    <p data-i18n="contact_hero_p">Call, email, or stop by the lot. We're here to help you find the right car.</p>
   </div>
 </section>
 
@@ -107,38 +104,38 @@
     <div class="contact-info">
 
       <div class="contact-card animate-on-scroll">
-        <div class="contact-card-icon">📞</div>
+        <div class="contact-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
         <div>
-          <h4>Call Us</h4>
+          <h4 data-i18n="contact_call_h">Call Us</h4>
           <a href="tel:7177435175" class="contact-card-link">(717) 743-5175</a>
-          <p>Talk to a real person — no automated systems.</p>
+          <p data-i18n="contact_call_p">Talk to a real person — no automated systems.</p>
         </div>
       </div>
 
       <div class="contact-card animate-on-scroll delay-1">
-        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div>
-          <h4>Email Us</h4>
+          <h4 data-i18n="contact_email_h">Email Us</h4>
           <a href="mailto:sales@nashmimotors.com" class="contact-card-link">sales@nashmimotors.com</a>
-          <p>We typically respond within a few hours during business hours.</p>
+          <p data-i18n="contact_email_p">We typically respond within a few hours during business hours.</p>
         </div>
       </div>
 
       <div class="contact-card animate-on-scroll delay-2">
-        <div class="contact-card-icon">📍</div>
+        <div class="contact-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div>
-          <h4>Visit the Lot</h4>
+          <h4 data-i18n="contact_visit_h">Visit the Lot</h4>
           <a href="https://maps.google.com/?q=8001+Paxton+St+Harrisburg+PA+17111" target="_blank" rel="noopener" class="contact-card-link">
             8001 Paxton St, Harrisburg, PA 17111
           </a>
-          <p>Easy access off Paxton Street. Free parking on-site.</p>
+          <p data-i18n="contact_visit_p">Easy access off Paxton Street. Free parking on-site.</p>
         </div>
       </div>
 
       <div class="contact-card animate-on-scroll delay-3">
-        <div class="contact-card-icon">⏰</div>
+        <div class="contact-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <div>
-          <h4>Business Hours</h4>
+          <h4 data-i18n="contact_hours_h">Business Hours</h4>
           <div class="hours-grid">
             <span>Monday</span>      <span>10:00 AM – 6:00 PM</span>
             <span>Tuesday</span>     <span>10:00 AM – 6:00 PM</span>
@@ -154,7 +151,7 @@
       <div class="contact-map animate-on-scroll delay-2">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.5!2d-76.8307!3d40.2549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDE1JzE3LjYiTiA3NsKwNDknNTAuNSJX!5e0!3m2!1sen!2sus!4v1234567890"
-          width="100%" height="220" style="border:0;border-radius:12px;display:block" allowfullscreen loading="lazy">
+          width="100%" height="220" style="border:0;display:block" allowfullscreen loading="lazy">
         </iframe>
         <a href="https://maps.google.com/?q=8001+Paxton+St+Harrisburg+PA+17111" target="_blank" rel="noopener" class="btn btn-outline-green" style="margin-top:12px;display:inline-block;width:100%;text-align:center">
           Get Directions →
@@ -164,32 +161,32 @@
 
     <!-- RIGHT: FORM -->
     <div class="contact-form-wrap animate-on-scroll delay-1">
-      <h2 style="font-family:var(--font-head);font-size:1.6rem;margin-bottom:6px;color:var(--dark)">Send Us a Message</h2>
-      <p style="color:var(--gray);margin-bottom:28px;font-size:14px">Fill out the form and we'll get back to you during business hours. Or just call — it's faster.</p>
+      <h2 style="font-family:var(--font-head);font-size:1.6rem;margin-bottom:6px;color:var(--dark)" data-i18n="contact_form_h">Send Us a Message</h2>
+      <p style="color:var(--gray);margin-bottom:28px;font-size:14px" data-i18n="contact_form_p">Fill out the form and we'll get back to you during business hours. Or just call — it's faster.</p>
 
       <form class="contact-form" id="contact-form" onsubmit="handleContact(event)"><input type="text" name="_hp" style="position:absolute;left:-9999px;width:1px;height:1px" tabindex="-1" autocomplete="off">
         <div class="form-row">
           <div class="form-group">
-            <label for="c-first">First Name *</label>
+            <label for="c-first" data-i18n="c_first_label">First Name *</label>
             <input type="text" id="c-first" name="First Name" placeholder="John" required>
           </div>
           <div class="form-group">
-            <label for="c-last">Last Name *</label>
+            <label for="c-last" data-i18n="c_last_label">Last Name *</label>
             <input type="text" id="c-last" name="Last Name" placeholder="Smith" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="c-phone">Phone *</label>
+            <label for="c-phone" data-i18n="c_phone_label">Phone *</label>
             <input type="tel" id="c-phone" name="Phone" placeholder="(717) 000-0000" required>
           </div>
           <div class="form-group">
-            <label for="c-email">Email</label>
+            <label for="c-email" data-i18n="c_email_label">Email</label>
             <input type="email" id="c-email" name="Email" placeholder="john@email.com">
           </div>
         </div>
         <div class="form-group">
-          <label for="c-subject">I'm contacting you about</label>
+          <label for="c-subject" data-i18n="c_subject_label">I'm contacting you about</label>
           <select id="c-subject" name="Subject">
             <option>A vehicle I saw in your inventory</option>
             <option>Financing / getting approved</option>
@@ -199,15 +196,15 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="c-msg">Message *</label>
+          <label for="c-msg" data-i18n="c_msg_label">Message *</label>
           <textarea id="c-msg" name="Message" rows="5" placeholder="Tell us what you're looking for, which car caught your eye, any questions you have..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Send Message</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%" data-i18n="contact_send_btn">Send Message</button>
       </form>
 
-      <div id="contact-success" style="display:none;margin-top:20px;padding:20px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;text-align:center">
-        <div style="font-size:2rem;margin-bottom:6px">✅</div>
-        <h3 style="color:#15803d;margin-bottom:4px">Message Sent!</h3>
+      <div id="contact-success" style="display:none;margin-top:20px;padding:20px;background:#f0fdf4;border:1px solid #bbf7d0;text-align:center">
+        <div style="margin-bottom:10px;display:flex;justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <h3 style="color:#15803d;margin-bottom:4px" data-i18n="contact_success_h">Message Sent!</h3>
         <p style="color:#166534;font-size:14px">We got your message and will get back to you during business hours. Or call us at <a href="tel:7177435175" style="color:#15803d;font-weight:700">(717) 743-5175</a>.</p>
       </div>
     </div>
@@ -219,8 +216,8 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="logo.png" alt="Nashmi Motors" height="44" style="border-radius:6px">
-      <p>Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
+      <img src="logo.png" alt="Nashmi Motors" height="44" style="">
+      <p data-i18n="footer_tagline">Quality used cars in Harrisburg, PA. Honest prices. Flexible financing.</p>
       <div class="footer-social">
         <a href="https://www.facebook.com/profile.php?id=61578949635961" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -250,10 +247,10 @@
     </div>
     <div class="footer-contact">
       <h3>Contact</h3>
-      <p>📞 <a href="tel:7177435175">(717) 743-5175</a></p>
-      <p>✉️ <a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
-      <p>📍 8001 Paxton St<br>Harrisburg, PA 17111</p>
-      <p>⏰ Mon–Fri 10am–6pm<br>Sat 10am–3pm · Sun Closed</p>
+      <p><a href="tel:7177435175">(717) 743-5175</a></p>
+      <p><a href="mailto:sales@nashmimotors.com">sales@nashmimotors.com</a></p>
+      <p>8001 Paxton St<br>Harrisburg, PA 17111</p>
+      <p>Mon–Fri 10am–6pm<br>Sat 10am–3pm · Sun Closed</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -264,7 +261,7 @@
   </div>
 </footer>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=12"></script>
 <script>
 function handleContact(e) {
   e.preventDefault();
@@ -276,170 +273,67 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
+<script src="/translations.js" defer></script>
 <script>
-// ══════════════════════════════════════════════════════════════════
-//  NASHMI MOTORS — Language Switcher  (Google Translate backend)
-// ══════════════════════════════════════════════════════════════════
-
-const LANG_LABELS = {
+var LANG_LABELS = {
   en: 'EN', 'zh-CN': '中文', hi: 'HI', es: 'ES', fr: 'FR',
   ar: 'AR', bn: 'BN', pt: 'PT', ru: 'RU', ur: 'UR',
   id: 'ID', de: 'DE', ja: 'JA', pcm: 'PCM', mr: 'MR'
 };
+var RTL_LANGS = { ar: true, ur: true };
 
-// ── readiness gate ────────────────────────────────────────────────
-// GT calls googleTranslateElementInit() when the engine is ready.
-// We set this flag there so setLanguage() knows it can use the combo.
-window._gtReady   = false;
-window._gtQueued  = null;   // language to apply once GT is ready
-
-// ── cookie helpers ────────────────────────────────────────────────
-function _setCookie(lang) {
-  var val = lang === 'en' ? '' : '/en/' + lang;
-  var exp = lang === 'en' ? 'expires=Thu, 01 Jan 1970 00:00:01 GMT;' : '';
-  // Set on root path AND domain prefix for cross-page persistence
-  document.cookie = 'googtrans=' + val + '; ' + exp + ' path=/; SameSite=Lax';
-  try {
-    document.cookie = 'googtrans=' + val + '; ' + exp +
-                      ' path=/; domain=.' + location.hostname + '; SameSite=Lax';
-  } catch(e) {}
-}
-
-function _readCookieLang() {
-  var m = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-  return m ? m[1] : null;
-}
-
-// ── GT combo trigger ──────────────────────────────────────────────
-function _triggerCombo(lang) {
-  var sel = document.querySelector('.goog-te-combo');
-  if (!sel) return false;
-  sel.value = lang;
-  // Use both createEvent (legacy) and Event constructor for max compatibility
-  try {
-    var ev = document.createEvent('HTMLEvents');
-    ev.initEvent('change', true, true);
-    sel.dispatchEvent(ev);
-  } catch(e) {
-    sel.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-  return true;
-}
-
-// ── UI helpers ────────────────────────────────────────────────────
-function _updateUI(lang) {
+function applyLang(lang) {
+  var t = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+  if (!t) return;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(function(el) {
+    var key = el.dataset.i18nAriaLabel;
+    if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+  });
   var lbl = document.getElementById('lang-label');
-  if (lbl) lbl.textContent = LANG_LABELS[lang] || 'EN';
+  if (lbl) lbl.textContent = LANG_LABELS[lang] || lang.toUpperCase();
   document.querySelectorAll('.lang-option').forEach(function(el) {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
 }
 
-// ── Google Translate initialisation callback ──────────────────────
-// GT calls this function when the engine + combo are fully ready.
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,zh-CN,hi,es,fr,ar,bn,pt,ru,ur,id,de,ja,pcm,mr',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-
-  // On page load, read stored language from cookie OR localStorage and apply it
-  // Polls every 200ms (max 5s) for the combo to appear, then fires change event
-  var targetLang = _readCookieLang() ||
-    (function(){ try { return localStorage.getItem('nashmi_lang'); } catch(e){ return null; } })();
-  if (targetLang && targetLang !== 'en') {
-    var attempts = 0;
-    var poll = setInterval(function() {
-      var sel = document.querySelector('.goog-te-combo');
-      if (sel) {
-        clearInterval(poll);
-        if (sel.value !== targetLang) {
-          sel.value = targetLang;
-          try {
-            var ev = document.createEvent('HTMLEvents');
-            ev.initEvent('change', true, true);
-            sel.dispatchEvent(ev);
-          } catch(e) {
-            sel.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        }
-      } else if (++attempts > 25) {
-        clearInterval(poll);
-      }
-    }, 200);
-  }
-
-  // Suppress body jump and GT toolbar
-  function stopTheJump() {
-    document.body.style.top = '0px';
-    var googleFrame = document.querySelector('.goog-te-banner-frame');
-    if (googleFrame) {
-      googleFrame.style.display = 'none';
-      googleFrame.style.height  = '0';
-    }
-    var tt = document.getElementById('goog-gt-tt');
-    if (tt) tt.style.display = 'none';
-  }
-  stopTheJump();
-  var gtObserver = new MutationObserver(stopTheJump);
-  gtObserver.observe(document.body, {
-    attributes:    true,
-    attributeFilter: ['style', 'class'],
-    childList:     true,
-    subtree:       false
-  });
-}
-
-// ── Main switch function (called by custom dropdown buttons) ──────
 function setLanguage(lang) {
   closeLangMenu();
-  _updateUI(lang);
   try { localStorage.setItem('nashmi_lang', lang); } catch(e) {}
-  _setCookie(lang);
-
-  if (lang === 'en') { location.reload(); return; }
-
-  // Try the GT combo immediately (it's usually ready after the first click)
-  if (_triggerCombo(lang)) return;
-
-  // GT still loading — poll every 100ms for up to 5 seconds
-  var attempts = 0;
-  var poll = setInterval(function() {
-    if (_triggerCombo(lang)) {
-      clearInterval(poll);
-    } else if (++attempts >= 50) {
-      clearInterval(poll);
-      // GT failed to load — fall back to Google Translate website
-      window.location.href = 'https://translate.google.com/translate?sl=en&tl=' +
-        lang + '&u=' + encodeURIComponent(location.href);
-    }
-  }, 100);
+  applyLang(lang);
 }
 
-// ── Restore language UI on every page load ────────────────────────
-// (Actual translation is handled by GT reading the googtrans cookie.)
-(function restoreUI() {
-  var lang = _readCookieLang() ||
-             (function() { try { return localStorage.getItem('nashmi_lang'); } catch(e) { return null; } })() ||
-             'en';
-  if (lang !== 'en') _updateUI(lang);
-})();
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = null;
+  try { saved = localStorage.getItem('nashmi_lang'); } catch(e) {}
+  if (saved && window.TRANSLATIONS && window.TRANSLATIONS[saved]) {
+    applyLang(saved);
+  }
+});
 
-// ── Dropdown open / close ─────────────────────────────────────────
 function toggleLangMenu(e) {
-  e && e.stopPropagation();
+  if (e) { e.stopPropagation(); e.preventDefault(); }
   var menu = document.getElementById('lang-menu');
   var btn  = document.getElementById('lang-btn');
   var open = menu.classList.contains('open');
   if (!open) {
-    var rect    = btn.getBoundingClientRect();
-    var vw      = window.innerWidth;
+    var rect = btn.getBoundingClientRect();
+    var vw   = window.innerWidth;
     if (vw <= 900) {
-      // Menu width: fill most of the screen but cap at 340px
-      var mw = Math.min(vw - 20, 340);
-      // Anchor from the button's left edge; clamp so it never goes off-screen
+      var mw   = Math.min(vw - 20, 340);
       var left = Math.max(10, Math.min(rect.left, vw - mw - 10));
       menu.style.top   = (rect.bottom + 8) + 'px';
       menu.style.left  = left + 'px';
@@ -460,13 +354,12 @@ function closeLangMenu() {
   if (btn)  btn.setAttribute('aria-expanded', 'false');
 }
 
-document.addEventListener('click',   function(e) {
+document.addEventListener('pointerdown', function(e) {
   if (!e.target.closest('#lang-switcher')) closeLangMenu();
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLangMenu();
 });
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 </body>
 </html>

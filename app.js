@@ -2,24 +2,6 @@
 // Inventory is fetched live from /api/inventory (Vercel serverless, 30-second CDN cache)
 // which proxies the DealerCenter XML feed in real time.
 
-const CARGURUS_DEALER_URL = 'https://www.cargurus.com/Cars/m-Nashmi-Motors-sp464929';
-
-const CARGURUS_LISTINGS = {
-  '1FAHP2E84HG131823': '427955121',
-  '1FMCU0GD6HUB33923': '444980028',
-  '5XYZUDLB1EG228476': '444973402',
-  'KNDPMCAC0J7307268': '448032285',
-  '3VV2B7AX8KM053490': '448032286',
-  'JN8AS5MV7CW394605': '448032284',
-  '3FADP4BJ2KM108166': '444980026',
-  '5XXGM4A74DG145701': '442568176',
-  'KNDJ23AU3P7884308': '448032287',
-};
-
-function getCarGurusUrl(vin) {
-  if (!vin) return CARGURUS_DEALER_URL;
-  return 'https://www.cargurus.com/Cars/new/nl/filter?zip=17111&vin=' + encodeURIComponent(vin);
-}
 
 function h(s) {
   return String(s == null ? '' : s)
@@ -84,14 +66,9 @@ function carCard(c) {
     ? `<img src="${h(safeImg)}" alt="${h(c.year)} ${h(c.make)} ${h(c.model)}" loading="lazy" width="640" height="480">`
     : `<div class="car-no-photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 140" aria-hidden="true" class="car-no-photo-svg"><rect x="18" y="72" width="204" height="40" rx="8" fill="#c9d3dc"/><path d="M52 72 L72 44 L168 44 L188 72Z" fill="#bbc6d0"/><rect x="76" y="47" width="88" height="24" rx="3" fill="#d8e2ea"/><circle cx="68" cy="112" r="20" fill="#e2e8ee"/><circle cx="172" cy="112" r="20" fill="#e2e8ee"/><circle cx="68" cy="112" r="17" fill="#929fad"/><circle cx="68" cy="112" r="8" fill="#dce4ea"/><circle cx="172" cy="112" r="17" fill="#929fad"/><circle cx="172" cy="112" r="8" fill="#dce4ea"/><rect x="196" y="80" width="22" height="12" rx="4" fill="#e4ecf5"/><rect x="22" y="80" width="22" height="12" rx="4" fill="#f2d0d0"/></svg></div>`;
   const saleBadge = c.sale ? `<div class="car-badge">Sale</div>` : '';
-  // Show original/was price + savings on EVERY car (sale price if marked, else 12% above asking)
-  const wasPrice = c.sale ? null : (c.price ? Math.round(c.price * 1.12) : null);
-  const oldPrice = c.sale
-    ? `<span class="car-old-price">${fmtPrice(c.price)}</span>`
-    : (wasPrice ? `<span class="car-old-price">${fmtPrice(wasPrice)}</span>` : '');
-  const savings = c.sale
-    ? `<span class="car-savings">Save ${fmtPrice(c.price - c.sale)}</span>`
-    : (wasPrice && c.price ? `<span class="car-savings">Save ${fmtPrice(wasPrice - c.price)}</span>` : '');
+  // Only show crossed-out price and savings when DealerCenter marks the vehicle on sale
+  const oldPrice = c.sale ? `<span class="car-old-price">${fmtPrice(c.price)}</span>` : '';
+  const savings  = c.sale && c.price ? `<span class="car-savings">Save ${fmtPrice(c.price - c.sale)}</span>` : '';
   // ── CarFax badges ──────────────────────────────────────────────────────────
   // carfaxBadge values from API: '1own' | '1own_great' | '1own_good' | '1own_fair'
   //                              | 'Great Value' | 'Good Value' | 'Fair Value' | null
@@ -120,13 +97,6 @@ function carCard(c) {
       </a>`
     : '';
 
-  // CarGurus — only shown when an explicit per-vehicle URL is provided.
-  // To add: paste the CarGurus listing URL into the vehicle's cargurusUrl field.
-  // Hiding the button is better than linking to a page that won't match the vehicle.
-  const cgBtn = c.cargurusUrl
-    ? `<a href="${h(c.cargurusUrl)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="cg-btn"><svg class="cg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M16.5 8.5l-1.7-4.2A1.5 1.5 0 0013.4 3H6.6c-.6 0-1.1.4-1.4.9L3.5 8.5A2 2 0 002 10.4V14a1 1 0 001 1h1a2 2 0 004 0h4a2 2 0 004 0h1a1 1 0 001-1v-3.6a2 2 0 00-1.5-1.9zM7 15a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zM5 9l1.3-3.4a.5.5 0 01.5-.6h6.4c.2 0 .4.2.5.5L15 9H5z"/></svg><span>View on CarGurus</span></a>`
-    : '';
-
   return `
 <div class="car-card" data-type="${h(c.type)}" data-make="${h(c.make)}" data-drive="${h(c.drive)}" data-price="${displayPrice || 0}">
   <a href="${detailUrl}" class="car-img-wrap">
@@ -148,7 +118,6 @@ function carCard(c) {
     <div class="car-actions">
       <a href="${detailUrl}" class="btn btn-primary car-btn">View Details</a>
       ${cfBtn}
-      ${cgBtn}
     </div>
   </div>
 </div>`;
@@ -197,21 +166,21 @@ document.getElementById('hamburger')?.addEventListener('click', function () {
 // positioning — avoids iOS Safari tap-target issues with position:fixed dropdowns.
 (function () {
   var LANGS = [
-    { code: 'en',    flag: '🇺🇸', label: 'English'   },
-    { code: 'zh-CN', flag: '🇨🇳', label: '中文'       },
-    { code: 'hi',    flag: '🇮🇳', label: 'हिन्दी'     },
-    { code: 'es',    flag: '🇪🇸', label: 'Español'    },
-    { code: 'fr',    flag: '🇫🇷', label: 'Français'   },
-    { code: 'ar',    flag: '🇸🇦', label: 'العربية'    },
-    { code: 'bn',    flag: '🇧🇩', label: 'বাংলা'      },
-    { code: 'pt',    flag: '🇧🇷', label: 'Português'  },
-    { code: 'ru',    flag: '🇷🇺', label: 'Русский'    },
-    { code: 'ur',    flag: '🇵🇰', label: 'اردو'       },
-    { code: 'id',    flag: '🇮🇩', label: 'Indonesia'  },
-    { code: 'de',    flag: '🇩🇪', label: 'Deutsch'    },
-    { code: 'ja',    flag: '🇯🇵', label: '日本語'      },
-    { code: 'pcm',   flag: '🇳🇬', label: 'Pidgin'     },
-    { code: 'mr',    flag: '🇮🇳', label: 'मराठी'      },
+    { code: 'en',    badge: 'EN',  label: 'English'   },
+    { code: 'zh-CN', badge: 'ZH',  label: '中文'       },
+    { code: 'hi',    badge: 'HI',  label: 'हिन्दी'     },
+    { code: 'es',    badge: 'ES',  label: 'Español'    },
+    { code: 'fr',    badge: 'FR',  label: 'Français'   },
+    { code: 'ar',    badge: 'AR',  label: 'العربية'    },
+    { code: 'bn',    badge: 'BN',  label: 'বাংলা'      },
+    { code: 'pt',    badge: 'PT',  label: 'Português'  },
+    { code: 'ru',    badge: 'RU',  label: 'Русский'    },
+    { code: 'ur',    badge: 'UR',  label: 'اردو'       },
+    { code: 'id',    badge: 'ID',  label: 'Indonesia'  },
+    { code: 'de',    badge: 'DE',  label: 'Deutsch'    },
+    { code: 'ja',    badge: 'JA',  label: '日本語'      },
+    { code: 'pcm',   badge: 'PCM', label: 'Pidgin'     },
+    { code: 'mr',    badge: 'MR',  label: 'मराठी'      },
   ];
 
   function toggleMobileLangGrid() {
@@ -233,7 +202,7 @@ document.getElementById('hamburger')?.addEventListener('click', function () {
       var closeNav = "document.getElementById('nav').classList.remove('open');document.getElementById('hamburger').classList.remove('open');";
       return '<button class="mobile-lang-opt lang-option" data-lang="' + l.code + '" ' +
              'onclick="' + closeNav + 'setLanguage(\'' + l.code + '\')">' +
-             '<span class="lang-flag">' + l.flag + '</span>' + l.label + '</button>';
+             '<span class="lang-code">' + l.badge + '</span>' + l.label + '</button>';
     }).join('');
 
     var section = document.createElement('div');
